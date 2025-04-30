@@ -10,9 +10,14 @@ import restoro.ChainOfResponsibilty.ComplaintHandler;
  *
  * @author salma
  */
-public class Delivery implements ComplaintHandler {
+public class Delivery extends User implements ComplaintHandler {
     private ComplaintHandler next;
+    private DeliveryController delivery;
 
+    public Delivery(DeliveryController delivery) {
+        this.delivery = delivery;
+    }
+    
     @Override
     public void setNext(ComplaintHandler next) {
         this.next = next;
