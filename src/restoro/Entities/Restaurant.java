@@ -1,148 +1,309 @@
 package restoro.Entities;
 
-import javax.swing.JTextArea;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import restoro.ChainOfResponsibilty.ComplaintHandler;
 
-public class Restaurant implements ComplaintHandler {
-    private int id;
-    private String name;
-    private String address;
-    private String phone;
-    private String notes;
+import restoro.Controllers.ContactRestaurant;
+import restoro.Controllers.DeliveryController;
+import restoro.Controllers.MenuController;
+import restoro.Controllers.OrderController;
+import restoro.Controllers.SearchRestaurantController;
+import restoro.Controllers.CheckRestaurant;
+
+public class Restaurant{
+    
+    private ContactRestaurant contactRestaurant;
+    private SearchRestaurantController searchRestaurantController;
+    private HandleComplaint handleComplaint;
+    private MenuController menuController;
+    private OrderController orderController;
+    private DeliveryController deliveryController;
+    private CheckRestaurant checkRestaurant;
+    
+    private int restaurantID;
+    private String restaurantName;
+    private String restaurantLocation;
+    private String restaurantAddress;
+    private String restaurantPhoneNumber;
     private boolean isOpen;
-    private static final RestaurantAdmin restaurantAdmin = new RestaurantAdmin();
-    private static final Map<Integer, String> menus = new HashMap<>();
+    private Menu menu;
+    private RestaurantAdmin restaurantAdmin;
+    
     private static final List<Restaurant> allRestaurants = new ArrayList<>();
-    private ComplaintHandler next;
 
-    static {
-        allRestaurants.add(new Restaurant(1, "Pizza Palace", "123 Main St", "111-222-3333", "", true));
-        allRestaurants.add(new Restaurant(2, "Burger Barn", "456 Oak Ave", "111-222-4444", "", true));
-        allRestaurants.add(new Restaurant(3, "Taco Town", "789 Pine Rd", "111-222-5555", "", false));
-        allRestaurants.add(new Restaurant(4, "Sushi Spot", "101 Cedar Ln", "111-222-6666", "", true));
-        allRestaurants.add(new Restaurant(5, "Pasta Place", "202 Maple Dr", "111-222-7777", "", true));
-
-        menus.put(1, "1. Margherita Pizza - $12.99\n2. Pepperoni Pizza - $14.99\n3. Vegetarian Pizza - $13.99\n4. Cheese Bread - $6.99\n5. Soda - $2.99");
-        menus.put(2, "1. Classic Burger - $10.99\n2. Cheeseburger - $11.99\n3. Bacon Burger - $13.99\n4. French Fries - $4.99\n5. Milkshake - $5.99");
-        menus.put(4, "1. California Roll - $8.99\n2. Spicy Tuna Roll - $10.99\n3. Dragon Roll - $15.99\n4. Miso Soup - $3.99\n5. Green Tea - $2.50");
-        menus.put(5, "1. Spaghetti & Meatballs - $14.99\n2. Fettuccine Alfredo - $13.99\n3. Lasagna - $16.99\n4. Garlic Bread - $5.99\n5. Tiramisu - $7.99");
-    }
-
-    public Restaurant(int id, String name, String address, String phone, String notes, boolean isOpen) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.notes = notes;
+    public Restaurant(ContactRestaurant contactRestaurant, SearchRestaurantController searchRestaurantController, HandleComplaint handleComplaint, MenuController menuController, OrderController orderController, DeliveryController deliveryController, CheckRestaurant checkRestaurant, int restaurantID, String restaurantName, String restaurantLocation, String restaurantAddress, String restaurantPhoneNumber, boolean isOpen, Menu menu, RestaurantAdmin restaurantAdmin) {
+        this.contactRestaurant = contactRestaurant;
+        this.searchRestaurantController = searchRestaurantController;
+        this.handleComplaint = handleComplaint;
+        this.menuController = menuController;
+        this.orderController = orderController;
+        this.deliveryController = deliveryController;
+        this.checkRestaurant = checkRestaurant;
+        this.restaurantID = restaurantID;
+        this.restaurantName = restaurantName;
+        this.restaurantLocation = restaurantLocation;
+        this.restaurantAddress = restaurantAddress;
+        this.restaurantPhoneNumber = restaurantPhoneNumber;
         this.isOpen = isOpen;
+        this.menu = menu;
+        this.restaurantAdmin = restaurantAdmin;
+    }
+    
+    
+
+    public ContactRestaurant getContactRestaurant() {
+        return contactRestaurant;
     }
 
-    Restaurant() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void setContactRestaurant(ContactRestaurant contactRestaurant) {
+        this.contactRestaurant = contactRestaurant;
     }
 
-    public void checkValidation(int id, JTextArea output) {
-        output.append("Restaurant is Verified.\n");
-        getAdminContact(id, output);
+    public SearchRestaurantController getSearchRestaurantController() {
+        return searchRestaurantController;
     }
 
-    public void getAdminContact(int id, JTextArea output) {
-        String contact = restaurantAdmin.getContact(id);
-        output.append("Restaurant Admin Contact: " + contact + "\n");
-        updateStatus(id, "Available", output);
+    public void setSearchRestaurantController(SearchRestaurantController searchRestaurantController) {
+        this.searchRestaurantController = searchRestaurantController;
     }
 
-    public void updateStatus(int id, String status, JTextArea output) {
-        output.append("Updating status to: " + status + "\n");
-        output.append("Status Updated Successfully\n");
-        remove(id, output);
+    public HandleComplaint getHandleComplaint() {
+        return handleComplaint;
     }
 
-    public void remove(int id, JTextArea output) {
-        output.append("Restaurant Removed Successfully\n");
+    public void setHandleComplaint(HandleComplaint handleComplaint) {
+        this.handleComplaint = handleComplaint;
     }
 
-    public List<Restaurant> getMatchingRestaurants(String searchName) {
-        List<Restaurant> matching = new ArrayList<>();
-        for (Restaurant restaurant : allRestaurants) {
-            if (restaurant.getName().toLowerCase().contains(searchName.toLowerCase())) {
-                matching.add(restaurant);
-            }
-        }
-        return matching;
+    public MenuController getMenuController() {
+        return menuController;
     }
 
-    public String getRestaurantMenu(int restaurantId) {
-        for (Restaurant r : allRestaurants) {
-            if (r.getId() == restaurantId && r.isOpen()) {
-                return menus.getOrDefault(restaurantId, "No menu available.");
-            }
-        }
-        return null;
+    public void setMenuController(MenuController menuController) {
+        this.menuController = menuController;
     }
 
-    public boolean orderFromRestaurant() {
-        return true;
+    public OrderController getOrderController() {
+        return orderController;
     }
 
-    public String getDetails() {
-        return "Restaurant: " + name + ", Location: " + address;
+    public void setOrderController(OrderController orderController) {
+        this.orderController = orderController;
     }
 
-    public static Restaurant getRestaurantDetails(int restaurantId) {
-        for (Restaurant r : allRestaurants) {
-            if (r.getId() == restaurantId) return r;
-        }
-        return null;
+    public DeliveryController getDeliveryController() {
+        return deliveryController;
     }
 
-    public void setNext(ComplaintHandler next) {
-        this.next = next;
+    public void setDeliveryController(DeliveryController deliveryController) {
+        this.deliveryController = deliveryController;
     }
 
-    public void handleComplaint(String complaint) {
-        if (complaint.contains("food") || complaint.contains("restaurant")) {
-            System.out.println("Restaurant department handling complaint: " + complaint);
-        } else if (next != null) {
-            next.handleComplaint(complaint);
-        } else {
-            System.out.println("Complaint not handled: " + complaint);
-        }
+    public CheckRestaurant getCheckRestaurant() {
+        return checkRestaurant;
     }
 
-    public int getId() {
-        return id;
+    public void setCheckRestaurant(CheckRestaurant checkRestaurant) {
+        this.checkRestaurant = checkRestaurant;
     }
 
-    public String getName() {
-        return name;
+    public int getRestaurantID() {
+        return restaurantID;
     }
 
-    public boolean isOpen() {
+    public void setRestaurantID(int restaurantID) {
+        this.restaurantID = restaurantID;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
+    }
+
+    public String getRestaurantLocation() {
+        return restaurantLocation;
+    }
+
+    public void setRestaurantLocation(String restaurantLocation) {
+        this.restaurantLocation = restaurantLocation;
+    }
+
+    public String getRestaurantAddress() {
+        return restaurantAddress;
+    }
+
+    public void setRestaurantAddress(String restaurantAddress) {
+        this.restaurantAddress = restaurantAddress;
+    }
+
+    public String getRestaurantPhoneNumber() {
+        return restaurantPhoneNumber;
+    }
+
+    public void setRestaurantPhoneNumber(String restaurantPhoneNumber) {
+        this.restaurantPhoneNumber = restaurantPhoneNumber;
+    }
+
+    public boolean isIsOpen() {
         return isOpen;
     }
 
-    public void setOpen(boolean open) {
-        this.isOpen = open;
+    public void setIsOpen(boolean isOpen) {
+        this.isOpen = isOpen;
     }
 
-    public String getPhone() {
-        return phone;
+    public Menu getMenu() {
+        return menu;
     }
 
-    public String getNotes() {
-        return notes;
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 
-    public String getAddress() {
-        return address;
+    public RestaurantAdmin getRestaurantAdmin() {
+        return restaurantAdmin;
     }
 
+    public void setRestaurantAdmin(RestaurantAdmin restaurantAdmin) {
+        this.restaurantAdmin = restaurantAdmin;
+    }
+
+    public void ContactRestaurant() {
+        if (contactRestaurant != null) {
+            System.out.println("Contacting restaurant: " + restaurantName);
+        } else {
+            System.out.println("Contact controller not initialized");
+        }
+    }
+    
+    public void ReCallRestaurant() {
+        System.out.println("Recalling restaurant: " + restaurantName);
+        // Implementation would depend on the business logic
+    }
+    
+      public static Restaurant GetMatchingRestaurants(String name) {
+        System.out.println("Searching for restaurants matching: " + name);
+        for (Restaurant restaurant : allRestaurants) {
+            if (restaurant.getRestaurantName().toLowerCase().contains(name.toLowerCase())) {
+                System.out.println("Found matching restaurant: " + restaurant.getRestaurantName());
+                return restaurant;
+            }
+        }
+        System.out.println("No matching restaurant found for: " + name);
+        return null;
+    }
+    
+    public Menu GetRestaurantMenu(String id) {
+        System.out.println("Getting menu for restaurant ID: " + id);
+        
+        // For demo purposes, create and return a sample menu
+        Menu menu = new Menu();
+        menu.addItem(new MenuItem("Spaghetti Carbonara", "Pasta", 12.99));
+        menu.addItem(new MenuItem("Margherita Pizza", "Pizza", 10.99));
+        menu.addItem(new MenuItem("Caesar Salad", "Salad", 7.99));
+        
+        return menu;
+    }
+    
+    public void OrderFromRestaurant() {
+        if (orderController != null) {
+            System.out.println("Placing order at " + restaurantName);
+        } else {
+            System.out.println("Order controller not initialized");
+        }
+    }
+    
+    public static Restaurant SelectRestaurant(String id) {
+        System.out.println("Selecting restaurant with ID: " + id);
+                int targetId = Integer.parseInt(id);
+
+        for (Restaurant restaurant : allRestaurants) {
+            if (restaurant.getRestaurantID() == targetId) {
+                System.out.println("Selected restaurant: " + restaurant.getRestaurantName());
+                return restaurant;
+            }
+        }
+        System.out.println("No restaurant found with ID: " + id);
+        return null;
+    }
+    
+    public boolean CheckRestaurantValidation(String id) {
+        System.out.println("Checking validation for restaurant ID: " + id);
+                int targetId = Integer.parseInt(id);
+
+        for (Restaurant restaurant : allRestaurants) {
+                        if (restaurant.getRestaurantID() == targetId && restaurant.isIsOpen()) {
+                System.out.println("Restaurant " + restaurant.getRestaurantName() + " is valid and active");
+                return true;
+            }
+        }
+        System.out.println("Restaurant with ID " + id + " is not valid or not active");
+        return false;
+    }
+    
+    public void UpdateRestaurantStatus(String id, boolean status) {
+        System.out.println("Updating status for restaurant ID: " + id + " to " + status);
+                int targetId = Integer.parseInt(id);
+
+        for (Restaurant restaurant : allRestaurants) {
+            if (restaurant.getRestaurantID() == targetId) {
+                restaurant.setIsOpen(status);
+                System.out.println("Restaurant " + restaurant.getRestaurantName() + " status updated to " + status);
+                return;
+            }
+        }
+        System.out.println("No restaurant found with ID: " + id);
+    }
+    
+   public void RemoveRestaurant(String id) {
+    System.out.println("Removing restaurant with ID: " + id);
+    
+        int targetId = Integer.parseInt(id);
+
+        for (int i = 0; i < allRestaurants.size(); i++) {
+            Restaurant restaurant = allRestaurants.get(i);
+            if (restaurant.getRestaurantID() == targetId) {
+                allRestaurants.remove(i);
+                System.out.println("Restaurant " + restaurant.getRestaurantName() + " removed");
+                return;
+            }
+        }
+        System.out.println("No restaurant found with ID: " + id);
+}
+    
+    public static Restaurant getRestaurantDetails(String id) {
+        System.out.println("Getting details for restaurant ID: " + id);
+                int targetId = Integer.parseInt(id);
+
+        for (Restaurant restaurant : allRestaurants) {
+            if (restaurant.getRestaurantID() == targetId) {
+                return restaurant;
+            }
+        }
+        System.out.println("No restaurant found with ID: " + id);
+        return null;
+    }
+    
+    public void NotifyRestaurantAboutComplaint() {
+        if (handleComplaint != null) {
+            System.out.println("Notifying restaurant " + restaurantName + " about complaint");
+        } else {
+            System.out.println("Complaint handler not initialized");
+        }
+    }
+    
+    // toString method for debugging
+    @Override
     public String toString() {
-        return name + (isOpen ? " (Open)" : " (Closed)") + " - " + address;
+        return "Restaurant{" +
+               "id='" + restaurantID + '\'' +
+               ", restaurantName='" + restaurantName + '\'' +
+               ", restaurantLocation='" + restaurantLocation + '\'' +
+               ", isActive=" + isOpen +
+               '}';
     }
+
 }
