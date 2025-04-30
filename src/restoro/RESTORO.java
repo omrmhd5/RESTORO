@@ -3,6 +3,8 @@
  */
 
 package restoro;
+import restoro.Interfaces.CustomerUI;
+import restoro.Entities.Order;
 import javax.swing.SwingUtilities;
 
 /**
