@@ -11,18 +11,18 @@ import java.util.ArrayList;
  * @author user
  */
 public class Cart {
-    private ArrayList<MenuItem> Cartitems;
-     public Cart() {
-        Cartitems = new ArrayList<>();
+    private ArrayList<MenuItem> CartItems = new ArrayList<>();
+
+    public Cart() {
     }
     
     public void addToCart(MenuItem item){
-        Cartitems.add(item);
+        CartItems.add(item);
         System.out.println(item.getName() + " added to cart.");
     }
     
     public void remove(MenuItem item){
-         if (Cartitems.remove(item)) {
+         if (CartItems.remove(item)) {
             System.out.println(item.getName() + " removed from cart.");
         } else {
             System.out.println("Item not found in cart.");
@@ -31,7 +31,7 @@ public class Cart {
     
      public int calculateTotal() {
         int total = 0;
-        for (MenuItem item : Cartitems) {
+        for (MenuItem item : CartItems) {
             total += item.getPrice();
         }
         System.out.println("Total Price: " + total);
@@ -39,24 +39,17 @@ public class Cart {
     }
 
     public void viewCart() {
-        if (Cartitems.isEmpty()) {
+        if (CartItems.isEmpty()) {
             System.out.println("Cart is empty.");
         } else {
             System.out.println("Items in Cart:");
-            for (MenuItem item : Cartitems) {
+            for (MenuItem item : CartItems) {
                 System.out.println(item);
             }
         }
     }
 
     public ArrayList<MenuItem> getCartitems() {
-        return Cartitems;
-    }
-
-    public void setCartitems(ArrayList<MenuItem> Cartitems) {
-        this.Cartitems = Cartitems;
-    }
-
-    
-    
+        return CartItems;
+    }    
 }

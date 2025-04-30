@@ -5,6 +5,7 @@
 package restoro.Entities;
 
 import restoro.ChainOfResponsibilty.ComplaintHandler;
+import restoro.Controllers.DeliveryController;
 
 /**
  *
@@ -13,9 +14,32 @@ import restoro.ChainOfResponsibilty.ComplaintHandler;
 public class Delivery extends User implements ComplaintHandler {
     private ComplaintHandler next;
     private DeliveryController delivery;
+    
+    
+    public Delivery(String name, String email, String password) {
+        super(name, email, password);
+    }
 
-    public Delivery(DeliveryController delivery) {
-        this.delivery = delivery;
+    @Override
+    public boolean register(String name, String email, String password) {
+        System.out.println("Delivery: Attempting registration for " + email);
+
+        if (!validateUser(email, password) || name == null || name.trim().isEmpty()) {
+            System.out.println("Delivery: Registration failed due to invalid input.");
+            return false;
+        }
+
+        for (User user : users) {
+            if (user.email.equals(email)) {
+                System.out.println("Delivery: Email already registered.");
+                return false;
+            }
+        }
+
+        Delivery newDelivery = new Delivery(name, email, password);
+        users.add(newDelivery);
+        System.out.println("Delivery: Registration successful for " + email);
+        return true;
     }
     
     @Override
@@ -32,5 +56,10 @@ public class Delivery extends User implements ComplaintHandler {
         } else {
             System.out.println("Complaint not handled: " + complaint);
         }
+    }
+
+    @Override
+    public boolean register(String name, String email, String password, Restaurant restaurant) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

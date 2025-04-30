@@ -9,45 +9,50 @@ package restoro.Entities;
  */
 
 import restoro.ChainOfResponsibilty.ComplaintHandler;
+import restoro.Controllers.CheckRestaurantController;
 
 public class RestaurantAdmin extends User implements ComplaintHandler {
     private ComplaintHandler next;
     private CheckRestaurantController checkRestaurant;
     private Restaurant restaurant;
-
-    public ComplaintHandler getNext() {
-        return next;
-    }
-
-    public CheckRestaurantController getCheckRestaurant() {
-        return checkRestaurant;
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setNext(ComplaintHandler next) {
-        this.next = next;
-    }
-
-    public void setCheckRestaurant(CheckRestaurantController checkRestaurant) {
-        this.checkRestaurant = checkRestaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
     
-    public RestaurantAdmin(CheckRestaurantController checkRestaurant, Restaurant restaurant) {
-        this.checkRestaurant = checkRestaurant;
+    public RestaurantAdmin(String name, String email, String password, Restaurant restaurant) {
+        super(name, email, password);
         this.restaurant = restaurant;
     }
     
     @Override
+    public void setNext(ComplaintHandler next) {
+        this.next = next;
+    }
+
+    @Override
+    public boolean register(String name, String email, String password, Restaurant restaurant) {
+        System.out.println("RestaurantAdmin: Attempting registration for " + email);
+
+        if (!validateUser(email, password) || name == null || name.trim().isEmpty() || restaurant == null) {
+            System.out.println("RestaurantAdmin: Registration failed due to invalid input.");
+            return false;
+        }
+
+        for (User user : users) {
+            if (user.email.equals(email)) {
+                System.out.println("RestaurantAdmin: Email already registered.");
+                return false;
+            }
+        }
+
+        RestaurantAdmin newRestaurantAdmin = new RestaurantAdmin(name, email, password, restaurant);
+        users.add(newRestaurantAdmin);
+        System.out.println("RestaurantAdmin: Registration successful for " + email);
+        return true;
+    }
+
+    
+    @Override
     public void handleComplaint(String complaint) {
-        if (complaint.contains("Restaurant Admin")) {
-            System.out.println("Restaurant Admin department handling complaint: " + complaint);
+        if (complaint.contains("Restaurant RestaurantAdmin")) {
+            System.out.println("Restaurant RestaurantAdmin department handling complaint: " + complaint);
         } else if (next != null) {
             next.handleComplaint(complaint);
         } else {
@@ -57,13 +62,17 @@ public class RestaurantAdmin extends User implements ComplaintHandler {
     
     
     public RestaurantAdmin GetRestaurantAdminContactInfo(int ID) {
-        System.out.println("Returning Restaurant Admin Contact Info for ID: " + ID);
+        System.out.println("Returning Restaurant RestaurantAdmin Contact Info for ID: " + ID);
         return this;
     }
     
     public void ContactRestaurantAdmin(int ID) {
-        System.out.println("Contacting Restaurant Admin with ID: " + ID);
+        System.out.println("Contacting Restaurant RestaurantAdmin with ID: " + ID);
     }
-    
+
+    @Override
+    public boolean register(String name, String email, String password) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    } 
 
 }

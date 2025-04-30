@@ -8,7 +8,7 @@ import restoro.Controllers.DeliveryController;
 import restoro.Controllers.MenuController;
 import restoro.Controllers.OrderController;
 import restoro.Controllers.SearchRestaurantController;
-import restoro.Controllers.CheckRestaurant;
+import restoro.Controllers.CheckRestaurantController;
 
 public class Restaurant{
     
@@ -18,7 +18,7 @@ public class Restaurant{
     private MenuController menuController;
     private OrderController orderController;
     private DeliveryController deliveryController;
-    private CheckRestaurant checkRestaurant;
+    private CheckRestaurantController checkRestaurant;
     
     private int restaurantID;
     private String restaurantName;
@@ -31,7 +31,7 @@ public class Restaurant{
     
     private static final List<Restaurant> allRestaurants = new ArrayList<>();
 
-    public Restaurant(ContactRestaurant contactRestaurant, SearchRestaurantController searchRestaurantController, HandleComplaint handleComplaint, MenuController menuController, OrderController orderController, DeliveryController deliveryController, CheckRestaurant checkRestaurant, int restaurantID, String restaurantName, String restaurantLocation, String restaurantAddress, String restaurantPhoneNumber, boolean isOpen, Menu menu, RestaurantAdmin restaurantAdmin) {
+    public Restaurant(ContactRestaurant contactRestaurant, SearchRestaurantController searchRestaurantController, HandleComplaint handleComplaint, MenuController menuController, OrderController orderController, DeliveryController deliveryController, CheckRestaurantController checkRestaurant, int restaurantID, String restaurantName, String restaurantLocation, String restaurantAddress, String restaurantPhoneNumber, boolean isOpen, Menu menu, RestaurantAdmin restaurantAdmin) {
         this.contactRestaurant = contactRestaurant;
         this.searchRestaurantController = searchRestaurantController;
         this.handleComplaint = handleComplaint;
@@ -99,11 +99,11 @@ public class Restaurant{
         this.deliveryController = deliveryController;
     }
 
-    public CheckRestaurant getCheckRestaurant() {
+    public CheckRestaurantController getCheckRestaurant() {
         return checkRestaurant;
     }
 
-    public void setCheckRestaurant(CheckRestaurant checkRestaurant) {
+    public void setCheckRestaurant(CheckRestaurantController checkRestaurant) {
         this.checkRestaurant = checkRestaurant;
     }
 

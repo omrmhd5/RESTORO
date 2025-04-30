@@ -4,28 +4,39 @@
  */
 package restoro.Entities;
 
-/**
- *
- * @author omrmh
- */
 import restoro.ChainOfResponsibilty.ComplaintHandler;
+import restoro.Controllers.CheckAdminController;
 // * @author salma
 // *
-public class Admin implements ComplaintHandler {
-    private ComplaintHandler next;
+public class Admin extends User implements ComplaintHandler {
 
+    private ComplaintHandler next;
     private CheckAdminController checkAdmin;
 
-    public ComplaintHandler getNext() {
-        return next;
+    public Admin(String name, String email, String password) {
+        super(name, email, password);
     }
 
-    public CheckAdminController getCheckAdmin() {
-        return checkAdmin;
-    }
+    @Override
+    public boolean register(String name, String email, String password) {
+        System.out.println("Admin: Attempting registration for " + email);
 
-    public void setCheckAdmin(CheckAdminController checkAdmin) {
-        this.checkAdmin = checkAdmin;
+        if (!validateUser(email, password) || name == null || name.trim().isEmpty()) {
+            System.out.println("Admin: Registration failed due to invalid input.");
+            return false;
+        }
+
+        for (User user : users) {
+            if (user.email.equals(email)) {
+                System.out.println("Admin: Email already registered.");
+                return false;
+            }
+        }
+
+        Admin newAdmin = new Admin(name, email, password);
+        users.add(newAdmin);
+        System.out.println("Admin: Registration successful for " + email);
+        return true;
     }
 
     @Override
@@ -44,10 +55,10 @@ public class Admin implements ComplaintHandler {
         }
     }
     
-    
-    public void AccessAdminPanel(int ID) {
-        System.out.println("Accessing Admin Panel with ID: " + ID);
-    }
+//    
+//    public void AccessAdminPanel(int ID) {
+//        System.out.println("Accessing Admin Panel with ID: " + ID);
+//    }
     
     
 //    private final Restaurant restaurant = new Restaurant();
@@ -63,5 +74,10 @@ public class Admin implements ComplaintHandler {
 //    public void removeRestaurant(int restaurantId, JTextArea output) {
 //        restaurant.remove(restaurantId, output);
 //    }
+
+    @Override
+    public boolean register(String name, String email, String password, Restaurant restaurant) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
   
 }

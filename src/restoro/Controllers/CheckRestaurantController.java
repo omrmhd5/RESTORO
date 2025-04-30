@@ -10,7 +10,7 @@ package restoro.Controllers;
 import restoro.Entities.Admin;
 import javax.swing.JTextArea;
 
-public class CheckRestaurant {
+public class CheckRestaurantController {
     private final Admin admin = new Admin();
 
     public void validateRestaurant(int restaurantId, JTextArea output) {

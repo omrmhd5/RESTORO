@@ -2,21 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Observer;
+package restoro.Observer;
 
 /**
  *
  * @author user
  */
-public class RestaurantAdminObserver implements Observer{
+public class SystemAdminObserver implements Observer{
     private String name;
 
-    public RestaurantAdminObserver(String name) {
+    public SystemAdminObserver(String name) {
         this.name = name;
     }
 
     @Override
     public void update(String status) {
-        System.out.println("Restaurant Admin [" + name + "] notified: Order is " + status);
+        System.out.println("System Admin [" + name + "] notified: Order is " + status);
     }
 }

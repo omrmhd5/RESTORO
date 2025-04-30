@@ -14,24 +14,15 @@ import restoro.ReadOnly.MenuViewer;
  * @author HP
  */
 public class Menu implements MenuViewer {
-    private ArrayList<MenuItem> items;
+    private ArrayList<MenuItem> items = new ArrayList<>();
     private String MenuTitle; 
-    
-    public Menu() {
-        items = new ArrayList<>();
-    }
 
-    public Menu(ArrayList<MenuItem> items, String MenuTitle) {
-        this.items = items;
+    public Menu(String MenuTitle) {
         this.MenuTitle = MenuTitle;
     }
 
     public ArrayList<MenuItem> getItems() {
         return items;
-    }
-
-    public void setItems(ArrayList<MenuItem> items) {
-        this.items = items;
     }
 
     public String getMenuTitle() {

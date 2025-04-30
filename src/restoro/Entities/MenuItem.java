@@ -22,14 +22,7 @@ public class MenuItem {
         this.price = price;
         this.category=category;
     }
-
-    public MenuItem(String name, double price, String category) {
-        this.name = name;
-        this.price = price;
-        this.category = category;
-    }
     
-
     public void setId(int id) {
         this.id = id;
     }
@@ -69,7 +62,6 @@ public class MenuItem {
     public String getCategory() {
         return category;
     }
-    
 
     @Override
     public String toString() {

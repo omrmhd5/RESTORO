@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package restoro.Interfaces;
-import restoro.Controllers.CheckAdmin;
+import restoro.Controllers.CheckAdminController;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +17,7 @@ public class CheckRestaurantUI extends javax.swing.JFrame {
     private JButton checkButton;
     private JTextArea outputArea;
 
-        private final CheckAdmin checkAdmin = new CheckAdmin();
+        private final CheckAdminController checkAdmin = new CheckAdminController();
 
     
     /**

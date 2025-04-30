@@ -9,8 +9,8 @@ package restoro.Controllers;
  */
 import javax.swing.JTextArea;
 
-public class CheckAdmin {
-    private final CheckRestaurant checkRestaurant = new CheckRestaurant();
+public class CheckAdminController {
+    private final CheckRestaurantController checkRestaurant = new CheckRestaurantController();
 
     public boolean verifyAccess(int adminId) {
         return adminId == 1; // simulate access control
