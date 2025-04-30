@@ -59,6 +59,10 @@ public class Order {
         state.nextState(this);
     }
 
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
     public void cancelOrder() {
         state.cancelOrder(this);
     }
