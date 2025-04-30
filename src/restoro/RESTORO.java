@@ -3,9 +3,11 @@
  */
 
 package restoro;
+import java.util.Scanner;
 import restoro.Interfaces.CustomerUI;
 import restoro.Entities.Order;
 import javax.swing.SwingUtilities;
+import restoro.Entities.Menu;
 
 /**
  *
@@ -14,15 +16,16 @@ import javax.swing.SwingUtilities;
 public class RESTORO {
 
     public static void main(String[] args) {
-        // Create some dummy orders and assign to staff ID 101
-         new Order(1, 1001, "2x Burger, 1x Coke", 200);
-        new Order(2, 1001, "1x Pizza, 1x Garlic Bread", 201);
-        new Order(3, 1002, "1x Sushi", 202); // Another customer
+        Menu menu = new Menu();
+    Scanner scanner = new Scanner(System.in);
 
-        SwingUtilities.invokeLater(() -> {
-            CustomerUI ui = new CustomerUI();
-            ui.setVisible(true);
-            ui.login("customer@example.com", "abcd"); // hardcoded for test
-        });
+    while (true) {
+        System.out.print("Choose action (add/remove/update/exit): ");
+        String action = scanner.nextLine();
+
+        if (action.equalsIgnoreCase("exit")) break;
+
+        menu.OpenMenuSettings(action);
+    }
     }
 }
