@@ -1,5 +1,6 @@
 package restoro.Entities;
 
+import Observer.Observer;
 import java.util.ArrayList;
 import java.util.List;
 import restoro.State.OrderPlacedState;
@@ -14,7 +15,8 @@ public class Order {
     private OrderState state;
     private int quantity;
     private static List<Order> orders = new ArrayList<>();
-    
+    private String status;
+    private final List<Observer> observers = new ArrayList<>();
     
     public Order() {
         this.cart = new Cart();
@@ -125,6 +127,25 @@ public class Order {
                 newOrder.addToCart(item);
             }
             System.out.println("Reordered from Order ID: " + orderID);
+        }
+    }
+     public void attach(Observer observer) {
+        observers.add(observer);
+    }
+
+    public void detach(Observer observer) {
+        observers.remove(observer);
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+        System.out.println("Order status changed to: " + status);
+        notifyObservers();
+    }
+
+    private void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(status);
         }
     }
 
