@@ -8,12 +8,25 @@ package restoro.Entities;
  *
  * @author omrmh
  */
-import javax.swing.JTextArea;
 import restoro.ChainOfResponsibilty.ComplaintHandler;
 // * @author salma
 // *
 public class Admin implements ComplaintHandler {
     private ComplaintHandler next;
+
+    private CheckAdminController checkAdmin;
+
+    public ComplaintHandler getNext() {
+        return next;
+    }
+
+    public CheckAdminController getCheckAdmin() {
+        return checkAdmin;
+    }
+
+    public void setCheckAdmin(CheckAdminController checkAdmin) {
+        this.checkAdmin = checkAdmin;
+    }
 
     @Override
     public void setNext(ComplaintHandler next) {
@@ -31,18 +44,24 @@ public class Admin implements ComplaintHandler {
         }
     }
     
-      private final Restaurant restaurant = new Restaurant();
-
-    public void handleRestaurantSelection(int restaurantId, JTextArea output) {
-        restaurant.checkValidation(restaurantId, output);
+    
+    public void AccessAdminPanel(int ID) {
+        System.out.println("Accessing Admin Panel with ID: " + ID);
     }
-
-    public void updateStatus(int restaurantId, String status, JTextArea output) {
-        restaurant.updateStatus(restaurantId, status, output);
-    }
-
-    public void removeRestaurant(int restaurantId, JTextArea output) {
-        restaurant.remove(restaurantId, output);
-    }
+    
+    
+//    private final Restaurant restaurant = new Restaurant();
+//
+//    public void handleRestaurantSelection(int restaurantId, JTextArea output) {
+//        restaurant.checkValidation(restaurantId, output);
+//    }
+//
+//    public void updateStatus(int restaurantId, String status, JTextArea output) {
+//        restaurant.updateStatus(restaurantId, status, output);
+//    }
+//
+//    public void removeRestaurant(int restaurantId, JTextArea output) {
+//        restaurant.remove(restaurantId, output);
+//    }
   
 }
