@@ -5,49 +5,41 @@ import java.util.List;
 import restoro.State.OrderPlacedState;
 import restoro.State.OrderState;
 
+
+
 public class Order {
+    private static int orderCounter = 1;
+    private int orderID;
+    private Cart cart;
     private OrderState state;
-
-    private static List<Order> allOrders = new ArrayList<>();
-
-    private String orderId;
-    private String orderDetails;
-    private String userEmail; // customer
-    private String deliveryStaffEmail;
-    private String restaurantId;
-    private String restaurantName;
-    private String status;
-
+    private int quantity;
+    private static List<Order> orders = new ArrayList<>();
+    
+    
     public Order() {
+        this.cart = new Cart();
+        this.quantity = 0;
+        this.orderID = orderCounter++;
         this.state = new OrderPlacedState();
+        orders.add(this);
     }
-
-    // Full constructor for general use
-    public Order(String orderId, String userEmail, String orderDetails, String status,
-                 String deliveryStaffEmail, String restaurantId, String restaurantName) {
-        this.orderId = orderId;
-        this.userEmail = userEmail;
-        this.orderDetails = orderDetails;
-        this.status = status;
-        this.deliveryStaffEmail = deliveryStaffEmail;
-        this.restaurantId = restaurantId;
-        this.restaurantName = restaurantName;
-        this.state = new OrderPlacedState();
-        allOrders.add(this);
+    
+    public void addToCart(MenuItem item){
+        cart.addToCart(item);
+        quantity++;
     }
-
-    // Constructor for restaurant staff assignments (with ID instead of email)
-    public Order(String orderId, String orderDetails, String restaurantId, String deliveryStaffEmail) {
-        this.orderId = orderId;
-        this.orderDetails = orderDetails;
-        this.restaurantId = restaurantId;
-        this.deliveryStaffEmail = deliveryStaffEmail;
-        this.state = new OrderPlacedState();
-        allOrders.add(this);
+    
+    public int getTotalPrice(){
+        int price= cart.calculateTotal();
+        return price;
     }
-
-    // State pattern methods
-    public void setState(OrderState state) {
+    
+    public void placeOrder() {
+        System.out.println("Order placed with ID: " + orderID);
+    }
+    
+     // ---------------- State Pattern ----------------
+   public void setState(OrderState state) {
         this.state = state;
     }
 
@@ -64,75 +56,90 @@ public class Order {
     }
 
     public String getStatus() {
-        return status != null ? status : state.getStatus();
+        return state.getStatus();
     }
 
     public int getEstimatedTime() {
         return state.getEstimatedTime();
     }
-
-    // Getters and Setters
-    public String getOrderId() {
-        return orderId;
+    
+    public static List<Order> getIncomingOrders() {
+        return orders;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public static void checkOrderAvailability(int orderID) {
+        Order o = getOrder(orderID);
+        if (o != null) System.out.println("Order " + orderID + " is available.");
+        else System.out.println("Order not found.");
     }
 
-    public String getOrderDetails() {
-        return orderDetails;
+    public static void rejectOrder(int orderID) {
+        Order o = getOrder(orderID);
+        if (o != null) orders.remove(o);
     }
 
-    public void setOrderDetails(String orderDetails) {
-        this.orderDetails = orderDetails;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getDeliveryStaffEmail() {
-        return deliveryStaffEmail;
-    }
-
-    public String getRestaurantId() {
-        return restaurantId;
-    }
-
-    public String getRestaurantName() {
-        return restaurantName;
-    }
-
-    // Static utility methods
-    public static List<Order> getAssignedOrders(String staffEmail) {
-        List<Order> assigned = new ArrayList<>();
-        for (Order order : allOrders) {
-            if (staffEmail != null && staffEmail.equals(order.deliveryStaffEmail)) {
-                assigned.add(order);
-            }
-        }
-        return assigned;
-    }
-
-    public static List<Order> getPastOrders(String userEmail) {
-        List<Order> history = new ArrayList<>();
-        for (Order order : allOrders) {
-            if (userEmail != null && userEmail.equals(order.userEmail)) {
-                history.add(order);
-            }
-        }
-        return history;
-    }
-
-    public static Order viewOrderDetails(String orderId) {
-        for (Order order : allOrders) {
-            if (orderId != null && orderId.equals(order.orderId)) return order;
+    public static Order getOrder(int orderID) {
+        for (Order o : orders) {
+            if (o.getOrderID() == orderID) return o;
         }
         return null;
     }
 
-    public static void reorderOrder(String orderId) {
-        System.out.println("Order " + orderId + " is reordered.");
+    public static Order selectOrder(int orderID) {
+        return getOrder(orderID);
     }
+
+    public void editOrder(int orderID, Order newDetails) {
+        Order o = getOrder(orderID);
+        if (o != null) {
+            o.cart = newDetails.cart;
+            o.quantity = newDetails.quantity;
+            o.state = newDetails.state;
+        }
+    }
+
+    public void cancelOrder(int orderID) {
+        Order o = getOrder(orderID);
+        if (o != null) orders.remove(o);
+    }
+
+    public void updateOrderStatus(int orderID) {
+        Order o = getOrder(orderID);
+        if (o != null && o.state != null) {
+            o.state.nextState(o);
+        }
+    }
+
+    public static List<Order> getAssignedOrders(int staffId) {
+        // For simplicity, we return all orders.
+        // You can expand this based on real staff assignments.
+        return orders;
+    }
+
+    
+     public void reorderOrder(int orderID) {
+        Order o = getOrder(orderID);
+        if (o != null) {
+            Order newOrder = new Order();
+            for (MenuItem item : o.cart.getCartitems()) {
+                newOrder.addToCart(item);
+            }
+            System.out.println("Reordered from Order ID: " + orderID);
+        }
+    }
+
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+    
+    
 }
