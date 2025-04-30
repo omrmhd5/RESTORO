@@ -5,7 +5,6 @@
 package restoro.Entities;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import restoro.ReadOnly.MenuViewer;
 
@@ -21,9 +20,12 @@ public class Menu implements MenuViewer {
         this.MenuTitle = MenuTitle;
     }
 
-    public ArrayList<MenuItem> getItems() {
-        return items;
+    Menu() {
     }
+//
+//    public ArrayList<MenuItem> getItems() {
+//        return items;
+//    }
 
     public String getMenuTitle() {
         return MenuTitle;

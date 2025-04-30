@@ -4,17 +4,17 @@
  */
 package restoro.ReadOnly;
 
-import restoro.Controllers.PromoCtrl;
-import restoro.Entities.PromotionDiscounts;
+import restoro.Controllers.PromotionController;
+import restoro.Entities.PromotionsDiscounts;
 
 /**
  *
  * @author HP
  */
 public class DiscountAppUI {
-     private PromoCtrl promoCtrl;
+     private PromotionController promoCtrl;
 
-    public DiscountAppUI(PromoCtrl promoCtrl) {
+    public DiscountAppUI(PromotionController promoCtrl) {
         this.promoCtrl = promoCtrl;
     }
 
@@ -31,17 +31,17 @@ public class DiscountAppUI {
         return promoCtrl.selectPromotionToModify();
     }
 
-    public PromotionDiscounts getPromotionDetails(String id) {
+    public PromotionsDiscounts getPromotionDetails(String id) {
         return promoCtrl.getPromotionDetails(id);
     }
 
-    public PromotionDiscounts modifyPromotionDetails(PromotionDiscounts promo) {
+    public PromotionsDiscounts modifyPromotionDetails(PromotionsDiscounts promo) {
         // simulate modification
         promo.setDescription(promo.getDescription() + " [Updated]");
         return promo;
     }
 
-    public boolean updatePromotion(PromotionDiscounts updatedPromo) {
+    public boolean updatePromotion(PromotionsDiscounts updatedPromo) {
         return promoCtrl.updatePromotion(updatedPromo);
     }
 }

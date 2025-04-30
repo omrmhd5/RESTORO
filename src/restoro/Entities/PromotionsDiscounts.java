@@ -7,26 +7,29 @@ package restoro.Entities;
  *
  * @author HP
  */
-import restoro.Entities.PromotionDiscounts;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class PromotionsDiscounts {
-     private Map<String, PromotionDiscounts> database = new HashMap<>();
-
+    private static final ArrayList<PromotionsDiscounts> allPromotions = new ArrayList<>();
      
-         private String id;
+    private int code;
     private String description;
     private boolean active;
 
-    public PromotionsDiscounts(String id, String description, boolean active) {
-        this.id = id;
+    public PromotionsDiscounts(int code, String description, boolean active) {
+        this.code = code;
         this.description = description;
         this.active = active;
+        allPromotions.add(this);
     }
-
-    public String getId() {
-        return id;
+    
+     public static boolean isPromoCodeValid(int enteredCode) {
+        for (PromotionsDiscounts promo : allPromotions) {
+            if (promo.code == enteredCode && promo.active) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public String getDescription() {
@@ -40,24 +43,5 @@ public class PromotionsDiscounts {
     public boolean isActive() {
         return active;
     }
-    public boolean authenticate(String username, String password) {
-        return "admin".equals(username) && "password".equals(password);
-    }
 
-    public String fetchPromotionId() {
-        // simulate one ID (could be replaced with real user selection)
-        return "PROMO123";
-    }
-
-    public PromotionDiscounts getPromotion(String id) {
-        return database.getOrDefault(id, new PromotionDiscounts(id, "10% OFF", true));
-    }
-
-    public boolean updatePromotion(PromotionDiscounts promo) {
-        if (promo != null) {
-            database.put(promo.getId(), promo);
-            return true;
-        }
-        return false;
-    }
 }

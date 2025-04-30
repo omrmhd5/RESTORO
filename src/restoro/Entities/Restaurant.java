@@ -1,72 +1,57 @@
 package restoro.Entities;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import restoro.Controllers.ContactRestaurant;
 import restoro.Controllers.DeliveryController;
-import restoro.Controllers.MenuController;
-import restoro.Controllers.OrderController;
+//import restoro.Controllers.MenuController;
+//import restoro.Controllers.OrderController;
 import restoro.Controllers.SearchRestaurantController;
 import restoro.Controllers.CheckRestaurantController;
+import restoro.Controllers.HandleComplaint;
 
 public class Restaurant{
-    
     private ContactRestaurant contactRestaurant;
     private SearchRestaurantController searchRestaurantController;
     private HandleComplaint handleComplaint;
-    private MenuController menuController;
-    private OrderController orderController;
+//    private MenuController menuController;
+//    private OrderController orderController;
     private DeliveryController deliveryController;
     private CheckRestaurantController checkRestaurant;
     
     private int restaurantID;
     private String restaurantName;
-    private String restaurantLocation;
     private String restaurantAddress;
     private String restaurantPhoneNumber;
     private boolean isOpen;
     private Menu menu;
     private RestaurantAdmin restaurantAdmin;
     
-    private static final List<Restaurant> allRestaurants = new ArrayList<>();
+    private static final ArrayList<Restaurant> allRestaurants = new ArrayList<>();
 
-    public Restaurant(ContactRestaurant contactRestaurant, SearchRestaurantController searchRestaurantController, HandleComplaint handleComplaint, MenuController menuController, OrderController orderController, DeliveryController deliveryController, CheckRestaurantController checkRestaurant, int restaurantID, String restaurantName, String restaurantLocation, String restaurantAddress, String restaurantPhoneNumber, boolean isOpen, Menu menu, RestaurantAdmin restaurantAdmin) {
-        this.contactRestaurant = contactRestaurant;
-        this.searchRestaurantController = searchRestaurantController;
-        this.handleComplaint = handleComplaint;
-        this.menuController = menuController;
-        this.orderController = orderController;
-        this.deliveryController = deliveryController;
-        this.checkRestaurant = checkRestaurant;
-        this.restaurantID = restaurantID;
+    public Restaurant(String restaurantName, String restaurantAddress, String restaurantPhoneNumber, boolean isOpen, Menu menu, RestaurantAdmin restaurantAdmin) {
+        this.restaurantID = generateRandomId();
         this.restaurantName = restaurantName;
-        this.restaurantLocation = restaurantLocation;
         this.restaurantAddress = restaurantAddress;
         this.restaurantPhoneNumber = restaurantPhoneNumber;
         this.isOpen = isOpen;
         this.menu = menu;
         this.restaurantAdmin = restaurantAdmin;
+        allRestaurants.add(this);
+    }
+
+    public Restaurant() {
     }
     
+    public Restaurant searchForRestaurant(String name) {
+        for (Restaurant restaurant : allRestaurants) {
+            if (restaurant.getRestaurantName().equalsIgnoreCase(name)) {
+                return restaurant;
+            }
+        }
+        return null;
+    }
     
-
-    public ContactRestaurant getContactRestaurant() {
-        return contactRestaurant;
-    }
-
-    public void setContactRestaurant(ContactRestaurant contactRestaurant) {
-        this.contactRestaurant = contactRestaurant;
-    }
-
-    public SearchRestaurantController getSearchRestaurantController() {
-        return searchRestaurantController;
-    }
-
-    public void setSearchRestaurantController(SearchRestaurantController searchRestaurantController) {
-        this.searchRestaurantController = searchRestaurantController;
-    }
-
     public HandleComplaint getHandleComplaint() {
         return handleComplaint;
     }
@@ -75,76 +60,12 @@ public class Restaurant{
         this.handleComplaint = handleComplaint;
     }
 
-    public MenuController getMenuController() {
-        return menuController;
-    }
-
-    public void setMenuController(MenuController menuController) {
-        this.menuController = menuController;
-    }
-
-    public OrderController getOrderController() {
-        return orderController;
-    }
-
-    public void setOrderController(OrderController orderController) {
-        this.orderController = orderController;
-    }
-
-    public DeliveryController getDeliveryController() {
-        return deliveryController;
-    }
-
-    public void setDeliveryController(DeliveryController deliveryController) {
-        this.deliveryController = deliveryController;
-    }
-
-    public CheckRestaurantController getCheckRestaurant() {
-        return checkRestaurant;
-    }
-
-    public void setCheckRestaurant(CheckRestaurantController checkRestaurant) {
-        this.checkRestaurant = checkRestaurant;
-    }
-
     public int getRestaurantID() {
         return restaurantID;
     }
-
-    public void setRestaurantID(int restaurantID) {
-        this.restaurantID = restaurantID;
-    }
-
+    
     public String getRestaurantName() {
         return restaurantName;
-    }
-
-    public void setRestaurantName(String restaurantName) {
-        this.restaurantName = restaurantName;
-    }
-
-    public String getRestaurantLocation() {
-        return restaurantLocation;
-    }
-
-    public void setRestaurantLocation(String restaurantLocation) {
-        this.restaurantLocation = restaurantLocation;
-    }
-
-    public String getRestaurantAddress() {
-        return restaurantAddress;
-    }
-
-    public void setRestaurantAddress(String restaurantAddress) {
-        this.restaurantAddress = restaurantAddress;
-    }
-
-    public String getRestaurantPhoneNumber() {
-        return restaurantPhoneNumber;
-    }
-
-    public void setRestaurantPhoneNumber(String restaurantPhoneNumber) {
-        this.restaurantPhoneNumber = restaurantPhoneNumber;
     }
 
     public boolean isIsOpen() {
@@ -159,16 +80,8 @@ public class Restaurant{
         return menu;
     }
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
     public RestaurantAdmin getRestaurantAdmin() {
         return restaurantAdmin;
-    }
-
-    public void setRestaurantAdmin(RestaurantAdmin restaurantAdmin) {
-        this.restaurantAdmin = restaurantAdmin;
     }
 
     public void ContactRestaurant() {
@@ -179,63 +92,14 @@ public class Restaurant{
         }
     }
     
-    public void ReCallRestaurant() {
-        System.out.println("Recalling restaurant: " + restaurantName);
-        // Implementation would depend on the business logic
-    }
-    
-      public static Restaurant GetMatchingRestaurants(String name) {
-        System.out.println("Searching for restaurants matching: " + name);
+//    public void ReCallRestaurant() {
+//        System.out.println("Recalling restaurant: " + restaurantName);
+//        // Implementation would depend on the business logic
+//    }
+//    
+    public boolean CheckIsOpen(int id) {
         for (Restaurant restaurant : allRestaurants) {
-            if (restaurant.getRestaurantName().toLowerCase().contains(name.toLowerCase())) {
-                System.out.println("Found matching restaurant: " + restaurant.getRestaurantName());
-                return restaurant;
-            }
-        }
-        System.out.println("No matching restaurant found for: " + name);
-        return null;
-    }
-    
-    public Menu GetRestaurantMenu(String id) {
-        System.out.println("Getting menu for restaurant ID: " + id);
-        
-        // For demo purposes, create and return a sample menu
-        Menu menu = new Menu();
-        menu.addItem(new MenuItem("Spaghetti Carbonara", "Pasta", 12.99));
-        menu.addItem(new MenuItem("Margherita Pizza", "Pizza", 10.99));
-        menu.addItem(new MenuItem("Caesar Salad", "Salad", 7.99));
-        
-        return menu;
-    }
-    
-    public void OrderFromRestaurant() {
-        if (orderController != null) {
-            System.out.println("Placing order at " + restaurantName);
-        } else {
-            System.out.println("Order controller not initialized");
-        }
-    }
-    
-    public static Restaurant SelectRestaurant(String id) {
-        System.out.println("Selecting restaurant with ID: " + id);
-                int targetId = Integer.parseInt(id);
-
-        for (Restaurant restaurant : allRestaurants) {
-            if (restaurant.getRestaurantID() == targetId) {
-                System.out.println("Selected restaurant: " + restaurant.getRestaurantName());
-                return restaurant;
-            }
-        }
-        System.out.println("No restaurant found with ID: " + id);
-        return null;
-    }
-    
-    public boolean CheckRestaurantValidation(String id) {
-        System.out.println("Checking validation for restaurant ID: " + id);
-                int targetId = Integer.parseInt(id);
-
-        for (Restaurant restaurant : allRestaurants) {
-                        if (restaurant.getRestaurantID() == targetId && restaurant.isIsOpen()) {
+            if (restaurant.getRestaurantID() == id && restaurant.isIsOpen()) {
                 System.out.println("Restaurant " + restaurant.getRestaurantName() + " is valid and active");
                 return true;
             }
@@ -244,12 +108,9 @@ public class Restaurant{
         return false;
     }
     
-    public void UpdateRestaurantStatus(String id, boolean status) {
-        System.out.println("Updating status for restaurant ID: " + id + " to " + status);
-                int targetId = Integer.parseInt(id);
-
+    public void UpdateRestaurantAvailabilty(int id, boolean status) {
         for (Restaurant restaurant : allRestaurants) {
-            if (restaurant.getRestaurantID() == targetId) {
+            if (restaurant.getRestaurantID() == id) {
                 restaurant.setIsOpen(status);
                 System.out.println("Restaurant " + restaurant.getRestaurantName() + " status updated to " + status);
                 return;
@@ -258,33 +119,16 @@ public class Restaurant{
         System.out.println("No restaurant found with ID: " + id);
     }
     
-   public void RemoveRestaurant(String id) {
-    System.out.println("Removing restaurant with ID: " + id);
-    
-        int targetId = Integer.parseInt(id);
+    public void RemoveRestaurant(int id) {
 
-        for (int i = 0; i < allRestaurants.size(); i++) {
-            Restaurant restaurant = allRestaurants.get(i);
-            if (restaurant.getRestaurantID() == targetId) {
-                allRestaurants.remove(i);
+         for (Restaurant restaurant : allRestaurants) {
+            if (restaurant.getRestaurantID() == id) {
+                allRestaurants.remove(restaurant);
                 System.out.println("Restaurant " + restaurant.getRestaurantName() + " removed");
                 return;
             }
         }
         System.out.println("No restaurant found with ID: " + id);
-}
-    
-    public static Restaurant getRestaurantDetails(String id) {
-        System.out.println("Getting details for restaurant ID: " + id);
-                int targetId = Integer.parseInt(id);
-
-        for (Restaurant restaurant : allRestaurants) {
-            if (restaurant.getRestaurantID() == targetId) {
-                return restaurant;
-            }
-        }
-        System.out.println("No restaurant found with ID: " + id);
-        return null;
     }
     
     public void NotifyRestaurantAboutComplaint() {
@@ -294,16 +138,14 @@ public class Restaurant{
             System.out.println("Complaint handler not initialized");
         }
     }
-    
-    // toString method for debugging
+
     @Override
     public String toString() {
-        return "Restaurant{" +
-               "id='" + restaurantID + '\'' +
-               ", restaurantName='" + restaurantName + '\'' +
-               ", restaurantLocation='" + restaurantLocation + '\'' +
-               ", isActive=" + isOpen +
-               '}';
+        return "Restaurant{" + "restaurantID=" + restaurantID + ", restaurantName=" + restaurantName + ", restaurantAddress=" + restaurantAddress + ", restaurantPhoneNumber=" + restaurantPhoneNumber + ", isOpen=" + isOpen + ", menu=" + menu + ", restaurantAdmin=" + restaurantAdmin + '}';
+    }
+    
+    private int generateRandomId() {
+        return 10000 + (int)(Math.random() * 90000);
     }
 
 }

@@ -1,30 +1,34 @@
 package restoro.Entities;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public abstract class User {
-    public static List<User> users = new ArrayList<>();
+    public static ArrayList<User> users = new ArrayList<>();
+    protected int ID;
     protected String name;
     protected String email;
     protected String password;
     protected Restaurant restaurant;
     protected boolean isLoggedIn;
-
+    
     public User(String name, String email, String password) {
+        this.ID = generateRandomId();
         this.name = name;
         this.email = email;
         this.password = password;
         this.isLoggedIn = false;
+        users.add(this);
     }
     
     public User(String name, String email, String password, Restaurant restaurant) {
+        this.ID = generateRandomId();
         this.name = name;
         this.email = email;
         this.password = password;
         this.isLoggedIn = false;
         this.restaurant = restaurant;
+        users.add(this);
     }
     
     public void setName(String name) {
@@ -105,6 +109,10 @@ public abstract class User {
 
     public void logout() {
         this.isLoggedIn = false;
+    }
+    
+    private int generateRandomId() {
+        return 10000 + (int)(Math.random() * 90000);
     }
 
 

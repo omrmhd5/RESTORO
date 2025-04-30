@@ -2,15 +2,12 @@ package restoro.Entities;
 
 import restoro.Observer.Observer;
 import java.util.ArrayList;
-import java.util.List;
 import restoro.State.OrderPlacedState;
 import restoro.State.OrderState;
 
 
 
 public class Order {
-    
-    private static int orderCounter = 1;
     private int orderID;
     private Cart cart;
     private Customer customer;
@@ -18,13 +15,13 @@ public class Order {
     private Restaurant restaurant;
     private OrderState state;
     private int quantity=0;
-    private static List<Order> orders = new ArrayList<>();
+    private static ArrayList<Order> orders = new ArrayList<>();
     
     private String status;
-    private final List<Observer> observers = new ArrayList<>();
+    private final ArrayList<Observer> observers = new ArrayList<>();
 
-    public Order(int orderID, Cart cart, Customer customer, Delivery delivery, Restaurant restaurant, OrderState state, String status) {
-        this.orderID = orderID;
+    public Order(Cart cart, Customer customer, Delivery delivery, Restaurant restaurant, String status) {
+        this.orderID = generateRandomId();
         this.cart = cart;
         this.customer = customer;
         this.delivery = delivery;
@@ -49,6 +46,8 @@ public class Order {
         System.out.println("Reordered from Order ID: " + existingOrder.orderID + " -> New Order ID: " + this.orderID);
     }
 
+    public Order() {}
+
     public int getOrderID() {
         return orderID;
     }
@@ -60,7 +59,6 @@ public class Order {
     public int getQuantity() {
         return quantity;
     }
-    
     
     public void addToCart(MenuItem item){
         cart.addToCart(item);
@@ -101,8 +99,8 @@ public class Order {
         return state.getEstimatedTime();
     }
     
-    public static List<Order> getIncomingOrders(Restaurant restaurant) {
-        List<Order> incomingOrders = new ArrayList<>();
+    public ArrayList<Order> getIncomingOrders(Restaurant restaurant) {
+        ArrayList<Order> incomingOrders = new ArrayList<>();
         for (Order order : orders) {
             if (order.restaurant.equals(restaurant)) {
                 incomingOrders.add(order);
@@ -139,8 +137,8 @@ public class Order {
         }
     }
 
-    public static List<Order> getAssignedOrders(Delivery delivery) {
-    List<Order> assignedOrders = new ArrayList<>();
+    public ArrayList<Order> getAssignedOrders(Delivery delivery) {
+    ArrayList<Order> assignedOrders = new ArrayList<>();
     for (Order order : orders) {
         if (order.delivery != null && order.delivery.equals(delivery)) {
             assignedOrders.add(order);
@@ -148,9 +146,18 @@ public class Order {
     }
         return assignedOrders;
     }
-
     
-     public void reorderOrder(int orderID) {
+    public ArrayList<Order> getPastOrders(Customer customer) {
+    ArrayList<Order> pastOrders = new ArrayList<>();
+        for (Order order : orders) {
+            if (order.customer != null && order.customer.equals(customer)) {
+                pastOrders.add(order);
+            }
+        }
+        return pastOrders;
+    }
+
+     public void reOrderOrder(int orderID) {
         Order o = getOrder(orderID);
         if (o != null) {
             Order newOrder = new Order(o);
@@ -158,7 +165,6 @@ public class Order {
             System.out.println("Order with ID " + orderID + " not found.");
         }
     }  
-
      
      public void attach(Observer observer) {
         observers.add(observer);
@@ -179,4 +185,9 @@ public class Order {
             observer.update(status);
         }
     }
+    
+    private int generateRandomId() {
+        return 10000 + (int)(Math.random() * 90000);
+    }
+    
 }

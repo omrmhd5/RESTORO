@@ -61,6 +61,14 @@ public class RestaurantAdmin extends User implements ComplaintHandler {
     }
     
     
+     public void UpdateRestaurantAvailabilty(int id, boolean status) {
+         restaurant.UpdateRestaurantAvailabilty(id, status);
+    }
+     
+    public void RemoveRestaurant(int id) {
+        restaurant.RemoveRestaurant(id);
+    } 
+    
     public RestaurantAdmin GetRestaurantAdminContactInfo(int ID) {
         System.out.println("Returning Restaurant RestaurantAdmin Contact Info for ID: " + ID);
         return this;

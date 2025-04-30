@@ -5,16 +5,15 @@
 package restoro.Controllers;
 
 import restoro.Entities.PromotionsDiscounts;
-import restoro.Entities.PromotionDiscounts;
 
 /**
  *
  * @author HP
  */
-public class PromoCtrl {
+public class PromotionController {
     private PromotionsDiscounts model;
 
-    public PromoCtrl(PromotionsDiscounts model) {
+    public PromotionController(PromotionsDiscounts model) {
         this.model = model;
     }
 
@@ -26,11 +25,11 @@ public class PromoCtrl {
         return model.fetchPromotionId();
     }
 
-    public PromotionDiscounts getPromotionDetails(String id) {
+    public PromotionsDiscounts getPromotionDetails(String id) {
         return model.getPromotion(id);
     }
 
-    public boolean updatePromotion(PromotionDiscounts promo) {
+    public boolean updatePromotion(PromotionsDiscounts promo) {
         return model.updatePromotion(promo);
     }
 }
