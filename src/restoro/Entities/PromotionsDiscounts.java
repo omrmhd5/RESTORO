@@ -10,8 +10,8 @@ package restoro.Entities;
 import java.util.ArrayList;
 
 public class PromotionsDiscounts {
-    private static final ArrayList<PromotionsDiscounts> allPromotions = new ArrayList<>();
-     
+   private static final ArrayList<PromotionsDiscounts> allPromotions = new ArrayList<>();
+
     private int code;
     private String description;
     private boolean active;
@@ -22,8 +22,8 @@ public class PromotionsDiscounts {
         this.active = active;
         allPromotions.add(this);
     }
-    
-     public static boolean isPromoCodeValid(int enteredCode) {
+
+    public static boolean isPromoCodeValid(int enteredCode) {
         for (PromotionsDiscounts promo : allPromotions) {
             if (promo.code == enteredCode && promo.active) {
                 return true;
@@ -32,16 +32,29 @@ public class PromotionsDiscounts {
         return false;
     }
 
-    public String getDescription() {
-        return description;
+    public static boolean deletePromo(int code) {
+        for (PromotionsDiscounts promo : allPromotions) {
+            if (promo.code == code) {
+                allPromotions.remove(promo);
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public static boolean addPromo(int code) {
+        for (PromotionsDiscounts promo : allPromotions) {
+            if (promo.code == code) return false; // Already exists
+        }
+        allPromotions.add(new PromotionsDiscounts(code, "New Promo", true));
+        return true;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public boolean isActive() {
         return active;
     }
-
 }

@@ -185,10 +185,17 @@ public class LoginRegisterUI extends javax.swing.JFrame {
                 CO.setVisible(true);
                 break;
             case "admin":
-                //new AdminUI().setVisible(true);     // Replace with your actual Admin UI class
+                this.dispose();
+                AdminOptionsUI AO = new AdminOptionsUI();
+                AO.setVisible(true);
                 break;
             case "delivery":
                 //new DeliveryUI().setVisible(true);  // Replace with your actual Delivery UI class
+                break;
+            case "restaurant admin":
+                this.dispose();
+                RestaurantAdminOptionsUI RAO = new RestaurantAdminOptionsUI();
+                RAO.setVisible(true);
                 break;
             default:
                 JOptionPane.showMessageDialog(this, "Unknown user type.");
