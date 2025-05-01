@@ -22,14 +22,15 @@ public class ViewMenuUI extends javax.swing.JFrame {
     Restaurant restaurant;
     ArrayList<MenuItem> menuItems;
     MenuItem item;
+    boolean found = false;
     public ViewMenuUI(Customer customer,Restaurant restaurant) {
         initComponents();
         this.customer = customer;
         this.restaurant = restaurant;
         menuItems = restaurant.getMenu().viewAllItems();
         Order1.setText(menuItems.get(0).toString());
-        Order1.setText(menuItems.get(1).toString());
-        Order1.setText(menuItems.get(2).toString());
+        Order2.setText(menuItems.get(1).toString());
+        Order3.setText(menuItems.get(2).toString());
     }
 
     private ViewMenuUI() {
@@ -56,6 +57,7 @@ public class ViewMenuUI extends javax.swing.JFrame {
         ChooseOrder3 = new javax.swing.JButton();
         SearchInput = new javax.swing.JTextField();
         Search = new javax.swing.JButton();
+        Procced = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,22 +103,32 @@ public class ViewMenuUI extends javax.swing.JFrame {
             }
         });
 
+        Procced.setText("jButton1");
+        Procced.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ProccedActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ChooseOrder3))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(38, 38, 38)
-                            .addComponent(ChooseOrder2)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ChooseOrder3))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(ChooseOrder2)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Procced))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(SearchInput, javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,7 +137,7 @@ public class ViewMenuUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ChooseOrder1)
                             .addComponent(Search))))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,11 +164,16 @@ public class ViewMenuUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                        .addComponent(ChooseOrder3)
-                        .addGap(50, 50, 50))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(ChooseOrder3)
+                                .addGap(50, 50, 50))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(Procced)
+                                .addContainerGap())))))
         );
 
         pack();
@@ -164,7 +181,7 @@ public class ViewMenuUI extends javax.swing.JFrame {
 
     private void ChooseOrder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseOrder1ActionPerformed
         // TODO add your handling code here:
-        if (item != null){
+        if (found){
             customer.addToCart(item);            
         }
         else{
@@ -186,13 +203,21 @@ public class ViewMenuUI extends javax.swing.JFrame {
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         // TODO add your handling code here:
         String query = SearchInput.getText();
-        MenuItem item = restaurant.getMenu().searchItem(query);
+        item = restaurant.getMenu().searchItem(query);
         if (item != null){
             Order1.setText(item.toString());
+            found =true;
         }
         
         
     }//GEN-LAST:event_SearchActionPerformed
+
+    private void ProccedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProccedActionPerformed
+        // TODO add your handling code here:
+              ViewCartUI vc = new ViewCartUI(customer);
+        vc.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ProccedActionPerformed
 
     /**
      * @param args the command line arguments
@@ -236,6 +261,7 @@ public class ViewMenuUI extends javax.swing.JFrame {
     private javax.swing.JTextArea Order1;
     private javax.swing.JTextArea Order2;
     private javax.swing.JTextArea Order3;
+    private javax.swing.JButton Procced;
     private javax.swing.JButton Search;
     private javax.swing.JTextField SearchInput;
     private javax.swing.JScrollPane jScrollPane2;

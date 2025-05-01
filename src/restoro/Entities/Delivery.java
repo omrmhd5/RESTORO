@@ -6,7 +6,6 @@ package restoro.Entities;
 
 import java.util.ArrayList;
 import restoro.ChainOfResponsibilty.ComplaintHandler;
-import restoro.Controllers.DeliveryController;
 
 /**
  *
@@ -14,7 +13,6 @@ import restoro.Controllers.DeliveryController;
  */
 public class Delivery extends User implements ComplaintHandler {
     private ComplaintHandler next;
-    private DeliveryController delivery;
     
     
     public Delivery(String name, String email, String password) {

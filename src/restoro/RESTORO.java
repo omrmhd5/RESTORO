@@ -7,8 +7,11 @@ package restoro;
 import restoro.Entities.Admin;
 import restoro.Entities.Complaint;
 import restoro.Entities.Delivery;
+import restoro.Entities.Menu;
+import restoro.Entities.MenuItem;
 import restoro.Entities.Restaurant;
 import restoro.Entities.RestaurantAdmin;
+import restoro.Interfaces.LoginRegisterUI;
 
 /**
  *
@@ -17,16 +20,72 @@ import restoro.Entities.RestaurantAdmin;
 public class RESTORO {
 
     public static void main(String[] args) {
-        Delivery delivery = new Delivery("DeliveryGuy", "delivery@example.com", "pass123");
-Admin admin = new Admin("AdminGuy", "admin@example.com", "admin123");
-Restaurant restaurant = new Restaurant(); // assuming it has a default constructor
-RestaurantAdmin restaurantAdmin = new RestaurantAdmin("RestAdmin", "restadmin@example.com", "pass456", restaurant);
+MenuItem item1 = new MenuItem(1, "Burger", "Juicy grilled beef burger", 5.99, "Main Course");
+MenuItem item2 = new MenuItem(2, "Fries", "Crispy golden fries", 2.99, "Sides");
+MenuItem item3 = new MenuItem(3, "Cola", "Chilled soft drink", 1.49, "Drinks");
 
-Complaint complaintSystem = new Complaint(delivery, admin, restaurantAdmin);
+    Menu dummyMenu = new Menu("Dummy Menu");
+    dummyMenu.addItem(item1);
+    dummyMenu.addItem(item2);
+    dummyMenu.addItem(item3);
 
-complaintSystem.fileComplaint("delivery was late and package was damaged.");
-complaintSystem.fileComplaint("admin did not approve refund.");
-complaintSystem.fileComplaint("Restaurant RestaurantAdmin food quality is bad.");
+        Restaurant dummyRestaurant = new Restaurant();
+
+RestaurantAdmin dummyAdmin = new RestaurantAdmin(
+    "DummyAdmin",
+    "admin@example.com",
+    "admin123",
+    dummyRestaurant
+);
+
+dummyRestaurant = new Restaurant(
+    "Ahmed",
+    "123 Dummy Street",
+    "123-456-7890",
+    true,
+    dummyMenu,
+    dummyAdmin
+);
+
+        new LoginRegisterUI().setVisible(true);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        Delivery delivery = new Delivery("DeliveryGuy", "delivery@example.com", "pass123");
+//Admin admin = new Admin("AdminGuy", "admin@example.com", "admin123");
+//Restaurant restaurant = new Restaurant(); // assuming it has a default constructor
+//RestaurantAdmin restaurantAdmin = new RestaurantAdmin("RestAdmin", "restadmin@example.com", "pass456", restaurant);
+//
+//Complaint complaintSystem = new Complaint(delivery, admin, restaurantAdmin);
+//
+//complaintSystem.fileComplaint("delivery was late and package was damaged.");
+//complaintSystem.fileComplaint("admin did not approve refund.");
+//complaintSystem.fileComplaint("Restaurant RestaurantAdmin food quality is bad.");
 
     }
 }

@@ -10,11 +10,9 @@ package restoro.Entities;
 
 import java.util.ArrayList;
 import restoro.ChainOfResponsibilty.ComplaintHandler;
-import restoro.Controllers.CheckRestaurantController;
 
 public class RestaurantAdmin extends User implements ComplaintHandler {
     private ComplaintHandler next;
-    private CheckRestaurantController checkRestaurant;
     private Restaurant restaurant;
     
     public RestaurantAdmin(String name, String email, String password, Restaurant restaurant) {

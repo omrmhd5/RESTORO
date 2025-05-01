@@ -2,23 +2,7 @@ package restoro.Entities;
 
 import java.util.ArrayList;
 
-import restoro.Controllers.ContactRestaurant;
-import restoro.Controllers.DeliveryController;
-//import restoro.Controllers.MenuController;
-//import restoro.Controllers.OrderController;
-import restoro.Controllers.SearchRestaurantController;
-import restoro.Controllers.CheckRestaurantController;
-import restoro.Controllers.HandleComplaint;
-
 public class Restaurant{
-    private ContactRestaurant contactRestaurant;
-    private SearchRestaurantController searchRestaurantController;
-    private HandleComplaint handleComplaint;
-//    private MenuController menuController;
-//    private OrderController orderController;
-    private DeliveryController deliveryController;
-    private CheckRestaurantController checkRestaurant;
-    
     private int restaurantID;
     private String restaurantName;
     private String restaurantAddress;
@@ -62,14 +46,6 @@ public class Restaurant{
         }
         return null;
     }
-    
-    public HandleComplaint getHandleComplaint() {
-        return handleComplaint;
-    }
-
-    public void setHandleComplaint(HandleComplaint handleComplaint) {
-        this.handleComplaint = handleComplaint;
-    }
 
     public int getRestaurantID() {
         return restaurantID;
@@ -96,11 +72,11 @@ public class Restaurant{
     }
 
     public void ContactRestaurant() {
-        if (contactRestaurant != null) {
+//        if (contactRestaurant != null) {
             System.out.println("Contacting restaurant: " + restaurantName);
-        } else {
+//        } else {
             System.out.println("Contact controller not initialized");
-        }
+//        }
     }
     
 //    public void ReCallRestaurant() {
@@ -141,14 +117,6 @@ public class Restaurant{
     }
     System.out.println("No restaurant found with name: " + restaurantName);
     return false;
-    }
-             
-    public void NotifyRestaurantAboutComplaint() {
-        if (handleComplaint != null) {
-            System.out.println("Notifying restaurant " + restaurantName + " about complaint");
-        } else {
-            System.out.println("Complaint handler not initialized");
-        }
     }
 
     @Override

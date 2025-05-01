@@ -49,7 +49,7 @@ public class Cart {
         }
     }
 
-    public ArrayList<MenuItem> getCartitems() {
+    public ArrayList<MenuItem> getCartItems() {
         return CartItems;
     }    
 }

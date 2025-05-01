@@ -2,43 +2,46 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package RESTOROInterfaces;
+package restoro.Interfaces;
 
 /**
  *
  * @author HP
  */
 import javax.swing.table.DefaultTableModel;
+import restoro.Entities.Customer;
+import restoro.Entities.MenuItem;
 public class ViewCartUI extends javax.swing.JFrame {
 
     /**
      * Creates new form ViewCartUI
      */
-    public ViewCartUI() {
+    Customer customer;
+    public ViewCartUI(Customer customer) {
         initComponents();
+        this.customer = customer;
          populateCart(); 
     }
  private void populateCart() {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0); // Clear any default rows
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    model.setRowCount(0); // Clear table
 
-       
-        Object[] row1 = {"Burger", 2, 5.00, 2 * 5.00};
-        Object[] row2 = {"Fries", 1, 3.00, 1 * 3.00};
-        Object[] row3 = {"Drink", 1, 2.50, 1 * 2.50};
+    double total = 0.0;
 
-        model.addRow(row1);
-        model.addRow(row2);
-        model.addRow(row3);
+    for (MenuItem item : customer.getCartItems()) {
+        // You can assume quantity is 1 per item unless you track quantity elsewhere
+        int quantity = 1;
+        double unitPrice = item.getPrice();
+        double itemTotal = unitPrice * quantity;
 
-        // Calculate total
-        double total = 0;
-        for (int i = 0; i < model.getRowCount(); i++) {
-            total += (double) model.getValueAt(i, 3); // 4th column = Total
-        }
-
-        jLabel2.setText("Total: $" + String.format("%.2f", total));
+        Object[] row = {item.getName(), quantity, unitPrice, itemTotal};
+        model.addRow(row);
+        total += itemTotal;
     }
+
+    jLabel2.setText("Total: $" + String.format("%.2f", total));
+}
+
 
 
 
@@ -138,7 +141,6 @@ public class ViewCartUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewCartUI().setVisible(true);
             }
         });
     }

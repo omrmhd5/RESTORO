@@ -11,7 +11,6 @@
 import java.util.ArrayList;
 
 public class ComplaintService {
-    private HandleComplaint controller;
     private ComplaintService complaintService;
     private String loggedInUser;
     private ArrayList<Complaint> complaints;

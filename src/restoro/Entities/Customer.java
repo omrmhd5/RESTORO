@@ -5,7 +5,6 @@
 package restoro.Entities;
 
 import java.util.ArrayList;
-import restoro.Controllers.CustomerOrderController;
 import static restoro.Entities.User.users;
 import restoro.ReadOnly.MenuViewer;
 import restoro.Strategy.PaymentMethod;
@@ -22,7 +21,6 @@ public class Customer extends User {
     private Restaurant restaurant = new Restaurant();
     private Menu menu = new Menu();
     private Cart cart = new Cart();
-    private CustomerOrderController customerOrderController;
     
     public Customer(String name, String email, String password) {
         super(name, email, password);
@@ -110,7 +108,7 @@ public class Customer extends User {
     }
 
     public ArrayList<MenuItem> getCartItems() {
-        return cart.getCartitems();
+        return cart.getCartItems();
     }
 
     public Order placeOrder() {

@@ -5,13 +5,11 @@
 package restoro.Entities;
 
 import restoro.ChainOfResponsibilty.ComplaintHandler;
-import restoro.Controllers.CheckAdminController;
 // * @author salma
 // *
 public class Admin extends User implements ComplaintHandler {
 
     private ComplaintHandler next;
-    private CheckAdminController checkAdmin;
 
     public Admin(String name, String email, String password) {
         super(name, email, password);
@@ -59,8 +57,8 @@ public class Admin extends User implements ComplaintHandler {
 //        restaurant.RemoveRestaurant(id);
     } 
     
-    public void removeRestaurant(int id) {
-        restaurant.removeRestaurant(id);
+    public void removeRestaurant(String name) {
+        restaurant.RemoveRestaurant(name);
     } 
     
 //    
