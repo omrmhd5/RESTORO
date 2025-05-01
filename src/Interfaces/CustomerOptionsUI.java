@@ -15,6 +15,10 @@ public class CustomerOptionsUI extends javax.swing.JFrame {
      */
     public CustomerOptionsUI() {
         initComponents();
+        setTitle("Restoro");
+        setDefaultCloseOperation(CustomerOptionsUI.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+       //setSize(500, 500);
     }
 
     /**
@@ -62,6 +66,8 @@ public class CustomerOptionsUI extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
+        MakeOrder.setBackground(new java.awt.Color(232, 170, 255));
+        MakeOrder.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         MakeOrder.setForeground(new java.awt.Color(102, 0, 153));
         MakeOrder.setText("Make An Order");
         MakeOrder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 153), 2));
@@ -71,10 +77,14 @@ public class CustomerOptionsUI extends javax.swing.JFrame {
             }
         });
 
+        TrackOrder.setBackground(new java.awt.Color(232, 170, 255));
+        TrackOrder.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TrackOrder.setForeground(new java.awt.Color(102, 0, 153));
         TrackOrder.setText("Track Orders");
         TrackOrder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 153), 2));
 
+        ViewPastOrders.setBackground(new java.awt.Color(232, 170, 255));
+        ViewPastOrders.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         ViewPastOrders.setForeground(new java.awt.Color(102, 0, 153));
         ViewPastOrders.setText("View Past Orders");
         ViewPastOrders.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 153), 2));
@@ -84,6 +94,8 @@ public class CustomerOptionsUI extends javax.swing.JFrame {
             }
         });
 
+        FileComplaint.setBackground(new java.awt.Color(232, 170, 255));
+        FileComplaint.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         FileComplaint.setForeground(new java.awt.Color(102, 0, 153));
         FileComplaint.setText("File Complaint");
         FileComplaint.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 153), 2));
@@ -112,7 +124,7 @@ public class CustomerOptionsUI extends javax.swing.JFrame {
                 .addComponent(ViewPastOrders)
                 .addGap(18, 18, 18)
                 .addComponent(FileComplaint)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

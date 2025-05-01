@@ -167,7 +167,7 @@ public class LoginRegisterUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-        String email = emailField.getText();
+    String email = emailField.getText();
     String password = new String(passwordField.getText());
     String selectedRole = userTypeComboBox.getSelectedItem().toString();
 
@@ -177,7 +177,22 @@ public class LoginRegisterUI extends javax.swing.JFrame {
         if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
             System.out.println("Login successful for: " + email + " as " + selectedRole);
             found = true;
-            break;
+            
+            switch (selectedRole.toLowerCase()) {
+            case "customer":
+                this.dispose();
+                CustomerOptionsUI CO= new CustomerOptionsUI();
+                CO.setVisible(true);
+                break;
+            case "admin":
+                //new AdminUI().setVisible(true);     // Replace with your actual Admin UI class
+                break;
+            case "delivery":
+                //new DeliveryUI().setVisible(true);  // Replace with your actual Delivery UI class
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Unknown user type.");
+        }
         }
     }
 
@@ -209,6 +224,8 @@ public class LoginRegisterUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "User registered successfully. You can now log in.");
         }
     }
+   
+    
     }//GEN-LAST:event_LoginButtonActionPerformed
 
     /**
