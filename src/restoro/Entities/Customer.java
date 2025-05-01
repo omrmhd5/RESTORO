@@ -103,6 +103,10 @@ public class Customer extends User {
         cart.viewCart();
     }
 
+    public Cart getCart() {
+        return cart;
+    }
+
     public int calculateCartTotal() {
         return cart.calculateTotal();
     }

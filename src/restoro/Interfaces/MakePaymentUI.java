@@ -6,6 +6,7 @@ package restoro.Interfaces;
 
 import javax.swing.JOptionPane;
 import restoro.Entities.Cart;
+import restoro.Entities.Customer;
 import restoro.Entities.PromotionsDiscounts;
 
 /**
@@ -17,9 +18,10 @@ public class MakePaymentUI extends javax.swing.JFrame {
     /**
      * Creates new form MakePaymentUI
      */
-    private Cart cart = new Cart();
-    public MakePaymentUI() {
+    private Cart cart;
+    public MakePaymentUI(Customer customer) {
         initComponents();
+        cart = customer.getCart();
         setTitle("Restoro");
         setDefaultCloseOperation(MakePaymentUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -331,7 +333,6 @@ private void applyPromoCode() {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MakePaymentUI().setVisible(true);
             }
         });
     }

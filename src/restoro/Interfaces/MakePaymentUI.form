@@ -103,7 +103,7 @@
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="CVVLabel" max="32767" attributes="0"/>
-                                  <Component id="CardNumberLabel" pref="90" max="32767" attributes="0"/>
+                                  <Component id="CardNumberLabel" max="32767" attributes="0"/>
                               </Group>
                               <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
