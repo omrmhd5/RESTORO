@@ -119,7 +119,7 @@ public class Restaurant{
         System.out.println("No restaurant found with ID: " + id);
     }
     
-    public void RemoveRestaurant(int id) {
+    public void removeRestaurant(int id) {
 
          for (Restaurant restaurant : allRestaurants) {
             if (restaurant.getRestaurantID() == id) {
@@ -141,7 +141,7 @@ public class Restaurant{
 
     @Override
     public String toString() {
-        return "Restaurant{" + "restaurantID=" + restaurantID + ", restaurantName=" + restaurantName + ", restaurantAddress=" + restaurantAddress + ", restaurantPhoneNumber=" + restaurantPhoneNumber + ", isOpen=" + isOpen + ", menu=" + menu + ", restaurantAdmin=" + restaurantAdmin + '}';
+        return "Restaurant{" + "restaurantName=" + restaurantName + ", restaurantAddress=" + restaurantAddress + ", restaurantPhoneNumber=" + restaurantPhoneNumber + ", isOpen=" + isOpen + '}';
     }
     
     private int generateRandomId() {

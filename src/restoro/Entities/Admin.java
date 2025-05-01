@@ -55,6 +55,14 @@ public class Admin extends User implements ComplaintHandler {
         }
     }
     
+    public void addRestaurant(int id) {
+//        restaurant.RemoveRestaurant(id);
+    } 
+    
+    public void removeRestaurant(int id) {
+        restaurant.removeRestaurant(id);
+    } 
+    
 //    
 //    public void AccessAdminPanel(int ID) {
 //        System.out.println("Accessing Admin Panel with ID: " + ID);

@@ -11,6 +11,9 @@ public abstract class User {
     protected String password;
     protected Restaurant restaurant;
     protected boolean isLoggedIn;
+
+    public User() {
+    }
     
     public User(String name, String email, String password) {
         this.ID = generateRandomId();
