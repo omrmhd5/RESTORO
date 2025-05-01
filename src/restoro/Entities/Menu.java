@@ -20,12 +20,13 @@ public class Menu implements MenuViewer {
         this.MenuTitle = MenuTitle;
     }
 
-    Menu() {
+    public Menu() {
     }
 //
 //    public ArrayList<MenuItem> getItems() {
 //        return items;
 //    }
+
 
     public String getMenuTitle() {
         return MenuTitle;
@@ -65,9 +66,16 @@ public class Menu implements MenuViewer {
         items.add(item);
     }
 
-    public void removeItem(MenuItem item) {
-        items.remove(item);
+    public boolean removeItem(String name) {
+        for (MenuItem item : items) {
+        if (item.getName().equalsIgnoreCase(name.trim())) {
+                items.remove(item);
+                return true;
+            }
+        }
+        return false;
     }
+
 
     public void updateItem(int index, MenuItem newItem) {
         if (index >= 0 && index < items.size()) {
@@ -103,14 +111,14 @@ public class Menu implements MenuViewer {
             String nameToRemove = scanner.nextLine();
             boolean removed = false;
 
-            for (MenuItem item : items) {
-                if (item.getName().equalsIgnoreCase(nameToRemove)) {
-                    removeItem(item);
-                    System.out.println("Item removed: " + item);
-                    removed = true;
-                    break;
-                }
-            }
+//            for (MenuItem item : items) {
+//                if (item.getName().equalsIgnoreCase(nameToRemove)) {
+//                    removeItem(id);
+//                    System.out.println("Item removed: " + item);
+//                    removed = true;
+//                    break;
+//                }
+//            }
 
             if (!removed) {
                 System.out.println("Item not found.");
