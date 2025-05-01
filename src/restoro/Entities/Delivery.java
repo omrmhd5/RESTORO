@@ -4,6 +4,7 @@
  */
 package restoro.Entities;
 
+import java.util.ArrayList;
 import restoro.ChainOfResponsibilty.ComplaintHandler;
 import restoro.Controllers.DeliveryController;
 
@@ -57,6 +58,11 @@ public class Delivery extends User implements ComplaintHandler {
             System.out.println("Complaint not handled: " + complaint);
         }
     }
+    
+    public ArrayList<Order> getAssignedOrders(Delivery delivery){
+        Order order = new Order();
+        return order.getAssignedOrders(delivery);
+    } 
 
     @Override
     public boolean register(String name, String email, String password, Restaurant restaurant) {

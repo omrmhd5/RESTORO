@@ -3,13 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package restoro.ReadOnly;
+
+import java.util.ArrayList;
+import restoro.Entities.MenuItem;
+
 /**
  *
  * @author HP
  */
 public interface MenuViewer {
-    void viewAllItems();
+    ArrayList<MenuItem> viewAllItems();
     void viewByCategory(String category);
-    void searchItems(String keyword);
+    MenuItem searchItem(String keyword);
 }
 

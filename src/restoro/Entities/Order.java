@@ -31,7 +31,6 @@ public class Order {
         orders.add(this);
         System.out.println("Order placed with ID: " + orderID);
     }
-    
     public Order(Order existingOrder) {
         this.cart = new Cart();
         for (MenuItem item : existingOrder.cart.getCartitems()) {
@@ -55,6 +54,15 @@ public class Order {
     public Cart getCart() {
         return cart;
     }
+    
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+    
 
     public int getQuantity() {
         return quantity;
@@ -188,6 +196,11 @@ public class Order {
     
     private int generateRandomId() {
         return 10000 + (int)(Math.random() * 90000);
+    }
+
+    @Override
+    public String toString() {
+        return "\nOrder{" + "orderID=" + orderID + ", cart=" + cart + ", customer=" + customer + ", delivery=" + delivery + ", restaurant=" + restaurant + ", state=" + state + ", quantity=" + quantity + ", status=" + status + '}';
     }
     
 }

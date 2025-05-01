@@ -34,7 +34,7 @@ public class SearchRestaurantUI extends javax.swing.JFrame {
 
         searchQuery = new javax.swing.JTextField();
         Search = new javax.swing.JButton();
-        Proceed = new javax.swing.JButton();
+        ViewMenu = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         RestaurantResult = new javax.swing.JTextArea();
@@ -55,10 +55,10 @@ public class SearchRestaurantUI extends javax.swing.JFrame {
             }
         });
 
-        Proceed.setText("Proceed");
-        Proceed.addActionListener(new java.awt.event.ActionListener() {
+        ViewMenu.setText("View Menu");
+        ViewMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ProceedActionPerformed(evt);
+                ViewMenuActionPerformed(evt);
             }
         });
 
@@ -82,7 +82,7 @@ public class SearchRestaurantUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(141, 141, 141)
-                        .addComponent(Proceed))
+                        .addComponent(ViewMenu))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(148, 148, 148)
                         .addComponent(jLabel1))
@@ -103,7 +103,7 @@ public class SearchRestaurantUI extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(74, 74, 74)
-                .addComponent(Proceed)
+                .addComponent(ViewMenu)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -128,16 +128,15 @@ public class SearchRestaurantUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchQueryActionPerformed
 
-    private void ProceedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProceedActionPerformed
+    private void ViewMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewMenuActionPerformed
         // TODO add your handling code here:
          if (restaurant != null) {
-        // Open next window and pass selectedRestaurant
-//        new RestaurantDetailsUI(restaurant).setVisible(true);
-        this.dispose(); // Optional: close the current window
+        new ViewMenuUI(customer,restaurant).setVisible(true);
+        this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Please select a restaurant first.");
         }
-    }//GEN-LAST:event_ProceedActionPerformed
+    }//GEN-LAST:event_ViewMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,9 +174,9 @@ public class SearchRestaurantUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Proceed;
     private javax.swing.JTextArea RestaurantResult;
     private javax.swing.JButton Search;
+    private javax.swing.JButton ViewMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField searchQuery;

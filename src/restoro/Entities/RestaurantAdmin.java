@@ -8,6 +8,7 @@ package restoro.Entities;
  * @author omrmh
  */
 
+import java.util.ArrayList;
 import restoro.ChainOfResponsibilty.ComplaintHandler;
 import restoro.Controllers.CheckRestaurantController;
 
@@ -60,6 +61,16 @@ public class RestaurantAdmin extends User implements ComplaintHandler {
         }
     }
     
+    public ArrayList<Order> getIncomingOrders(Restaurant restaurant) {
+        Order order = new Order();
+        ArrayList<Order> incomingOrders = order.getIncomingOrders(restaurant);
+        return incomingOrders;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+    
     
      public void UpdateRestaurantAvailabilty(int id, boolean status) {
          restaurant.UpdateRestaurantAvailabilty(id, status);
@@ -79,4 +90,9 @@ public class RestaurantAdmin extends User implements ComplaintHandler {
         throw new UnsupportedOperationException("Not supported yet.");
     } 
 
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    
 }

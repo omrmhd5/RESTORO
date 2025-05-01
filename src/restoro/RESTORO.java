@@ -3,11 +3,12 @@
  */
 
 package restoro;
-import java.util.Scanner;
-import restoro.Interfaces.CustomerUI;
-import restoro.Entities.Order;
-import javax.swing.SwingUtilities;
-import restoro.Entities.Menu;
+
+import restoro.Entities.Admin;
+import restoro.Entities.Complaint;
+import restoro.Entities.Delivery;
+import restoro.Entities.Restaurant;
+import restoro.Entities.RestaurantAdmin;
 
 /**
  *
@@ -16,16 +17,16 @@ import restoro.Entities.Menu;
 public class RESTORO {
 
     public static void main(String[] args) {
-        Menu menu = new Menu();
-    Scanner scanner = new Scanner(System.in);
+        Delivery delivery = new Delivery("DeliveryGuy", "delivery@example.com", "pass123");
+Admin admin = new Admin("AdminGuy", "admin@example.com", "admin123");
+Restaurant restaurant = new Restaurant(); // assuming it has a default constructor
+RestaurantAdmin restaurantAdmin = new RestaurantAdmin("RestAdmin", "restadmin@example.com", "pass456", restaurant);
 
-    while (true) {
-        System.out.print("Choose action (add/remove/update/exit): ");
-        String action = scanner.nextLine();
+Complaint complaintSystem = new Complaint(delivery, admin, restaurantAdmin);
 
-        if (action.equalsIgnoreCase("exit")) break;
+complaintSystem.fileComplaint("delivery was late and package was damaged.");
+complaintSystem.fileComplaint("admin did not approve refund.");
+complaintSystem.fileComplaint("Restaurant RestaurantAdmin food quality is bad.");
 
-        menu.OpenMenuSettings(action);
-    }
     }
 }

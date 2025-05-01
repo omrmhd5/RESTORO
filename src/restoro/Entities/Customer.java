@@ -53,8 +53,12 @@ public class Customer extends User {
         return true;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public ArrayList<Order> getCustomerOrders(Customer customer) {
-        return order.getPastOrders(this);
+        return order.getPastOrders(customer);
     }
     
     public Restaurant searchForRestaurant(String restaurantName){
@@ -86,7 +90,7 @@ public class Customer extends User {
     }
     
     public void searchInMenu(String keyword){
-        menu.searchItems(keyword);
+        menu.searchItem(keyword);
     }
     
     public void addToCart(MenuItem item) {
