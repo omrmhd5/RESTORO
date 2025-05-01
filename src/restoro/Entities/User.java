@@ -11,18 +11,27 @@ public abstract class User {
     protected String password;
     protected Restaurant restaurant;
     protected boolean isLoggedIn;
+    protected String role;
 
     public User() {
     }
+
     
-    public User(String name, String email, String password) {
+    public User(String role ,String email, String password) {
         this.ID = generateRandomId();
-        this.name = name;
         this.email = email;
         this.password = password;
-        this.isLoggedIn = false;
         users.add(this);
     }
+    
+//    public User(String email, String password, String name) {
+//        this.ID = generateRandomId();
+//        this.name = name;
+//        this.email = email;
+//        this.password = password;
+//        this.isLoggedIn = false;
+//        users.add(this);
+//    }
     
     public User(String name, String email, String password, Restaurant restaurant) {
         this.ID = generateRandomId();

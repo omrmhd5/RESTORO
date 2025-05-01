@@ -39,6 +39,17 @@ public class Restaurant{
         this.restaurantAdmin = restaurantAdmin;
         allRestaurants.add(this);
     }
+    
+
+    
+        public Restaurant(int ID,String restaurantName, String restaurantAddress, String restaurantPhoneNumber,String restaurantAdmin) {
+        this.restaurantID = ID;
+        this.restaurantName = restaurantName;
+        this.restaurantAddress = restaurantAddress;
+        this.restaurantPhoneNumber = restaurantPhoneNumber;
+        allRestaurants.add(this);
+    }
+    
 
     public Restaurant() {
     }
@@ -118,19 +129,20 @@ public class Restaurant{
         }
         System.out.println("No restaurant found with ID: " + id);
     }
-    
-    public void removeRestaurant(int id) {
 
-         for (Restaurant restaurant : allRestaurants) {
-            if (restaurant.getRestaurantID() == id) {
-                allRestaurants.remove(restaurant);
-                System.out.println("Restaurant " + restaurant.getRestaurantName() + " removed");
-                return;
-            }
+    public static boolean RemoveRestaurant(String restaurantName) {
+        for (int i = 0; i < allRestaurants.size(); i++) {
+        Restaurant restaurant = allRestaurants.get(i);
+        if (restaurant.getRestaurantName().equalsIgnoreCase(restaurantName)) {
+            allRestaurants.remove(i);
+            System.out.println("Restaurant " + restaurant.getRestaurantName() + " removed");
+            return true;
         }
-        System.out.println("No restaurant found with ID: " + id);
     }
-    
+    System.out.println("No restaurant found with name: " + restaurantName);
+    return false;
+    }
+             
     public void NotifyRestaurantAboutComplaint() {
         if (handleComplaint != null) {
             System.out.println("Notifying restaurant " + restaurantName + " about complaint");
@@ -144,7 +156,7 @@ public class Restaurant{
         return "Restaurant{" + "restaurantName=" + restaurantName + ", restaurantAddress=" + restaurantAddress + ", restaurantPhoneNumber=" + restaurantPhoneNumber + ", isOpen=" + isOpen + '}';
     }
     
-    private int generateRandomId() {
+    public static int generateRandomId() {
         return 10000 + (int)(Math.random() * 90000);
     }
 
