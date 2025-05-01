@@ -129,7 +129,7 @@ public class Restaurant{
         }
         System.out.println("No restaurant found with ID: " + id);
     }
-    
+
     public static boolean RemoveRestaurant(String restaurantName) {
         for (int i = 0; i < allRestaurants.size(); i++) {
         Restaurant restaurant = allRestaurants.get(i);
@@ -153,7 +153,7 @@ public class Restaurant{
 
     @Override
     public String toString() {
-        return "Restaurant{" + "restaurantID=" + restaurantID + ", restaurantName=" + restaurantName + ", restaurantAddress=" + restaurantAddress + ", restaurantPhoneNumber=" + restaurantPhoneNumber + ", isOpen=" + isOpen + ", menu=" + menu + ", restaurantAdmin=" + restaurantAdmin + '}';
+        return "Restaurant{" + "restaurantName=" + restaurantName + ", restaurantAddress=" + restaurantAddress + ", restaurantPhoneNumber=" + restaurantPhoneNumber + ", isOpen=" + isOpen + '}';
     }
     
     public static int generateRandomId() {

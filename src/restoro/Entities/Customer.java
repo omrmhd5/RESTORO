@@ -28,6 +28,9 @@ public class Customer extends User {
         super(name, email, password);
     }
 
+    public Customer() {
+    }
+
     @Override
     public boolean register(String name, String email, String password) {
         System.out.println("Customer: Attempting registration for " + email);
@@ -50,12 +53,17 @@ public class Customer extends User {
         return true;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public ArrayList<Order> getCustomerOrders(Customer customer) {
-        return order.getPastOrders(this);
+        return order.getPastOrders(customer);
     }
     
-    public void searchForRestaurant(String restaurantName){
+    public Restaurant searchForRestaurant(String restaurantName){
         restaurant = restaurant.searchForRestaurant(restaurantName);
+        return restaurant;
     }
     
     public void getRestaurantMenu(String restaurantName){
@@ -82,7 +90,7 @@ public class Customer extends User {
     }
     
     public void searchInMenu(String keyword){
-        menu.searchItems(keyword);
+        menu.searchItem(keyword);
     }
     
     public void addToCart(MenuItem item) {

@@ -22,10 +22,13 @@ public class Menu implements MenuViewer {
 
     public Menu() {
     }
-//
-//    public ArrayList<MenuItem> getItems() {
-//        return items;
-//    }
+
+
+    @Override
+    public ArrayList<MenuItem> viewAllItems() {
+        return items;
+
+    }
 
 
     public String getMenuTitle() {
@@ -37,12 +40,11 @@ public class Menu implements MenuViewer {
     }
     
 
-    @Override
-    public void viewAllItems() {
-        for (MenuItem item : items) {
-            System.out.println(item.toString());
-        }
-    }
+//    @Override
+//    public ArrayList<MenuItem> viewAllItems() {
+//        return new ArrayList<MenuItem>(items);
+//    }
+
 
     @Override
     public void viewByCategory(String category) {
@@ -54,12 +56,13 @@ public class Menu implements MenuViewer {
     }
 
     @Override
-    public void searchItems(String keyword) {
+    public MenuItem searchItem(String keyword) {
         for (MenuItem item : items) {
             if (item.getName().equalsIgnoreCase(keyword)) {
-                System.out.println(item.toString());
+                return item;
             }
         }
+        return null;
     }
 
     public void addItem(MenuItem item) {
