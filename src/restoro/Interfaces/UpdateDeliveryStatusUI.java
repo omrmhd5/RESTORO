@@ -5,6 +5,7 @@
 package restoro.Interfaces;
 
 import javax.swing.JOptionPane;
+import restoro.Entities.Delivery;
 import restoro.Entities.Order;
 
 /**
@@ -14,6 +15,8 @@ import restoro.Entities.Order;
 public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
 
     Order order;
+    Delivery delivery;
+
     /**
      * Creates new form UpdateDeliveryStatusUI
      */
@@ -35,6 +38,7 @@ public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        BackButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         pickedUpRadio = new javax.swing.JRadioButton();
@@ -52,25 +56,43 @@ public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo.png"))); // NOI18N
 
+        BackButton1.setBackground(new java.awt.Color(232, 170, 255));
+        BackButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        BackButton1.setForeground(new java.awt.Color(255, 255, 255));
+        BackButton1.setText("<");
+        BackButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 153), 2));
+        BackButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(93, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(BackButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jLabel3)
                 .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(22, 22, 22)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addComponent(BackButton1)
+                        .addGap(16, 16, 16)
                         .addComponent(jLabel1)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
@@ -120,7 +142,7 @@ public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
                     .addComponent(deliveredRadio)
                     .addComponent(onTheWayRadio)
                     .addComponent(pickedUpRadio))
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -140,7 +162,7 @@ public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(17, 17, 17)
                 .addComponent(updateButton)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -154,8 +176,8 @@ public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -183,6 +205,12 @@ if (pickedUpRadio.isSelected()) {
 
 JOptionPane.showMessageDialog(this, "Order status updated to: " + order.getStatus());
     }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void BackButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButton1ActionPerformed
+        ViewAssignedOrderUI options= new ViewAssignedOrderUI(delivery);
+        options.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BackButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,6 +247,7 @@ JOptionPane.showMessageDialog(this, "Order status updated to: " + order.getStatu
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackButton1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JRadioButton deliveredRadio;
     private javax.swing.JLabel jLabel1;

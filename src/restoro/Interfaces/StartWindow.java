@@ -15,6 +15,9 @@ public class StartWindow extends javax.swing.JFrame {
      */
     public StartWindow() {
         initComponents();
+        setTitle("Restoro");
+        setDefaultCloseOperation(StartWindow.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
 
     /**
