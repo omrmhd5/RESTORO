@@ -158,7 +158,11 @@ public class CustomerOptionsUI extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+<<<<<<< Updated upstream
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, Short.MAX_VALUE)))
+=======
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, Short.MAX_VALUE)))
+>>>>>>> Stashed changes
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,6 +195,7 @@ public class CustomerOptionsUI extends javax.swing.JFrame {
         to.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_TrackOrderActionPerformed
+
 
     private void FileComplaintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FileComplaintActionPerformed
         // TODO add your handling code here:
