@@ -56,33 +56,13 @@ public class Admin extends User implements ComplaintHandler {
         }
     }
     
-    public void addRestaurant(int id) {
-//        restaurant.RemoveRestaurant(id);
+    public void addRestaurant(Restaurant restaurant) {
+        this.restaurant = new Restaurant();
     } 
     
     public void removeRestaurant(String name) {
         restaurant.RemoveRestaurant(name);
     } 
-    
-//    
-//    public void AccessAdminPanel(int ID) {
-//        System.out.println("Accessing Admin Panel with ID: " + ID);
-//    }
-    
-    
-//    private final Restaurant restaurant = new Restaurant();
-//
-//    public void handleRestaurantSelection(int restaurantId, JTextArea output) {
-//        restaurant.checkValidation(restaurantId, output);
-//    }
-//
-//    public void updateStatus(int restaurantId, String status, JTextArea output) {
-//        restaurant.updateStatus(restaurantId, status, output);
-//    }
-//
-//    public void removeRestaurant(int restaurantId, JTextArea output) {
-//        restaurant.remove(restaurantId, output);
-//    }
 
     @Override
     public boolean register(String name, String email, String password, Restaurant restaurant) {

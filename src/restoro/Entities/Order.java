@@ -1,7 +1,9 @@
 package restoro.Entities;
 
+import java.sql.SQLException;
 import restoro.Observer.Observer;
 import java.util.ArrayList;
+import restoro.DB;
 import restoro.State.OrderPlacedState;
 import restoro.State.OrderState;
 
@@ -20,7 +22,7 @@ public class Order {
     private String status;
     private final ArrayList<Observer> observers = new ArrayList<>();
 
-    public Order(Cart cart, Customer customer, Delivery delivery, Restaurant restaurant, String status) {
+    public Order(Cart cart, Customer customer, Delivery delivery, Restaurant restaurant, String status) throws SQLException {
         this.orderID = generateRandomId();
         this.cart = cart;
         this.customer = customer;
@@ -29,9 +31,10 @@ public class Order {
         this.state = new OrderPlacedState();
         this.status = status;
         orders.add(this);
+        DB.getInstance().addOrder(this);
         System.out.println("Order placed with ID: " + orderID);
     }
-    public Order(Order existingOrder) {
+    public Order(Order existingOrder) throws SQLException {
         this.cart = new Cart();
         for (MenuItem item : existingOrder.cart.getCartItems()) {
             this.cart.addToCart(item);
@@ -41,12 +44,17 @@ public class Order {
         this.restaurant = existingOrder.restaurant;
         this.state = new OrderPlacedState();
         this.status = this.state.getStatus();
+                DB.getInstance().addOrder(this);
         orders.add(this);
         System.out.println("Reordered from Order ID: " + existingOrder.orderID + " -> New Order ID: " + this.orderID);
     }
 
     public Order() {}
 
+    public static void loadOrdersFromDB() throws SQLException {
+    orders = DB.getInstance().getAllOrders();
+}
+    
     public int getOrderID() {
         return orderID;
     }
@@ -62,7 +70,10 @@ public class Order {
     public Restaurant getRestaurant() {
         return restaurant;
     }
-    
+
+    public Delivery getDelivery() {
+        return delivery;
+    }
 
     public int getQuantity() {
         return quantity;
@@ -94,7 +105,7 @@ public class Order {
         this.orderID = orderId;
     }
     
-    public void cancelOrder() {
+    public void cancelOrder() throws SQLException {
         state.cancelOrder(this);
        orders.remove(this);  
     }
@@ -165,7 +176,7 @@ public class Order {
         return pastOrders;
     }
 
-     public void reOrderOrder(int orderID) {
+     public void reOrderOrder(int orderID) throws SQLException {
         Order o = getOrder(orderID);
         if (o != null) {
             Order newOrder = new Order(o);

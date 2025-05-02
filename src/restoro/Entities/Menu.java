@@ -6,6 +6,7 @@ package restoro.Entities;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import restoro.DB;
 import restoro.ReadOnly.MenuViewer;
 
 /**
@@ -15,14 +16,16 @@ import restoro.ReadOnly.MenuViewer;
 public class Menu implements MenuViewer {
     private ArrayList<MenuItem> items = new ArrayList<>();
     private String MenuTitle; 
+    private int menu_ID;
 
     public Menu(String MenuTitle) {
+        items = DB.getInstance().getMenuItemsByMenuId(menu_ID);
         this.MenuTitle = MenuTitle;
     }
 
     public Menu() {
     }
-
+    
 
     @Override
     public ArrayList<MenuItem> viewAllItems() {
@@ -30,6 +33,9 @@ public class Menu implements MenuViewer {
 
     }
 
+    public int getMenu_ID() {
+        return menu_ID;
+    }
 
     public String getMenuTitle() {
         return MenuTitle;
@@ -38,13 +44,6 @@ public class Menu implements MenuViewer {
     public void setMenuTitle(String MenuTitle) {
         this.MenuTitle = MenuTitle;
     }
-    
-
-//    @Override
-//    public ArrayList<MenuItem> viewAllItems() {
-//        return new ArrayList<MenuItem>(items);
-//    }
-
 
     @Override
     public void viewByCategory(String category) {
@@ -66,24 +65,19 @@ public class Menu implements MenuViewer {
     }
 
     public void addItem(MenuItem item) {
+         DB.getInstance().addMenuItem(item);
         items.add(item);
     }
 
     public boolean removeItem(String name) {
         for (MenuItem item : items) {
         if (item.getName().equalsIgnoreCase(name.trim())) {
+                     DB.getInstance().removeMenuItem(name,this.menu_ID);
+
                 items.remove(item);
                 return true;
             }
         }
         return false;
     }
-
-
-    public void updateItem(int index, MenuItem newItem) {
-        if (index >= 0 && index < items.size()) {
-            items.set(index, newItem);
-        }
-    }
-
 }

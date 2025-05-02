@@ -5,6 +5,7 @@
 package restoro.Entities;
 
 import java.util.ArrayList;
+import restoro.DB;
 
 /**
  *
@@ -12,17 +13,29 @@ import java.util.ArrayList;
  */
 public class Cart {
     private ArrayList<MenuItem> CartItems = new ArrayList<>();
+    private int cart_ID;
 
     public Cart() {
+        DB.getInstance().getCartItems(cart_ID);
+    }
+
+    public int getCart_ID() {
+        return cart_ID;
+    }
+
+    public void setCart_ID(int cart_ID) {
+        this.cart_ID = cart_ID;
     }
     
     public void addToCart(MenuItem item){
         CartItems.add(item);
+        DB.getInstance().addToCart(cart_ID,item);
         System.out.println(item.getName() + " added to cart.");
     }
     
     public void remove(MenuItem item){
          if (CartItems.remove(item)) {
+            DB.getInstance().removeFromCart(cart_ID,item);
             System.out.println(item.getName() + " removed from cart.");
         } else {
             System.out.println("Item not found in cart.");

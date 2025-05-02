@@ -13,6 +13,7 @@ public class MenuItem {
     private String description;
     private double price;
     private String category;
+    private int menu_id;
     
 
     public MenuItem(int id, String name, String description, double price, String category ) {
@@ -21,6 +22,10 @@ public class MenuItem {
         this.description = description;
         this.price = price;
         this.category=category;
+        
+    }
+
+    public MenuItem() {
     }
     
     public void setId(int id) {
@@ -46,7 +51,15 @@ public class MenuItem {
     public int getID() {
         return id;
     }
-   
+
+    public int getMenuID() {
+        return menu_id;
+    }
+
+    public void setMenu_id(int menu_id) {
+        this.menu_id = menu_id;
+    }
+    
     public String getName() {
         return name;
     }

@@ -1,6 +1,7 @@
 package restoro.Entities;
 
 import java.util.ArrayList;
+import restoro.DB;
 
 
 public abstract class User {
@@ -17,31 +18,44 @@ public abstract class User {
     }
 
     
-    public User(String role ,String email, String password) {
+    public User(String role, String email, String password) {
         this.ID = generateRandomId();
         this.email = email;
         this.password = password;
+        this.role = role;
         users.add(this);
+        saveUserToDB();
     }
-    
-//    public User(String email, String password, String name) {
-//        this.ID = generateRandomId();
-//        this.name = name;
-//        this.email = email;
-//        this.password = password;
-//        this.isLoggedIn = false;
-//        users.add(this);
-//    }
     
     public User(String name, String email, String password, Restaurant restaurant) {
         this.ID = generateRandomId();
-
         this.name = name;
         this.email = email;
         this.password = password;
         this.isLoggedIn = false;
         this.restaurant = restaurant;
         users.add(this);
+        saveUserToDB();
+    }
+    
+    public static void loadUsersFromDB() {
+        users = DB.getInstance().getAllUsers();
+    }
+    
+    public boolean saveUserToDB() {
+        return DB.getInstance().addUser(this);
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
     
     public void setName(String name) {
@@ -74,6 +88,14 @@ public abstract class User {
 
     public String getRole() {
         return role;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
     public boolean isIsLoggedIn() {
@@ -119,6 +141,34 @@ public abstract class User {
     }
     System.out.println("User: No matching user found.");
     return false;
+    }
+    
+     public static User createUser(int id, String role, String name, String email, String password, 
+                                 boolean isLoggedIn, Restaurant restaurant) {
+        User user = null;
+        
+        switch (role.toUpperCase()) {
+            case "CUSTOMER":
+                user = new Customer(name, email, password);
+                break;
+            case "ADMIN":
+                user = new Admin(name, email, password);
+                break;
+            case "RESTAURANT_ADMIN":
+                user = new RestaurantAdmin(name, email, password, restaurant);
+                break;
+            case "DELIVERY":
+                user = new Delivery(name, email, password);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid user role: " + role);
+        }
+        
+        user.setID(id);
+        user.setRole(role);
+        user.setIsLoggedIn(isLoggedIn);
+        
+        return user;
     }
     
     public abstract boolean register(String name, String email, String password);

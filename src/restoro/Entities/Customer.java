@@ -133,9 +133,6 @@ public String toString() {
            "\n}";
 }
 
-    
-    
-
     @Override
     public boolean register(String name, String email, String password, Restaurant restaurant) {
         throw new UnsupportedOperationException("Not supported yet.");
