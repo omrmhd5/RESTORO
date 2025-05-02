@@ -71,6 +71,7 @@ public class MakePaymentUI extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         cardLabel = new javax.swing.JLabel();
         applePayLabel = new javax.swing.JLabel();
@@ -95,21 +96,29 @@ public class MakePaymentUI extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Make Payment");
 
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(194, 194, 194)
+                .addGap(113, 113, 113)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(22, 22, 22))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(26, 26, 26))
+                .addGap(34, 34, 34))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -182,7 +191,7 @@ public class MakePaymentUI extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(CVVLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(CardNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+                                .addComponent(CardNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel3))))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -271,18 +280,35 @@ public class MakePaymentUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void payNowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payNowButtonActionPerformed
-        String cardNum = cardNumberField.getText();
-        String cvv = cvvField.getText();
+        try {
+        String cardNum = cardNumberField.getText().trim();
+        String cvv = cvvField.getText().trim();
 
         if (cardNum.isEmpty() || cvv.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please enter card number and CVV.");
-        } else {
-            JOptionPane.showMessageDialog(null, "Payment successful using Card!");
+            JOptionPane.showMessageDialog(this, "Please enter card number and CVV.");
+            return;
         }
+
+        // Basic validation (you can extend with regex for card formats)
+        if (cardNum.length() < 12 || cardNum.length() > 19 || !cardNum.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Invalid card number format.");
+            return;
+        }
+
+        if (cvv.length() != 3 || !cvv.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Invalid CVV format.");
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, "Payment successful using Card!");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "An error occurred while processing payment: " + e.getMessage());
+    }
     }//GEN-LAST:event_payNowButtonActionPerformed
 private void applyPromoCode() {
-    try {
+     try {
         int code = Integer.parseInt(jTextField3.getText().trim());
+
         if (PromotionsDiscounts.isPromoCodeValid(code)) {
             double originalTotal = cart.calculateTotal();
             double discountedTotal = originalTotal - 20;
@@ -295,7 +321,9 @@ private void applyPromoCode() {
             JOptionPane.showMessageDialog(this, "Invalid or inactive promo code.");
         }
     } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Please enter a valid numeric promo code.");
+        JOptionPane.showMessageDialog(this, "Please enter a numeric promo code.");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Something went wrong: " + e.getMessage());
     }
 }
 
@@ -350,6 +378,7 @@ private void applyPromoCode() {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField3;

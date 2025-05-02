@@ -23,15 +23,19 @@ public class ViewMenuUI extends javax.swing.JFrame {
     ArrayList<MenuItem> menuItems;
     MenuItem item;
     boolean found = false;
-    public ViewMenuUI(Customer customer,Restaurant restaurant) {
-        initComponents();
-        this.customer = customer;
-        this.restaurant = restaurant;
+    public ViewMenuUI(Customer customer, Restaurant restaurant) {
+    initComponents();
+    this.customer = customer;
+    this.restaurant = restaurant;
+    try {
         menuItems = restaurant.getMenu().viewAllItems();
         Order1.setText(menuItems.get(0).toString());
         Order2.setText(menuItems.get(1).toString());
         Order3.setText(menuItems.get(2).toString());
+    } catch (Exception e) {
+        System.err.println("Error loading menu items: " + e.getMessage());
     }
+}
 
     private ViewMenuUI() {
         initComponents();     
@@ -53,6 +57,7 @@ public class ViewMenuUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         SearchInput = new javax.swing.JTextField();
         Search = new javax.swing.JButton();
@@ -75,6 +80,8 @@ public class ViewMenuUI extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("View Menu");
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -84,7 +91,9 @@ public class ViewMenuUI extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addGap(1, 1, 1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(19, 19, 19))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,8 +104,11 @@ public class ViewMenuUI extends javax.swing.JFrame {
                         .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
-                        .addComponent(jLabel2)))
-                .addContainerGap(41, Short.MAX_VALUE))
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -233,7 +245,7 @@ public class ViewMenuUI extends javax.swing.JFrame {
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(42, 42, 42)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(68, Short.MAX_VALUE))
+                        .addContainerGap(105, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addComponent(ChooseOrder2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -270,43 +282,60 @@ public class ViewMenuUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ChooseOrder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseOrder1ActionPerformed
-        // TODO add your handling code here:
-        if (found){
-            customer.addToCart(item);            
+        try {
+        if (found) {
+            customer.addToCart(item);
+        } else {
+            customer.addToCart(menuItems.get(0));
         }
-        else{
-            customer.addToCart(menuItems.get(0));            
-        }
+    } catch (Exception e) {
+        System.err.println("Error adding order 1: " + e.getMessage());
+    }
 
     }//GEN-LAST:event_ChooseOrder1ActionPerformed
 
     private void ChooseOrder2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseOrder2ActionPerformed
-        // TODO add your handling code here:
-                customer.addToCart(menuItems.get(1));
+        try {
+        customer.addToCart(menuItems.get(1));
+    } catch (Exception e) {
+        System.err.println("Error adding order 2: " + e.getMessage());
+    }
     }//GEN-LAST:event_ChooseOrder2ActionPerformed
 
     private void ChooseOrder3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseOrder3ActionPerformed
-        // TODO add your handling code here:
-                customer.addToCart(menuItems.get(2));
+        try {
+        customer.addToCart(menuItems.get(2));
+    } catch (Exception e) {
+        System.err.println("Error adding order 3: " + e.getMessage());
+    }
     }//GEN-LAST:event_ChooseOrder3ActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        // TODO add your handling code here:
+        try {
         String query = SearchInput.getText();
         item = restaurant.getMenu().searchItem(query);
-        if (item != null){
+        if (item != null) {
             Order1.setText(item.toString());
-            found =true;
+            found = true;
+        } else {
+            Order1.setText("Item not found.");
+            found = false;
         }
+    } catch (Exception e) {
+        System.err.println("Error searching for item: " + e.getMessage());
+    }
         
         
     }//GEN-LAST:event_SearchActionPerformed
 
     private void ProccedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProccedActionPerformed
-        // TODO add your handling code here:
-              ViewCartUI vc = new ViewCartUI(customer);
+         try {
+        ViewCartUI vc = new ViewCartUI(customer);
         vc.setVisible(true);
         this.dispose();
+    } catch (Exception e) {
+        System.err.println("Error proceeding to cart: " + e.getMessage());
+    }
     }//GEN-LAST:event_ProccedActionPerformed
 
     private void SearchInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchInputActionPerformed
@@ -358,6 +387,7 @@ public class ViewMenuUI extends javax.swing.JFrame {
     private javax.swing.JButton Procced;
     private javax.swing.JButton Search;
     private javax.swing.JTextField SearchInput;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
