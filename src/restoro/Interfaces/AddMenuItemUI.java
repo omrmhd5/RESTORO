@@ -8,6 +8,7 @@ import java.awt.Color;
 import javax.swing.JOptionPane;
 import restoro.Entities.Menu;
 import restoro.Entities.MenuItem;
+import restoro.Entities.RestaurantAdmin;
 
 
 /**
@@ -17,12 +18,13 @@ import restoro.Entities.MenuItem;
 public class AddMenuItemUI extends javax.swing.JFrame {
 
     private Menu menu;
-
+RestaurantAdmin restaurantAdmin;
     /**
      * Creates new form AddMenuItemUI
      */
-    public AddMenuItemUI(Menu menu) {
+    public AddMenuItemUI(Menu menu, RestaurantAdmin restaurantAdmin) {
 initComponents();
+this.restaurantAdmin = restaurantAdmin;
     this.menu = menu;
         setTitle("Restoro");
         setDefaultCloseOperation(AddMenuItemUI.EXIT_ON_CLOSE);
@@ -327,7 +329,7 @@ try {
     }//GEN-LAST:event_AddActionPerformed
 
     private void BackButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButton1ActionPerformed
-        ManageMenuItemsUI manage= new ManageMenuItemsUI();
+        ManageMenuItemsUI manage= new ManageMenuItemsUI(restaurantAdmin);
         manage.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BackButton1ActionPerformed

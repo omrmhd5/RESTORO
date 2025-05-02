@@ -18,14 +18,14 @@ public class ManageMenuItemsUI extends javax.swing.JFrame {
      * Creates new form ManageMenuItemsUI
      */
             Menu menu;
-
+            RestaurantAdmin restaurantAdmin;
     public ManageMenuItemsUI(RestaurantAdmin restaurantAdmin) {
 initComponents();
         System.out.println(restaurantAdmin);
                 System.out.println(menu);
                 System.out.println(restaurantAdmin.getRestaurant());
                 System.out.println(restaurantAdmin.getRestaurant().getMenu());
-
+this.restaurantAdmin = restaurantAdmin;
         menu = restaurantAdmin.getRestaurant().getMenu();
                         System.out.println(menu);
 
@@ -177,7 +177,7 @@ initComponents();
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddItemActionPerformed
-        AddMenuItemUI addUI = new AddMenuItemUI(menu);
+        AddMenuItemUI addUI = new AddMenuItemUI(menu,restaurantAdmin);
         addUI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_AddItemActionPerformed
@@ -200,7 +200,7 @@ if (inputName != null && !inputName.trim().isEmpty()) {
                 }//GEN-LAST:event_RemoveItemActionPerformed
 
     private void BackButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButton1ActionPerformed
-        RestaurantAdminOptionsUI options= new RestaurantAdminOptionsUI();
+        RestaurantAdminOptionsUI options= new RestaurantAdminOptionsUI(restaurantAdmin);
         options.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BackButton1ActionPerformed

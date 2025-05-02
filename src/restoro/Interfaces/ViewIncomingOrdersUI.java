@@ -172,7 +172,7 @@ public class ViewIncomingOrdersUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButton1ActionPerformed
-        RestaurantAdminOptionsUI options= new RestaurantAdminOptionsUI();
+        RestaurantAdminOptionsUI options= new RestaurantAdminOptionsUI(restaurantAdmin);
         options.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BackButton1ActionPerformed

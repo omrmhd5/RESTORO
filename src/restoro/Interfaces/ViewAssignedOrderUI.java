@@ -240,7 +240,7 @@ public class ViewAssignedOrderUI extends javax.swing.JFrame {
     }//GEN-LAST:event_ChooseItem2ActionPerformed
 
     private void ChooseItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseItem3ActionPerformed
-=        new UpdateDeliveryStatusUI(orders.get(2)).setVisible(true);
+       new UpdateDeliveryStatusUI(orders.get(2)).setVisible(true);
     }//GEN-LAST:event_ChooseItem3ActionPerformed
 
     /**

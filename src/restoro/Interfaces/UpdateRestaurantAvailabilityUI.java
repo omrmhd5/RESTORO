@@ -226,7 +226,7 @@ if (openRadio.isSelected()) {
     }//GEN-LAST:event_doneButtonActionPerformed
 
     private void BackButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButton3ActionPerformed
-        RestaurantAdminOptionsUI options= new RestaurantAdminOptionsUI();
+        RestaurantAdminOptionsUI options= new RestaurantAdminOptionsUI(restaurant.getRestaurantAdmin());
         options.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BackButton3ActionPerformed
