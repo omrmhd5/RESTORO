@@ -4,12 +4,10 @@
  */
 package restoro.Interfaces;
 
-import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
-import restoro.Entities.Menu;
+import restoro.Entities.Customer;
 import restoro.Entities.Order;
 import restoro.Entities.Restaurant;
-import restoro.Entities.RestaurantAdmin;
 
 /**
  *
@@ -20,18 +18,21 @@ public class TrackOrderUI extends javax.swing.JFrame {
     /**
      * Creates new form ViewPastOrdersUI
      */
-    public TrackOrderUI() {
+    Customer customer;
+    public TrackOrderUI(Customer customer) {
         initComponents();
+        System.out.println(customer);
+        this.customer = customer;
+        Order order = customer.getOrder();
+        Restaurant restaurant = order.getRestaurant();
         setTitle("Restoro");
         setDefaultCloseOperation(TrackOrderUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setSize(500, 500);
 
         
-        
-        
-        if (Order != null) {
-                OrderId.setText(String.valueOf(Order.getOrderID()));
+        if (order != null) {
+                OrderId.setText(String.valueOf(order.getOrderID()));
             } else {
                 JOptionPane.showMessageDialog(null, "No order selected.");
             }
@@ -42,18 +43,13 @@ public class TrackOrderUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No order or restaurant found.");
         }
           
-           if (Order != null) {
-               OrderState.setText(Order.getStatus());
+           if (order != null) {
+               OrderState.setText(order.getStatus());
            } else {
                JOptionPane.showMessageDialog(null, "No order selected.");
            }
           
     }
-    private Order Order = new Order(null, null, null, null, "placed");
-    private Restaurant restaurant = new Restaurant("Pizza Hut", "Madinaty", "01122872429",true,null,null);
-
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -249,11 +245,9 @@ public class TrackOrderUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TrackOrderUI().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField OrderId;
     private javax.swing.JTextField OrderState;

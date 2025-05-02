@@ -4,6 +4,12 @@
  */
 package restoro.Interfaces;
 
+import restoro.Entities.Admin;
+import restoro.Entities.Complaint;
+import restoro.Entities.Customer;
+import restoro.Entities.Delivery;
+import restoro.Entities.RestaurantAdmin;
+
 /**
  *
  * @author salma
@@ -13,8 +19,10 @@ public class FileComplaintUI extends javax.swing.JFrame {
     /**
      * Creates new form FileComplaintUI
      */
-    public FileComplaintUI() {
+    Customer customer;
+    public FileComplaintUI(Customer customer) {
         initComponents();
+        this.customer = customer;
         setTitle("Restoro");
         setDefaultCloseOperation(FileComplaintUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); 
@@ -133,7 +141,23 @@ public class FileComplaintUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubmitActionPerformed
-    CustomerOptionsUI customerOptionsUI = new CustomerOptionsUI();
+    String complaintText = jTextArea1.getText().trim();
+
+    if (complaintText.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Please enter a complaint before submitting.");
+        return;
+    }
+    Delivery deliveryHandler = new Delivery();
+    Admin adminHandler = new Admin();
+    RestaurantAdmin restaurantAdminHandler = new RestaurantAdmin();
+
+    Complaint complaint = new Complaint(deliveryHandler, adminHandler, restaurantAdminHandler);
+
+    complaint.fileComplaint(complaintText);
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Your complaint has been submitted.");
+
+    CustomerOptionsUI customerOptionsUI = new CustomerOptionsUI(customer);
     customerOptionsUI.setVisible(true);
     this.dispose();    }//GEN-LAST:event_SubmitActionPerformed
 
@@ -167,7 +191,6 @@ public class FileComplaintUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FileComplaintUI().setVisible(true);
             }
         });
     }

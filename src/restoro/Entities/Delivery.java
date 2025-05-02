@@ -19,6 +19,9 @@ public class Delivery extends User implements ComplaintHandler {
         super(name, email, password);
     }
 
+    public Delivery() {
+    }
+
     @Override
     public boolean register(String name, String email, String password) {
         System.out.println("Delivery: Attempting registration for " + email);

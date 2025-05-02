@@ -107,7 +107,11 @@ public class Customer extends User {
         return cart;
     }
 
-    public int calculateCartTotal() {
+    public Order getOrder() {
+        return order;
+    }
+
+    public double calculateCartTotal() {
         return cart.calculateTotal();
     }
 

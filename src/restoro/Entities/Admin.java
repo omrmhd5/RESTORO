@@ -15,6 +15,9 @@ public class Admin extends User implements ComplaintHandler {
         super(name, email, password);
     }
 
+    public Admin() {
+    }
+
     @Override
     public boolean register(String name, String email, String password) {
         System.out.println("Admin: Attempting registration for " + email);

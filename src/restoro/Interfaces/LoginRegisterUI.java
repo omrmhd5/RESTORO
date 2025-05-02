@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import restoro.Entities.Admin;
 import restoro.Entities.Customer;
 import restoro.Entities.Delivery;
+import restoro.Entities.Order;
 import restoro.Entities.User;
 
 /**
@@ -19,7 +20,8 @@ public class LoginRegisterUI extends javax.swing.JFrame {
     /**
      * Creates new form LoginRegisterUI
      */
-    Customer testUser = new Customer("Test User", "test@example.com", "1234");
+    Customer newCustomer;
+    Admin newAdmin;
     User user;
     public LoginRegisterUI() {
         initComponents();
@@ -181,12 +183,12 @@ public class LoginRegisterUI extends javax.swing.JFrame {
             switch (selectedRole.toLowerCase()) {
             case "customer":
                 this.dispose();
-                CustomerOptionsUI CO= new CustomerOptionsUI();
+                CustomerOptionsUI CO= new CustomerOptionsUI(newCustomer);
                 CO.setVisible(true);
                 break;
             case "admin":
                 this.dispose();
-                AdminOptionsUI AO = new AdminOptionsUI();
+                AdminOptionsUI AO = new AdminOptionsUI(newAdmin);
                 AO.setVisible(true);
                 break;
             case "delivery":
@@ -214,11 +216,14 @@ public class LoginRegisterUI extends javax.swing.JFrame {
 
             switch (selectedRole.toLowerCase()) {
                 case "customer":
-                    newUser = new Customer("New User", email, password);
+                    newCustomer = new Customer("New User", email, password);
+                    
+        Order o1 = new Order(null,newCustomer,null,null,"Placed");
+        Order o2 = new Order(null,newCustomer,null,null,"Yes");
                     
                     break;
                 case "admin":
-                    newUser = new Admin("New Admin", email, password);
+                    newAdmin = new Admin("New Admin", email, password);
                     break;
                 case "delivery":
                     newUser = new Delivery("New Staff", email, password);

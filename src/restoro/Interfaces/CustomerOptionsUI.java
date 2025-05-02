@@ -4,6 +4,8 @@
  */
 package restoro.Interfaces;
 
+import restoro.Entities.Customer;
+
 /**
  *
  * @author user
@@ -13,8 +15,10 @@ public class CustomerOptionsUI extends javax.swing.JFrame {
     /**
      * Creates new form CustomerOptionsUI
      */
-    public CustomerOptionsUI() {
+    Customer customer;
+    public CustomerOptionsUI(Customer customer) {
         initComponents();
+        this.customer = customer;
         setTitle("Restoro");
         setDefaultCloseOperation(CustomerOptionsUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -82,6 +86,11 @@ public class CustomerOptionsUI extends javax.swing.JFrame {
         TrackOrder.setForeground(new java.awt.Color(102, 0, 153));
         TrackOrder.setText("Track Orders");
         TrackOrder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 153), 2));
+        TrackOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TrackOrderActionPerformed(evt);
+            }
+        });
 
         ViewPastOrders.setBackground(new java.awt.Color(232, 170, 255));
         ViewPastOrders.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -99,6 +108,11 @@ public class CustomerOptionsUI extends javax.swing.JFrame {
         FileComplaint.setForeground(new java.awt.Color(102, 0, 153));
         FileComplaint.setText("File Complaint");
         FileComplaint.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 153), 2));
+        FileComplaint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FileComplaintActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -135,7 +149,7 @@ public class CustomerOptionsUI extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,14 +164,31 @@ public class CustomerOptionsUI extends javax.swing.JFrame {
 
     private void MakeOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MakeOrderActionPerformed
         // TODO add your handling code here:
-        SearchRestaurantUI sUI = new SearchRestaurantUI();
-        sUI.setVisible(true);
+        SearchRestaurantUI sr = new SearchRestaurantUI();
+        sr.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_MakeOrderActionPerformed
 
     private void ViewPastOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewPastOrdersActionPerformed
         // TODO add your handling code here:
+        ViewPastOrdersUI to = new ViewPastOrdersUI(customer);
+        to.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_ViewPastOrdersActionPerformed
+
+    private void TrackOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TrackOrderActionPerformed
+        // TODO add your handling code here:
+        TrackOrderUI to = new TrackOrderUI(customer);
+        to.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_TrackOrderActionPerformed
+
+    private void FileComplaintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FileComplaintActionPerformed
+        // TODO add your handling code here:
+        FileComplaintUI fc = new FileComplaintUI(customer);
+        fc.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_FileComplaintActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,7 +220,6 @@ public class CustomerOptionsUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CustomerOptionsUI().setVisible(true);
             }
         });
     }

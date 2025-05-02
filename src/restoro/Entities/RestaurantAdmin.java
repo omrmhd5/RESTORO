@@ -19,6 +19,9 @@ public class RestaurantAdmin extends User implements ComplaintHandler {
         super(name, email, password);
         this.restaurant = restaurant;
     }
+
+    public RestaurantAdmin() {
+    }
     
     @Override
     public void setNext(ComplaintHandler next) {

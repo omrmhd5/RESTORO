@@ -16,12 +16,12 @@ public class ViewPastOrdersUI extends javax.swing.JFrame {
     /**
      * Creates new form ViewPastOrders
      */
-    public ViewPastOrdersUI() {
+    Customer customer;
+    public ViewPastOrdersUI(Customer customer) {
         initComponents();
-        Customer customer = new Customer("Omar", "o@gmail.com", "123");
-        Order o1 = new Order(null,customer,null,null,"Placed");
-        Order o2 = new Order(null,customer,null,null,"Yes");
-        PastOrders.setText(o1.getPastOrders(customer).toString());
+        this.customer = customer;
+        Order order = new Order();
+        PastOrders.setText(order.getPastOrders(customer).toString());
     }
 
     /**
@@ -103,7 +103,6 @@ public class ViewPastOrdersUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewPastOrdersUI().setVisible(true);
             }
         });
     }

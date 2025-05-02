@@ -6,6 +6,7 @@ package restoro;
 
 import restoro.Entities.Admin;
 import restoro.Entities.Complaint;
+import restoro.Entities.Customer;
 import restoro.Entities.Delivery;
 import restoro.Entities.Menu;
 import restoro.Entities.MenuItem;
@@ -20,6 +21,26 @@ import restoro.Interfaces.LoginRegisterUI;
 public class RESTORO {
 
     public static void main(String[] args) {
+        
+//         // Create a dummy customer and register
+//        Customer customer = new Customer("Omar", "omar@example.com", "1234");
+//        customer.register("Omar", "omar@example.com", "1234");
+//
+//        // Set payment method
+//        customer.setPaymentMethod(new CreditCard());
+//
+//        // Add items to cart
+//        customer.addToCart(new MenuItem("Margherita Pizza", 120));
+//        customer.addToCart(new MenuItem("Pepperoni Pizza", 150));
+//
+//        // Place order
+//        Order order = customer.placeOrder();
+//
+//        // Show UI to track order
+//        new TrackOrderUI(customer).setVisible(true);
+//        
+//        
+//Customer customer = new Customer("1", "1", "1");
 MenuItem item1 = new MenuItem(1, "Burger", "Juicy grilled beef burger", 5.99, "Main Course");
 MenuItem item2 = new MenuItem(2, "Fries", "Crispy golden fries", 2.99, "Sides");
 MenuItem item3 = new MenuItem(3, "Cola", "Chilled soft drink", 1.49, "Drinks");

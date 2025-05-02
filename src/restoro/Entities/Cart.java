@@ -29,8 +29,8 @@ public class Cart {
         }
     }
     
-     public int calculateTotal() {
-        int total = 0;
+     public double calculateTotal() {
+        double total = 0;
         for (MenuItem item : CartItems) {
             total += item.getPrice();
         }

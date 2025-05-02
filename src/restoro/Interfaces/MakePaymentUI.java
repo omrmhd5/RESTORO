@@ -284,8 +284,8 @@ private void applyPromoCode() {
     try {
         int code = Integer.parseInt(jTextField3.getText().trim());
         if (PromotionsDiscounts.isPromoCodeValid(code)) {
-            int originalTotal = cart.calculateTotal();
-            int discountedTotal = originalTotal - 20;
+            double originalTotal = cart.calculateTotal();
+            double discountedTotal = originalTotal - 20;
 
             if (discountedTotal < 0) discountedTotal = 0;
 

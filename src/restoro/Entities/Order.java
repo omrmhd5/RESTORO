@@ -33,7 +33,7 @@ public class Order {
     }
     public Order(Order existingOrder) {
         this.cart = new Cart();
-        for (MenuItem item : existingOrder.cart.getCartitems()) {
+        for (MenuItem item : existingOrder.cart.getCartItems()) {
             this.cart.addToCart(item);
         }
         this.customer = existingOrder.customer;
@@ -73,8 +73,8 @@ public class Order {
         quantity++;
     }
     
-    public int getTotalPrice(){
-        int price= cart.calculateTotal();
+    public double getTotalPrice(){
+        double price= cart.calculateTotal();
         return price;
     }
     

@@ -5,6 +5,7 @@
 package restoro.Interfaces;
 
 import javax.swing.JOptionPane;
+import restoro.Entities.Admin;
 import restoro.Entities.PromotionsDiscounts;
 
 /**
@@ -16,8 +17,12 @@ public class AddDeletePromotionsUI extends javax.swing.JFrame {
     /**
      * Creates new form AddDeletePromotionsUI
      */
-    public AddDeletePromotionsUI() {
+    Admin admin;
+    
+    public AddDeletePromotionsUI(Admin admin) {
         initComponents();
+                this.admin = admin;
+
         setTitle("Restoro");
         setDefaultCloseOperation(AddDeletePromotionsUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -206,7 +211,6 @@ public class AddDeletePromotionsUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddDeletePromotionsUI().setVisible(true);
             }
         });
     }
