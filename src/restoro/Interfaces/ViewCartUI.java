@@ -22,7 +22,7 @@ public class ViewCartUI extends javax.swing.JFrame {
         setTitle("Restoro");
         setDefaultCloseOperation(ViewCartUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setSize(500,500);
+        setSize(600,600);
         this.customer = customer;
          populateCart(); 
     }

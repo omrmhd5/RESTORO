@@ -125,6 +125,17 @@ public class Customer extends User {
         return order;
     }
 
+   @Override
+public String toString() {
+    return "Customer {" + super.toString()+
+           "\n  ordersCount  = " + ordersCount +
+           ",\n  cart         = " + cart.getCartItems() +
+           "\n}";
+}
+
+    
+    
+
     @Override
     public boolean register(String name, String email, String password, Restaurant restaurant) {
         throw new UnsupportedOperationException("Not supported yet.");

@@ -120,9 +120,15 @@ public class Restaurant{
     }
 
     @Override
-    public String toString() {
-        return "Restaurant{" + "restaurantName=" + restaurantName + ", restaurantAddress=" + restaurantAddress + ", restaurantPhoneNumber=" + restaurantPhoneNumber + ", isOpen=" + isOpen + '}';
-    }
+public String toString() {
+    return "Restaurant {" +
+           "\n  restaurantName        = " + restaurantName +
+           ",\n  restaurantAddress     = " + restaurantAddress +
+           ",\n  restaurantPhoneNumber = " + restaurantPhoneNumber +
+           ",\n  isOpen                = " + isOpen +
+           "\n}";
+}
+
     
     public static int generateRandomId() {
         return 10000 + (int)(Math.random() * 90000);

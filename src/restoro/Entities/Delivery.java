@@ -63,7 +63,7 @@ public class Delivery extends User implements ComplaintHandler {
     public ArrayList<Order> getAssignedOrders(Delivery delivery){
         Order order = new Order();
         return order.getAssignedOrders(delivery);
-    } 
+    }
 
     @Override
     public boolean register(String name, String email, String password, Restaurant restaurant) {

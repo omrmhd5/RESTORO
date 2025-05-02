@@ -27,9 +27,27 @@ public class ViewAssignedOrderUI extends javax.swing.JFrame {
         this.delivery = delivery;
         
         orders = delivery.getAssignedOrders(delivery);
+          
+    if (orders.size() > 0) {
         Order1.setText(orders.get(0).toString());
-        Order1.setText(orders.get(1).toString());
-        Order1.setText(orders.get(2).toString());
+    } else {
+        Order1.setText("No order found.");
+        ChooseItem1.setEnabled(false);
+    }
+
+    if (orders.size() > 1) {
+        Order2.setText(orders.get(1).toString());
+    } else {
+        Order2.setText("No order found.");
+        ChooseItem2.setEnabled(false);
+    }
+
+    if (orders.size() > 2) {
+        Order3.setText(orders.get(2).toString());
+    } else {
+        Order3.setText("No order found.");
+        ChooseItem3.setEnabled(false);
+    }
     }
 
     private ViewAssignedOrderUI() {
@@ -204,18 +222,18 @@ public class ViewAssignedOrderUI extends javax.swing.JFrame {
     private void ChooseItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseItem1ActionPerformed
         // TODO add your handling code here:
         
-        new UpdateDeliveryStatusUI(orders.get(0)).setVisible(true);
+        new DeliveryOptionsUI(orders.get(0)).setVisible(true);
 
     }//GEN-LAST:event_ChooseItem1ActionPerformed
 
     private void ChooseItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseItem2ActionPerformed
         // TODO add your handling code here:
-        new UpdateDeliveryStatusUI(orders.get(1)).setVisible(true);
+        new DeliveryOptionsUI(orders.get(1)).setVisible(true);
     }//GEN-LAST:event_ChooseItem2ActionPerformed
 
     private void ChooseItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseItem3ActionPerformed
         // TODO add your handling code here:
-        new UpdateDeliveryStatusUI(orders.get(2)).setVisible(true);
+        new DeliveryOptionsUI(orders.get(2)).setVisible(true);
     }//GEN-LAST:event_ChooseItem3ActionPerformed
 
     /**

@@ -5,7 +5,6 @@
 package restoro.Interfaces;
 
 import java.awt.Color;
-import static java.awt.SystemColor.menu;
 import javax.swing.JOptionPane;
 import restoro.Entities.Menu;
 import restoro.Entities.MenuItem;
@@ -22,8 +21,9 @@ public class AddMenuItemUI extends javax.swing.JFrame {
     /**
      * Creates new form AddMenuItemUI
      */
-    public AddMenuItemUI() {
+    public AddMenuItemUI(Menu menu) {
 initComponents();
+    this.menu = menu;
         setTitle("Restoro");
         setDefaultCloseOperation(AddMenuItemUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -32,13 +32,6 @@ initComponents();
 
     
     }
-    
-    public AddMenuItemUI(Menu menu) {
-    this.menu = menu;
-    setupUI();
-    setupListeners();
-}
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -341,7 +334,6 @@ try {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddMenuItemUI().setVisible(true);
             }
         });
     }
@@ -365,11 +357,4 @@ try {
     private javax.swing.JLabel label5;
     // End of variables declaration//GEN-END:variables
 
-    private void setupUI() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void setupListeners() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

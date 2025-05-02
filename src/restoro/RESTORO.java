@@ -10,9 +10,10 @@ import restoro.Entities.Customer;
 import restoro.Entities.Delivery;
 import restoro.Entities.Menu;
 import restoro.Entities.MenuItem;
+import restoro.Entities.Order;
 import restoro.Entities.Restaurant;
 import restoro.Entities.RestaurantAdmin;
-import restoro.Interfaces.LoginRegisterUI;
+import restoro.Interfaces.StartWindow;
 
 /**
  *
@@ -40,26 +41,26 @@ public class RESTORO {
 //        new TrackOrderUI(customer).setVisible(true);
 //        
 //        
-//Customer customer = new Customer("1", "1", "1");
+Delivery dummyDelivery = new Delivery("1", "1", "1");
+Customer customer = new Customer("1", "1", "1");
 MenuItem item1 = new MenuItem(1, "Burger", "Juicy grilled beef burger", 5.99, "Main Course");
 MenuItem item2 = new MenuItem(2, "Fries", "Crispy golden fries", 2.99, "Sides");
 MenuItem item3 = new MenuItem(3, "Cola", "Chilled soft drink", 1.49, "Drinks");
 
-    Menu dummyMenu = new Menu("Dummy Menu");
-    dummyMenu.addItem(item1);
-    dummyMenu.addItem(item2);
-    dummyMenu.addItem(item3);
-
-        Restaurant dummyRestaurant = new Restaurant();
+Menu dummyMenu = new Menu("Dummy Menu");
+dummyMenu.addItem(item1);
+dummyMenu.addItem(item2);
+dummyMenu.addItem(item3);
 
 RestaurantAdmin dummyAdmin = new RestaurantAdmin(
     "DummyAdmin",
-    "admin@example.com",
-    "admin123",
-    dummyRestaurant
+    "1",
+    "2",
+    null // temporarily set to null
 );
 
-dummyRestaurant = new Restaurant(
+// Create the restaurant and assign the admin
+Restaurant dummyRestaurant = new Restaurant(
     "Ahmed",
     "123 Dummy Street",
     "123-456-7890",
@@ -68,7 +69,17 @@ dummyRestaurant = new Restaurant(
     dummyAdmin
 );
 
-        new LoginRegisterUI().setVisible(true);
+
+        Order o1 = new Order(customer.getCart(),customer,dummyDelivery,dummyRestaurant,"Placed");
+        Order o2 = new Order(customer.getCart(),customer,dummyDelivery,dummyRestaurant,"Yes");
+
+
+// Set the restaurant on the admin now that it exists
+dummyAdmin.setRestaurant(dummyRestaurant);
+        System.out.println(o1.toString());
+
+
+        new StartWindow().setVisible(true);
         
         
         

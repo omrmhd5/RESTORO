@@ -13,13 +13,15 @@ import restoro.Entities.Restaurant;
  */
 public class UpdateRestaurantAvailabilityUI extends javax.swing.JFrame {
 
-    Restaurant Restaurant;
+    Restaurant restaurant;
     
     /**
      * Creates new form UpdateRestaurantAvailabilityUI
      */
-    public UpdateRestaurantAvailabilityUI() {
+    public UpdateRestaurantAvailabilityUI(Restaurant restaurant) {
         initComponents();
+        this.restaurant = restaurant;
+        restaurantNameField.setText(restaurant.getRestaurantName());
         setTitle("Restoro");
         setDefaultCloseOperation(UpdateRestaurantAvailabilityUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -90,6 +92,7 @@ public class UpdateRestaurantAvailabilityUI extends javax.swing.JFrame {
 
         restaurantNameField.setForeground(new java.awt.Color(102, 0, 153));
         restaurantNameField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 153), 2));
+        restaurantNameField.setEnabled(false);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 0, 153));
@@ -181,34 +184,22 @@ public class UpdateRestaurantAvailabilityUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
-       String name = restaurantNameField.getText().trim();
-
-if (name.isEmpty()) {
-    JOptionPane.showMessageDialog(this, "Please enter a restaurant name.");
-    return;
-}
-
-// Search for the restaurant
-Restaurant found = new Restaurant().searchForRestaurant(name);
-
-if (found == null) {
-    JOptionPane.showMessageDialog(this, "Restaurant not found.");
-    return;
-}
 
 // Determine selected status
 if (openRadio.isSelected()) {
-    found.setIsOpen(true);
+    restaurant.setIsOpen(true);
     JOptionPane.showMessageDialog(this, "Restaurant marked as OPEN.");
-    Restaurant.setIsOpen(true);
+    System.out.println(restaurant);
 } else if (closeRadio.isSelected()) {
-    found.setIsOpen(false);
+    restaurant.setIsOpen(false);
     JOptionPane.showMessageDialog(this, "Restaurant marked as CLOSED.");
-    Restaurant.setIsOpen(false);
+        System.out.println(restaurant);
+
 } else if (busyRadio.isSelected()) {
-    
-    JOptionPane.showMessageDialog(this, "Restaurant marked as BUSY (not implemented in logic yet).");
-    Restaurant.setIsOpen(false);
+        restaurant.setIsOpen(false);
+    JOptionPane.showMessageDialog(this, "Restaurant marked as BUSY");
+        System.out.println(restaurant);
+
 } else {
     JOptionPane.showMessageDialog(this, "Please select a status.");
 }
@@ -244,7 +235,6 @@ if (openRadio.isSelected()) {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UpdateRestaurantAvailabilityUI().setVisible(true);
             }
         });
     }

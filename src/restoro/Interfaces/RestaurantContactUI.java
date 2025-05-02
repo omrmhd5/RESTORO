@@ -4,6 +4,8 @@
  */
 package restoro.Interfaces;
 
+import restoro.Entities.Order;
+
 /**
  *
  * @author HP
@@ -13,11 +15,15 @@ public class RestaurantContactUI extends javax.swing.JFrame {
     /**
      * Creates new form RestaurantContactUI
      */
-    public RestaurantContactUI() {
+    
+    Order order;
+    public RestaurantContactUI(Order order) {
              initComponents();
+             this.order = order;
         setTitle("Restoro");
         setDefaultCloseOperation(RestaurantContactUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        jTextArea1.setText(order.getRestaurant().toString());
     }
 
     /**
@@ -166,7 +172,6 @@ public class RestaurantContactUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RestaurantContactUI().setVisible(true);
             }
         });
     }

@@ -31,9 +31,6 @@ public class ViewIncomingOrdersUI extends javax.swing.JFrame {
         loadOrdersIntoTable();
     }
 
-    private ViewIncomingOrdersUI() {
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -206,7 +203,6 @@ public class ViewIncomingOrdersUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewIncomingOrdersUI().setVisible(true);
             }
         });
     }

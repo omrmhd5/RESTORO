@@ -35,6 +35,7 @@ public abstract class User {
     
     public User(String name, String email, String password, Restaurant restaurant) {
         this.ID = generateRandomId();
+
         this.name = name;
         this.email = email;
         this.password = password;
@@ -69,6 +70,10 @@ public abstract class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public boolean isIsLoggedIn() {
@@ -126,6 +131,12 @@ public abstract class User {
     private int generateRandomId() {
         return 10000 + (int)(Math.random() * 90000);
     }
+
+    @Override
+    public String toString() {
+        return "name=" + name + ", email=" + email;
+    }
+    
 
 
 }

@@ -4,9 +4,9 @@
  */
 package restoro.Interfaces;
 
-import static java.awt.SystemColor.menu;
 import javax.swing.JOptionPane;
 import restoro.Entities.Menu;
+import restoro.Entities.RestaurantAdmin;
 
 /**
  *
@@ -17,10 +17,18 @@ public class ManageMenuItemsUI extends javax.swing.JFrame {
     /**
      * Creates new form ManageMenuItemsUI
      */
-            Menu menu = new Menu();
+            Menu menu;
 
-    public ManageMenuItemsUI() {
+    public ManageMenuItemsUI(RestaurantAdmin restaurantAdmin) {
 initComponents();
+        System.out.println(restaurantAdmin);
+                System.out.println(menu);
+                System.out.println(restaurantAdmin.getRestaurant());
+                System.out.println(restaurantAdmin.getRestaurant().getMenu());
+
+        menu = restaurantAdmin.getRestaurant().getMenu();
+                        System.out.println(menu);
+
         setTitle("Restoro");
         setDefaultCloseOperation(ManageMenuItemsUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -149,7 +157,7 @@ initComponents();
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddItemActionPerformed
-        AddMenuItemUI addUI = new AddMenuItemUI();
+        AddMenuItemUI addUI = new AddMenuItemUI(menu);
         addUI.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_AddItemActionPerformed
@@ -201,7 +209,6 @@ if (inputName != null && !inputName.trim().isEmpty()) {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManageMenuItemsUI().setVisible(true);
             }
         });
     }

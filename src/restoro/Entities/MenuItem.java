@@ -65,7 +65,7 @@ public class MenuItem {
 
     @Override
     public String toString() {
-        return name + " (" + description + ") - $" + price + " " + category;
+        return name + " (" + description + ")\n $" + price + " " + category;
     }
     
 }

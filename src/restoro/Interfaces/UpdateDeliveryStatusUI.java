@@ -17,8 +17,9 @@ public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
     /**
      * Creates new form UpdateDeliveryStatusUI
      */
-    public UpdateDeliveryStatusUI() {
+    public UpdateDeliveryStatusUI(Order order) {
         initComponents();
+        this.order = order;
     }
 
     /**
@@ -161,20 +162,20 @@ public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-       if (order == null) {
-    JOptionPane.showMessageDialog(this, "Order not found!");
-    return;
-}
+   
 
 if (pickedUpRadio.isSelected()) {
     //order.setState(new PickedUpState());
     order.setStatus("Picked Up");
+    System.out.println(order);
 } else if (onTheWayRadio.isSelected()) {
     //order.setState(new OnTheWayState());
     order.setStatus("On The Way");
+        System.out.println(order);
 } else if (deliveredRadio.isSelected()) {
     //order.setState(new DeliveredState());
     order.setStatus("Delivered");
+        System.out.println(order);
 } else {
     JOptionPane.showMessageDialog(this, "Please select a status.");
     return;
@@ -213,7 +214,6 @@ JOptionPane.showMessageDialog(this, "Order status updated to: " + order.getStatu
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UpdateDeliveryStatusUI().setVisible(true);
             }
         });
     }

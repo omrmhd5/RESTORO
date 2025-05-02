@@ -1,5 +1,7 @@
 package restoro.Interfaces;
 
+import restoro.Entities.Order;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -14,11 +16,14 @@ public class CustomerContactUI extends javax.swing.JFrame {
     /**
      * Creates new form CustomerContactUI
      */
-    public CustomerContactUI() {
+    Order order;
+    public CustomerContactUI(Order order) {
         initComponents();
+        this.order = order;
         setTitle("Restoro");
         setDefaultCloseOperation(CustomerContactUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        txtCustomerOutput.setText(order.getCustomer().toString());
 
     }
 
@@ -106,24 +111,7 @@ public class CustomerContactUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-private void btnGetCustomerInfoActionPerformed(java.awt.event.ActionEvent evt) {
-String name = txtCustomerName.getText().trim().toLowerCase();
-String info;
 
-switch (name) {
-    case "ahmed":
-        info = " Phone: +20 101 555 0000\n Address: 21 Nile St, Cairo\n Email: ahmed@mail.com";
-        break;
-    case "sara":
-        info = " Phone: +20 109 888 1234\n Address: 77 Zamalek, Giza\n️ Email: sara@live.com";
-        break;
-    default:
-        info = " Customer not found.";
-}
-
-txtCustomerOutput.setText(info);
-
-}
     /**
      * @param args the command line arguments
      */
@@ -154,7 +142,6 @@ txtCustomerOutput.setText(info);
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CustomerContactUI().setVisible(true);
             }
         });
     }

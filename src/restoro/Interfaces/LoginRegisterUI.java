@@ -9,6 +9,7 @@ import restoro.Entities.Admin;
 import restoro.Entities.Customer;
 import restoro.Entities.Delivery;
 import restoro.Entities.Order;
+import restoro.Entities.RestaurantAdmin;
 import restoro.Entities.User;
 
 /**
@@ -22,6 +23,8 @@ public class LoginRegisterUI extends javax.swing.JFrame {
      */
     Customer newCustomer;
     Admin newAdmin;
+    RestaurantAdmin newRestaurantAdmin;
+    Delivery newDelivery;
     User user;
     public LoginRegisterUI() {
         initComponents();
@@ -183,34 +186,47 @@ public class LoginRegisterUI extends javax.swing.JFrame {
     boolean found = false;
 
     for (User user : User.users) {
-        if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
-            System.out.println("Login successful for: " + email + " as " + selectedRole);
+    if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+        if ((selectedRole.equalsIgnoreCase("customer") && user instanceof Customer)
+                || (selectedRole.equalsIgnoreCase("admin") && user instanceof Admin)
+                || (selectedRole.equalsIgnoreCase("restaurantadmin") && user instanceof RestaurantAdmin)
+                || (selectedRole.equalsIgnoreCase("deliverystaff") && user instanceof Delivery)) {
+
             found = true;
-            
+
+            // Assign the user to the appropriate type
             switch (selectedRole.toLowerCase()) {
-            case "customer":
-                this.dispose();
-                CustomerOptionsUI CO= new CustomerOptionsUI(newCustomer);
-                CO.setVisible(true);
-                break;
-            case "admin":
-                this.dispose();
-                AdminOptionsUI AO = new AdminOptionsUI(newAdmin);
-                AO.setVisible(true);
-                break;
-            case "delivery":
-                //new DeliveryUI().setVisible(true);  // Replace with your actual Delivery UI class
-                break;
-            case "restaurant admin":
-                this.dispose();
-                RestaurantAdminOptionsUI RAO = new RestaurantAdminOptionsUI();
-                RAO.setVisible(true);
-                break;
-            default:
-                JOptionPane.showMessageDialog(this, "Unknown user type.");
-        }
+                case "customer":
+                    newCustomer = (Customer) user;
+                    this.dispose();
+                    CustomerOptionsUI CO = new CustomerOptionsUI(newCustomer);
+                    CO.setVisible(true);
+                    break;
+                case "admin":
+                    newAdmin = (Admin) user;
+                    this.dispose();
+                    AdminOptionsUI AO = new AdminOptionsUI(newAdmin);
+                    AO.setVisible(true);
+                    break;
+                case "restaurantadmin":
+                    newRestaurantAdmin = (RestaurantAdmin) user;
+                    this.dispose();
+                    RestaurantAdminOptionsUI RAO = new RestaurantAdminOptionsUI(newRestaurantAdmin);
+                    RAO.setVisible(true);
+                    break;
+                case "deliverystaff":
+                    newDelivery = (Delivery) user;
+                    this.dispose();
+                    ViewAssignedOrderUI VAO = new ViewAssignedOrderUI(newDelivery);
+                    VAO.setVisible(true);
+                    
+                    break;
+            }
+            break;
         }
     }
+}
+
 
     if (!found) {
         int choice = JOptionPane.showConfirmDialog(this,
@@ -231,16 +247,22 @@ public class LoginRegisterUI extends javax.swing.JFrame {
                     break;
                 case "admin":
                     newAdmin = new Admin("New Admin", email, password);
+                                JOptionPane.showMessageDialog(this, "User registered successfully. You can now log in.");
+
                     break;
-                case "delivery":
+                case "restaurantadmin":
+                    JOptionPane.showMessageDialog(this, "User Can Not Register Himself.");
+                    break;
+                case "deliverystaff":
                     newUser = new Delivery("New Staff", email, password);
+                                JOptionPane.showMessageDialog(this, "User registered successfully. You can now log in.");
+
                     break;
                 default:
                     JOptionPane.showMessageDialog(this, "Unknown user type.");
-                    return;
+                    
             }
 
-            JOptionPane.showMessageDialog(this, "User registered successfully. You can now log in.");
         }
     }
    
@@ -277,7 +299,6 @@ public class LoginRegisterUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginRegisterUI().setVisible(true);
             }
         });
     }

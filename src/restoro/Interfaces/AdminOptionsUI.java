@@ -118,8 +118,6 @@ public class AdminOptionsUI extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
                 .addContainerGap(86, Short.MAX_VALUE))
         );
 
@@ -147,7 +145,7 @@ public class AdminOptionsUI extends javax.swing.JFrame {
 //        fc.setVisible(true);
 //        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
+ 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         AddDeletePromotionsUI fc = new AddDeletePromotionsUI(admin);

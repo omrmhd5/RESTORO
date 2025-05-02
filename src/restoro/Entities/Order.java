@@ -199,8 +199,16 @@ public class Order {
     }
 
     @Override
-    public String toString() {
-        return "\nOrder{" + "orderID=" + orderID + ", cart=" + cart + ", customer=" + customer + ", delivery=" + delivery + ", restaurant=" + restaurant + ", state=" + state + ", quantity=" + quantity + ", status=" + status + '}';
-    }
-    
+public String toString() {
+    return
+           "  orderID     = " + orderID +
+           ",\n  cart        = " + cart.getCartItems() +
+           ",\n  customer    = " + customer.getName() +
+           ",\n  restaurant  = " + restaurant.getRestaurantName() +
+           ",\n  state       = " + state +
+           ",\n  quantity    = " + quantity +
+           ",\n  status      = " + status +
+           "\n}";
+}
+
 }
