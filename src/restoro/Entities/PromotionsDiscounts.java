@@ -31,6 +31,16 @@ public class PromotionsDiscounts {
         }
         return false;
     }
+    
+    public static float applyPromo(float originalTotal, int enteredCode) {
+       if (isPromoCodeValid(enteredCode)) {
+           float discount = originalTotal * 0.20f;
+           return originalTotal - discount;
+       }
+       return originalTotal;
+   }
+
+
 
     public static boolean deletePromo(int code) {
         for (PromotionsDiscounts promo : allPromotions) {

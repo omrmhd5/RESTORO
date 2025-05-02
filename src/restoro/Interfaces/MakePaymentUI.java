@@ -89,7 +89,7 @@ public class MakePaymentUI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         TotalPriceFeild = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        PromoCodeFeild = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -183,8 +183,18 @@ public class MakePaymentUI extends javax.swing.JFrame {
 
         TotalPriceFeild.setForeground(new java.awt.Color(102, 0, 153));
         TotalPriceFeild.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 153), 2));
+        TotalPriceFeild.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TotalPriceFeildActionPerformed(evt);
+            }
+        });
 
-        jTextField3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 153), 2));
+        PromoCodeFeild.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 153), 2));
+        PromoCodeFeild.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PromoCodeFeildActionPerformed(evt);
+            }
+        });
 
         jButton1.setBackground(new java.awt.Color(232, 170, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -233,7 +243,7 @@ public class MakePaymentUI extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(applePayLabel)
                             .addComponent(TotalPriceFeild, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(PromoCodeFeild, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -263,7 +273,7 @@ public class MakePaymentUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PromoCodeFeild, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -325,39 +335,64 @@ public class MakePaymentUI extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "An error occurred while processing payment: " + e.getMessage());
     }
     }//GEN-LAST:event_payNowButtonActionPerformed
-private void applyPromoCode() {
-     try {
-        int code = Integer.parseInt(jTextField3.getText().trim());
-
-        if (PromotionsDiscounts.isPromoCodeValid(code)) {
-            double originalTotal = cart.calculateTotal();
-            double discountedTotal = originalTotal - 20;
-
-            if (discountedTotal < 0) discountedTotal = 0;
-
-            TotalPriceFeild.setText(String.valueOf(discountedTotal));
-            JOptionPane.showMessageDialog(this, "Promo applied! 20 LE discount.");
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid or inactive promo code.");
-        }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Please enter a numeric promo code.");
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Something went wrong: " + e.getMessage());
-    }
-}
+//private void applyPromoCode() {
+//     try {
+//        int code = Integer.parseInt(jTextField3.getText().trim());
+//
+//        if (PromotionsDiscounts.isPromoCodeValid(code)) {
+//            double originalTotal = cart.calculateTotal();
+//            double discountedTotal = originalTotal - 20;
+//
+//            if (discountedTotal < 0) discountedTotal = 0;
+//
+//            TotalPriceFeild.setText(String.valueOf(discountedTotal));
+//            JOptionPane.showMessageDialog(this, "Promo applied! 20 LE discount.");
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Invalid or inactive promo code.");
+//        }
+//    } catch (NumberFormatException e) {
+//        JOptionPane.showMessageDialog(this, "Please enter a numeric promo code.");
+//    } catch (Exception e) {
+//        JOptionPane.showMessageDialog(this, "Something went wrong: " + e.getMessage());
+//    }
+//}
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        applyPromoCode();
+      try {
+    int promoCode = Integer.parseInt(PromoCodeFeild.getText().trim());
+    float originalPrice = Float.parseFloat(TotalPriceFeild.getText().trim());
+
+    float newPrice = PromotionsDiscounts.applyPromo(originalPrice, promoCode);
+
+    TotalPriceFeild.setText(String.format("%.2f", newPrice));
+
+    if (newPrice < originalPrice) {
+        JOptionPane.showMessageDialog(this, " Promo applied! New total: " + newPrice + " LE");
+    } else {
+        JOptionPane.showMessageDialog(this, "Invalid or inactive promo code.");
+    }
+} catch (NumberFormatException e) {
+    JOptionPane.showMessageDialog(this, "Please enter valid numbers only.");
+}
+
+
+ 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
- 
         
         ViewCartUI view= new ViewCartUI(customer);
         view.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
+
+    private void PromoCodeFeildActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PromoCodeFeildActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PromoCodeFeildActionPerformed
+
+    private void TotalPriceFeildActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TotalPriceFeildActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TotalPriceFeildActionPerformed
 
     /**
      * @param args the command line arguments
@@ -397,6 +432,7 @@ private void applyPromoCode() {
     private javax.swing.JButton BackButton;
     private javax.swing.JLabel CVVLabel;
     private javax.swing.JLabel CardNumberLabel;
+    private javax.swing.JTextField PromoCodeFeild;
     private javax.swing.JTextField TotalPriceFeild;
     private javax.swing.JLabel applePayLabel;
     private javax.swing.JLabel cardLabel;
@@ -410,7 +446,6 @@ private void applyPromoCode() {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JButton payNowButton;
     // End of variables declaration//GEN-END:variables
 }

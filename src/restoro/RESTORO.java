@@ -11,6 +11,7 @@ import restoro.Entities.Delivery;
 import restoro.Entities.Menu;
 import restoro.Entities.MenuItem;
 import restoro.Entities.Order;
+import restoro.Entities.PromotionsDiscounts;
 import restoro.Entities.Restaurant;
 import restoro.Entities.RestaurantAdmin;
 import restoro.Interfaces.StartWindow;
@@ -58,6 +59,8 @@ RestaurantAdmin dummyAdmin = new RestaurantAdmin(
     "2",
     null // temporarily set to null
 );
+PromotionsDiscounts promo = new PromotionsDiscounts(2025, "20% OFF for Eid Offer", true);
+
 
 // Create the restaurant and assign the admin
 Restaurant dummyRestaurant = new Restaurant(

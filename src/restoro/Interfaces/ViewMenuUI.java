@@ -25,6 +25,10 @@ public class ViewMenuUI extends javax.swing.JFrame {
     boolean found = false;
     public ViewMenuUI(Customer customer, Restaurant restaurant) {
     initComponents();
+            setTitle("Restoro");
+        setDefaultCloseOperation(ViewMenuUI.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setSize(700,700);
     this.customer = customer;
     this.restaurant = restaurant;
     try {
@@ -37,13 +41,6 @@ public class ViewMenuUI extends javax.swing.JFrame {
     }
 }
 
-    private ViewMenuUI() {
-        initComponents();     
-            setTitle("Restoro");
-        setDefaultCloseOperation(ViewMenuUI.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setSize(500,700);
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -402,7 +399,6 @@ public class ViewMenuUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewMenuUI().setVisible(true);
             }
         });
     }
