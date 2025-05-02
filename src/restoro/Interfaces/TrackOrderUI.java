@@ -25,7 +25,7 @@ public class TrackOrderUI extends javax.swing.JFrame {
         setTitle("Restoro");
         setDefaultCloseOperation(TrackOrderUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-       setSize(500, 500);
+        setSize(500, 500);
 
         
         
