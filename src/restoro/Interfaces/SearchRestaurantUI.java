@@ -111,15 +111,21 @@ public class SearchRestaurantUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        // TODO add your handling code here:
-        Restaurant r = new Restaurant("Hello","","",false,null,null);
+       try {
         Restaurant result = customer.searchForRestaurant(searchQuery.getText());
-    
-    if (result != null) {
-        restaurant = result;
-        RestaurantResult.setText( result.getRestaurantName() );
-    } else {
-        RestaurantResult.setText("No matching restaurant found.");
+
+        if (result != null) {
+            restaurant = result;
+            RestaurantResult.setText(result.getRestaurantName());
+        } else {
+            RestaurantResult.setText("No matching restaurant found.");
+            restaurant = null;
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,
+            "An error occurred while searching: " + e.getMessage(),
+            "Search Error",
+            JOptionPane.ERROR_MESSAGE);
         restaurant = null;
     }
     }//GEN-LAST:event_SearchActionPerformed
@@ -129,13 +135,19 @@ public class SearchRestaurantUI extends javax.swing.JFrame {
     }//GEN-LAST:event_searchQueryActionPerformed
 
     private void ViewMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewMenuActionPerformed
-        // TODO add your handling code here:
-         if (restaurant != null) {
-        new ViewMenuUI(customer,restaurant).setVisible(true);
-        this.dispose();
+        try {
+        if (restaurant != null) {
+            new ViewMenuUI(customer, restaurant).setVisible(true);
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Please select a restaurant first.");
         }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,
+            "Unable to open menu: " + e.getMessage(),
+            "Menu Error",
+            JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_ViewMenuActionPerformed
 
     /**

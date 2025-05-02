@@ -23,23 +23,29 @@ public class ViewCartUI extends javax.swing.JFrame {
          populateCart(); 
     }
  private void populateCart() {
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    model.setRowCount(0); // Clear table
+   try {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Clear table
 
-    double total = 0.0;
+        double total = 0.0;
 
-    for (MenuItem item : customer.getCartItems()) {
-        // You can assume quantity is 1 per item unless you track quantity elsewhere
-        int quantity = 1;
-        double unitPrice = item.getPrice();
-        double itemTotal = unitPrice * quantity;
+        for (MenuItem item : customer.getCartItems()) {
+            int quantity = 1;
+            double unitPrice = item.getPrice();
+            double itemTotal = unitPrice * quantity;
 
-        Object[] row = {item.getName(), quantity, unitPrice, itemTotal};
-        model.addRow(row);
-        total += itemTotal;
+            Object[] row = {item.getName(), quantity, unitPrice, itemTotal};
+            model.addRow(row);
+            total += itemTotal;
+        }
+
+        jLabel2.setText("Total: $" + String.format("%.2f", total));
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Failed to load cart items: " + e.getMessage(),
+                "Error",
+                javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-
-    jLabel2.setText("Total: $" + String.format("%.2f", total));
 }
 
 
@@ -126,10 +132,16 @@ public class ViewCartUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckoutActionPerformed
-        // TODO add your handling code here:
-              MakePaymentUI mk = new MakePaymentUI(customer);
+        try {
+        MakePaymentUI mk = new MakePaymentUI(customer);
         mk.setVisible(true);
         this.dispose();
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Checkout failed: " + e.getMessage(),
+                "Error",
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_CheckoutActionPerformed
 
     /**

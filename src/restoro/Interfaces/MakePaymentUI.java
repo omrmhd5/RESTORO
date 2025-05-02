@@ -271,18 +271,35 @@ public class MakePaymentUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void payNowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payNowButtonActionPerformed
-        String cardNum = cardNumberField.getText();
-        String cvv = cvvField.getText();
+        try {
+        String cardNum = cardNumberField.getText().trim();
+        String cvv = cvvField.getText().trim();
 
         if (cardNum.isEmpty() || cvv.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please enter card number and CVV.");
-        } else {
-            JOptionPane.showMessageDialog(null, "Payment successful using Card!");
+            JOptionPane.showMessageDialog(this, "Please enter card number and CVV.");
+            return;
         }
+
+        // Basic validation (you can extend with regex for card formats)
+        if (cardNum.length() < 12 || cardNum.length() > 19 || !cardNum.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Invalid card number format.");
+            return;
+        }
+
+        if (cvv.length() != 3 || !cvv.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Invalid CVV format.");
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, "Payment successful using Card!");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "An error occurred while processing payment: " + e.getMessage());
+    }
     }//GEN-LAST:event_payNowButtonActionPerformed
 private void applyPromoCode() {
-    try {
+     try {
         int code = Integer.parseInt(jTextField3.getText().trim());
+
         if (PromotionsDiscounts.isPromoCodeValid(code)) {
             int originalTotal = cart.calculateTotal();
             int discountedTotal = originalTotal - 20;
@@ -295,7 +312,9 @@ private void applyPromoCode() {
             JOptionPane.showMessageDialog(this, "Invalid or inactive promo code.");
         }
     } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Please enter a valid numeric promo code.");
+        JOptionPane.showMessageDialog(this, "Please enter a numeric promo code.");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Something went wrong: " + e.getMessage());
     }
 }
 

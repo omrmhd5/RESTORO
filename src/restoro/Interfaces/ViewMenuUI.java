@@ -23,15 +23,19 @@ public class ViewMenuUI extends javax.swing.JFrame {
     ArrayList<MenuItem> menuItems;
     MenuItem item;
     boolean found = false;
-    public ViewMenuUI(Customer customer,Restaurant restaurant) {
-        initComponents();
-        this.customer = customer;
-        this.restaurant = restaurant;
+    public ViewMenuUI(Customer customer, Restaurant restaurant) {
+    initComponents();
+    this.customer = customer;
+    this.restaurant = restaurant;
+    try {
         menuItems = restaurant.getMenu().viewAllItems();
         Order1.setText(menuItems.get(0).toString());
         Order2.setText(menuItems.get(1).toString());
         Order3.setText(menuItems.get(2).toString());
+    } catch (Exception e) {
+        System.err.println("Error loading menu items: " + e.getMessage());
     }
+}
 
     private ViewMenuUI() {
         initComponents();     
@@ -180,43 +184,60 @@ public class ViewMenuUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ChooseOrder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseOrder1ActionPerformed
-        // TODO add your handling code here:
-        if (found){
-            customer.addToCart(item);            
+        try {
+        if (found) {
+            customer.addToCart(item);
+        } else {
+            customer.addToCart(menuItems.get(0));
         }
-        else{
-            customer.addToCart(menuItems.get(0));            
-        }
+    } catch (Exception e) {
+        System.err.println("Error adding order 1: " + e.getMessage());
+    }
 
     }//GEN-LAST:event_ChooseOrder1ActionPerformed
 
     private void ChooseOrder2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseOrder2ActionPerformed
-        // TODO add your handling code here:
-                customer.addToCart(menuItems.get(1));
+        try {
+        customer.addToCart(menuItems.get(1));
+    } catch (Exception e) {
+        System.err.println("Error adding order 2: " + e.getMessage());
+    }
     }//GEN-LAST:event_ChooseOrder2ActionPerformed
 
     private void ChooseOrder3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseOrder3ActionPerformed
-        // TODO add your handling code here:
-                customer.addToCart(menuItems.get(2));
+        try {
+        customer.addToCart(menuItems.get(2));
+    } catch (Exception e) {
+        System.err.println("Error adding order 3: " + e.getMessage());
+    }
     }//GEN-LAST:event_ChooseOrder3ActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        // TODO add your handling code here:
+        try {
         String query = SearchInput.getText();
         item = restaurant.getMenu().searchItem(query);
-        if (item != null){
+        if (item != null) {
             Order1.setText(item.toString());
-            found =true;
+            found = true;
+        } else {
+            Order1.setText("Item not found.");
+            found = false;
         }
+    } catch (Exception e) {
+        System.err.println("Error searching for item: " + e.getMessage());
+    }
         
         
     }//GEN-LAST:event_SearchActionPerformed
 
     private void ProccedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProccedActionPerformed
-        // TODO add your handling code here:
-              ViewCartUI vc = new ViewCartUI(customer);
+         try {
+        ViewCartUI vc = new ViewCartUI(customer);
         vc.setVisible(true);
         this.dispose();
+    } catch (Exception e) {
+        System.err.println("Error proceeding to cart: " + e.getMessage());
+    }
     }//GEN-LAST:event_ProccedActionPerformed
 
     /**
