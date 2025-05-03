@@ -25,6 +25,7 @@ public class ViewIncomingOrdersUI extends javax.swing.JFrame {
         setTitle("Restoro");
         setDefaultCloseOperation(ViewIncomingOrdersUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setSize(600,500);
 
         this.restaurantAdmin = restaurantAdmin;
         orders = restaurantAdmin.getIncomingOrders(restaurantAdmin.getRestaurant());
@@ -149,7 +150,7 @@ public class ViewIncomingOrdersUI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

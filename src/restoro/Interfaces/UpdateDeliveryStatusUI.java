@@ -23,6 +23,10 @@ public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
     public UpdateDeliveryStatusUI(Order order) {
         initComponents();
         this.order = order;
+        setTitle("Restoro");
+        setDefaultCloseOperation(TrackOrderUI.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setSize(400,400);
     }
 
     /**
@@ -74,7 +78,7 @@ public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(93, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -137,16 +141,16 @@ public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(jLabel2)
-                .addGap(43, 43, 43)
+                .addGap(44, 44, 44)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(deliveredRadio)
                     .addComponent(onTheWayRadio)
                     .addComponent(pickedUpRadio))
-                .addContainerGap(173, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
+                .addGap(30, 30, 30))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,9 +164,9 @@ public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(deliveredRadio))
                     .addComponent(jLabel2))
-                .addGap(17, 17, 17)
+                .addGap(37, 37, 37)
                 .addComponent(updateButton)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

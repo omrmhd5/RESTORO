@@ -23,16 +23,8 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jPanel2" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="jPanel1" max="32767" attributes="0"/>
-              </Group>
-          </Group>
+          <Component id="jPanel2" max="32767" attributes="0"/>
+          <Component id="jPanel1" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -184,7 +176,7 @@
                               <Component id="RestaurantPhoneNumber" alignment="0" max="32767" attributes="0"/>
                               <Component id="RestaurantAddress" alignment="0" max="32767" attributes="0"/>
                               <Component id="RestaurantName" alignment="0" max="32767" attributes="0"/>
-                              <Component id="RestaurantID" pref="163" max="32767" attributes="0"/>
+                              <Component id="RestaurantID" pref="175" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
