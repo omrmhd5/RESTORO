@@ -92,9 +92,6 @@ public class DB {
                 Restaurant restaurant = new Restaurant(id, name, address, phone, adminName);
                 restaurant.setIsOpen(isOpen);
                 
-                // Load menu for this restaurant (separate call)
-                // Menu menu = getMenuForRestaurant(id);
-                // restaurant.setMenu(menu);
                 
                 restaurants.add(restaurant);
             }
@@ -123,13 +120,6 @@ public class DB {
             
             int rowsAffected = pstmt.executeUpdate();
             pstmt.close();
-            
-            // If restaurant has an admin, add the relationship
-            if (restaurant.getRestaurantAdmin() != null) {
-                // Code to link restaurant admin goes here
-                // This would require storing the admin in the RestaurantAdmin table
-                // and potentially creating the admin in the User table if not already there
-            }
             
             return rowsAffected > 0;
         } catch (SQLException ex) {
@@ -224,11 +214,9 @@ public ArrayList<User> getAllUsers() {
  * @return true if successful, false otherwise
  */public boolean addUser(User user) {
 try {
-// Start a transaction
 connection.setAutoCommit(false);
 
 
-    // Insert into User table
     String userQuery = "INSERT INTO Userr (user_id, name, email, password, is_logged_in, role, restaurant_id) "
             + "VALUES (?, ?, ?, ?, ?, ?, ?)";
     
@@ -240,7 +228,6 @@ connection.setAutoCommit(false);
     userStmt.setBoolean(5, user.isIsLoggedIn());
     userStmt.setString(6, user.getRole());
     
-    // Set restaurant ID if present
     if (user.getRestaurant() != null) {
         userStmt.setInt(7, user.getRestaurant().getRestaurantID());
     } else {
@@ -250,7 +237,6 @@ connection.setAutoCommit(false);
     int userRowsAffected = userStmt.executeUpdate();
     userStmt.close();
     
-    // Based on role, insert into specific user type table
     boolean typeInsertSuccess = false;
     
     switch (user.getRole().toUpperCase()) {
@@ -270,10 +256,9 @@ connection.setAutoCommit(false);
             break;
         default:
             LOGGER.warning("Unknown user role: " + user.getRole());
-            typeInsertSuccess = true; // Don't fail if role doesn't match specific table
+            typeInsertSuccess = true;
     }
     
-    // Commit or rollback based on success
     if (userRowsAffected > 0 && typeInsertSuccess) {
         connection.commit();
         connection.setAutoCommit(true);
@@ -472,7 +457,7 @@ public boolean removeMenuItem(String name, int menuId) {
 }
 
 public int createCartForCustomer(int customerId) {
-    String query = "INSERT INTO Cart (customer_id) VALUES (?)";  // Ensure your Cart table has customer_id FK
+    String query = "INSERT INTO Cart (customer_id) VALUES (?)";
     System.out.println("Creatimng");
     try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
         pstmt.setInt(1, customerId);
@@ -487,7 +472,7 @@ public int createCartForCustomer(int customerId) {
     } catch (SQLException ex) {
         ex.printStackTrace();
     }
-    return -1; // failed
+    return -1; 
 }
 
 public ArrayList<MenuItem> getCartItems(int cartId) {
@@ -512,7 +497,7 @@ public ArrayList<MenuItem> getCartItems(int cartId) {
             items.add(item);
         }
     } catch (SQLException ex) {
-        ex.printStackTrace(); // Or log with LOGGER
+        ex.printStackTrace(); 
     }
 
     return items;
@@ -687,7 +672,7 @@ public int createMenuForRestaurant(int restaurantId) {
     }
   
    public Cart getCartById(int id) throws SQLException {
-    Cart cart = new Cart();  // This should not trigger DB insertion
+    Cart cart = new Cart();
     cart.setCart_ID(id);
 
     String sql = "SELECT m.item_id, m.name, m.description, m.price, m.category " +

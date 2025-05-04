@@ -205,7 +205,6 @@ public class UpdateRestaurantAvailabilityUI extends javax.swing.JFrame {
 
     private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
 
-// Determine selected status
 if (openRadio.isSelected()) {
     restaurant.setIsOpen(true);
     JOptionPane.showMessageDialog(this, "Restaurant marked as OPEN.");

@@ -54,7 +54,7 @@ public class PromotionsDiscounts {
 
     public static boolean addPromo(int code) {
         for (PromotionsDiscounts promo : allPromotions) {
-            if (promo.code == code) return false; // Already exists
+            if (promo.code == code) return false;
         }
         allPromotions.add(new PromotionsDiscounts(code, "New Promo", true));
         return true;

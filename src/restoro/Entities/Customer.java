@@ -25,7 +25,6 @@ public class Customer extends User {
     private Menu menu = new Menu();
     private Cart cart;
     
-    // Add another constructor that takes name
     public Customer(String name, String email, String password) throws SQLException {
         super("CUSTOMER",name ,email, password);
 this.cart = new Cart(this.ID);

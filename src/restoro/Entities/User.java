@@ -39,7 +39,6 @@ public abstract class User {
         users.add(this);
     }
     
-    // Constructor that takes role
     public User(String role, String name,String email, String password) {
         this.name = name;
         this.ID = generateRandomId();
@@ -51,7 +50,6 @@ public abstract class User {
         saveUserToDB();
     }
     
-    // Constructor that takes restaurant
     public User(String role, String name,String email, String password, Restaurant restaurant) {
         this.name = name;
         this.ID = generateRandomId();
@@ -190,7 +188,6 @@ public abstract class User {
             throw new IllegalArgumentException("Invalid user role: " + role);
     }
     
-    // These should already be set by constructors, but just to be safe:
     user.setID(id);
     user.setIsLoggedIn(isLoggedIn);
     

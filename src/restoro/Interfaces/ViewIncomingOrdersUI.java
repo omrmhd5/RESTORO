@@ -180,13 +180,10 @@ public class ViewIncomingOrdersUI extends javax.swing.JFrame {
     }//GEN-LAST:event_BackButton1ActionPerformed
 
     private void loadOrdersIntoTable() {
-    // Define column names
     String[] columnNames = {"Order ID", "Customer Name", "Restaurant Name", "Cart" ,"Status", "Total Price"};
 
-    // Create table model
     DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
-    // Loop through orders and add rows
     for (Order order : orders) {
         Object[] rowData = {
             order.getOrderID(),

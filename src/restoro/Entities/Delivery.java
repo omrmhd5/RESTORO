@@ -15,7 +15,6 @@ import restoro.ChainOfResponsibilty.ComplaintHandler;
 public class Delivery extends User implements ComplaintHandler {
     private ComplaintHandler next;
     
-    // Add another constructor that takes name
     public Delivery(String name, String email, String password) {
         super("DELIVERY", name, email, password);
     }
