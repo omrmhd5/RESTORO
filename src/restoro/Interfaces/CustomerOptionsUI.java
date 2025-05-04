@@ -210,10 +210,14 @@ public class CustomerOptionsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_ViewPastOrdersActionPerformed
 
     private void TrackOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TrackOrderActionPerformed
-        // TODO add your handling code here:
-        TrackOrderUI to = new TrackOrderUI(customer);
-        to.setVisible(true);
-        this.dispose();
+        try {
+            // TODO add your handling code here:
+            TrackOrderUI to = new TrackOrderUI(customer);
+            to.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerOptionsUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_TrackOrderActionPerformed
 
 

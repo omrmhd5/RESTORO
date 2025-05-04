@@ -4,10 +4,12 @@
  */
 package restoro.Interfaces;
 
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import restoro.Entities.Customer;
 import restoro.Entities.Order;
 import restoro.Entities.Restaurant;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,36 +21,36 @@ public class TrackOrderUI extends javax.swing.JFrame {
      * Creates new form ViewPastOrdersUI
      */
     Customer customer;
-    public TrackOrderUI(Customer customer) {
+    public TrackOrderUI(Customer customer) throws SQLException {
         initComponents();
         System.out.println(customer);
         this.customer = customer;
-        Order order = customer.getOrder();
-        Restaurant restaurant = order.getRestaurant();
+        
+        // Initialize orders from database
+        Order.initializeAllOrders();
+        
+        // Get the first order for this customer
+        Order order = null;
+        ArrayList<Order> customerOrders = new Order().getPastOrders(customer);
+        if (!customerOrders.isEmpty()) {
+            order = customerOrders.get(0);
+        }
+        
         setTitle("Restoro");
         setDefaultCloseOperation(TrackOrderUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
-       setSize(400, 400);
+        setSize(400, 400);
         
         if (order != null) {
-                OrderId.setText(String.valueOf(order.getOrderID()));
-            } else {
-                JOptionPane.showMessageDialog(null, "No order selected.");
-            }
-        
-          if (restaurant != null && restaurant.getRestaurantName() != null) {
-            RestaurantName.setText(restaurant.getRestaurantName());
+            OrderId.setText(String.valueOf(order.getOrderID()));
+            RestaurantName.setText(order.getRestaurant().getRestaurantName());
+            OrderState.setText(order.getStatus());
         } else {
-            JOptionPane.showMessageDialog(this, "No order or restaurant found.");
+            OrderId.setText("No orders found");
+            RestaurantName.setText("No orders found");
+            OrderState.setText("No orders found");
+            JOptionPane.showMessageDialog(this, "No orders found for this customer.");
         }
-          
-           if (order != null) {
-               OrderState.setText(order.getStatus());
-           } else {
-               JOptionPane.showMessageDialog(null, "No order selected.");
-           }
-          
     }
 
     /**

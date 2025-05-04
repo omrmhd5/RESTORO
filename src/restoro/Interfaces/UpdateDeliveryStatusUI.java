@@ -4,6 +4,9 @@
  */
 package restoro.Interfaces;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import restoro.Entities.Delivery;
 import restoro.Entities.Order;
@@ -211,9 +214,13 @@ JOptionPane.showMessageDialog(this, "Order status updated to: " + order.getStatu
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void BackButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButton1ActionPerformed
-        ViewAssignedOrderUI options= new ViewAssignedOrderUI(delivery);
-        options.setVisible(true);
-        this.dispose();
+        try {
+            ViewAssignedOrderUI options= new ViewAssignedOrderUI(delivery);
+            options.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(UpdateDeliveryStatusUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_BackButton1ActionPerformed
 
     /**

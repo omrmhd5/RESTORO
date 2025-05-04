@@ -170,13 +170,19 @@ for (MenuItem item : existingOrder.cart.getCartItems()) {
     
     public ArrayList<Order> getPastOrders(Customer customer) {
     ArrayList<Order> pastOrders = new ArrayList<>();
-        for (Order order : orders) {
-            if (order.customer != null && order.customer.equals(customer)) {
+    System.out.println("Searching for orders for customer: " + customer.getName() + " (ID: " + customer.getID() + ")");
+    for (Order order : orders) {
+        if (order.customer != null) {
+            System.out.println("Comparing with order customer: " + order.customer.getName() + " (ID: " + order.customer.getID() + ")");
+            if (order.customer.equals(customer)) {
+                System.out.println("Match found! Adding order ID: " + order.orderID);
                 pastOrders.add(order);
             }
         }
-        return pastOrders;
     }
+    System.out.println("Found " + pastOrders.size() + " past orders for customer");
+    return pastOrders;
+}
 
      public void reOrderOrder(int orderID) throws SQLException {
         Order o = getOrder(orderID);

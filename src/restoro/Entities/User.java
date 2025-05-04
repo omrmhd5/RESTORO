@@ -213,6 +213,17 @@ public abstract class User {
         return "name=" + name + ", email=" + email;
     }
     
-
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        User other = (User) obj;
+        return ID == other.ID && email.equals(other.email);
+    }
+    
+    @Override
+    public int hashCode() {
+        return 31 * ID + email.hashCode();
+    }
 
 }
