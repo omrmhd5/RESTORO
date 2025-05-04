@@ -25,7 +25,7 @@ public class UpdateRestaurantAvailabilityUI extends javax.swing.JFrame {
         setTitle("Restoro");
         setDefaultCloseOperation(UpdateRestaurantAvailabilityUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setSize(400,400);
+        setSize(450,400);
         
 
     }
