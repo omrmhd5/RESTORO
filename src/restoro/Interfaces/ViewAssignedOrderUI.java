@@ -4,6 +4,7 @@
  */
 package restoro.Interfaces;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import restoro.Entities.Delivery;
 import restoro.Entities.Order;
@@ -22,7 +23,7 @@ public class ViewAssignedOrderUI extends javax.swing.JFrame {
     Restaurant restaurant;
     ArrayList<Order> orders;
     
-    public ViewAssignedOrderUI(Delivery delivery) {
+    public ViewAssignedOrderUI(Delivery delivery) throws SQLException {
         initComponents();     
         this.delivery = delivery;
         setTitle("Restoro");

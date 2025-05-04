@@ -4,7 +4,10 @@
  */
 package restoro.Interfaces;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import restoro.Entities.Customer;
 import restoro.Entities.MenuItem;
 import restoro.Entities.Restaurant;
@@ -28,7 +31,7 @@ public class ViewMenuUI extends javax.swing.JFrame {
             setTitle("Restoro");
         setDefaultCloseOperation(ViewMenuUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setSize(500,600);
+        setSize(500,700);
     this.customer = customer;
     this.restaurant = restaurant;
     try {
@@ -362,9 +365,13 @@ public class ViewMenuUI extends javax.swing.JFrame {
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
 
-        SearchRestaurantUI search= new SearchRestaurantUI();
-        search.setVisible(true);
-        this.dispose();
+        try {
+            SearchRestaurantUI search= new SearchRestaurantUI();
+            search.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewMenuUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_BackButtonActionPerformed
 
     /**

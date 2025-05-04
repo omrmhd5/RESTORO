@@ -1,5 +1,6 @@
 package restoro.Entities;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import restoro.DB;
 
@@ -16,32 +17,58 @@ public abstract class User {
 
     public User() {
     }
-
     
-    public User(String role, String email, String password) {
+    public User(int id, String role, String name,String email, String password) {
+        this.name = name;
+        this.ID = id;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.isLoggedIn = false;
+        users.add(this);
+    }
+    
+    public User(int id,String role, String name,String email, String password, Restaurant restaurant) {
+        this.name = name;
+        this.ID = id;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.isLoggedIn = false;
+        this.restaurant = restaurant;
+        users.add(this);
+    }
+    
+    // Constructor that takes role
+    public User(String role, String name,String email, String password) {
+        this.name = name;
         this.ID = generateRandomId();
         this.email = email;
         this.password = password;
         this.role = role;
+        this.isLoggedIn = false;
         users.add(this);
         saveUserToDB();
     }
     
-    public User(String name, String email, String password, Restaurant restaurant) {
-        this.ID = generateRandomId();
+    // Constructor that takes restaurant
+    public User(String role, String name,String email, String password, Restaurant restaurant) {
         this.name = name;
+        this.ID = generateRandomId();
         this.email = email;
         this.password = password;
+        this.role = role;
         this.isLoggedIn = false;
         this.restaurant = restaurant;
         users.add(this);
         saveUserToDB();
     }
     
-    public static void loadUsersFromDB() {
+    public static void initializeAllUsers() {
+    if (users.isEmpty()) {
         users = DB.getInstance().getAllUsers();
     }
-    
+}
     public boolean saveUserToDB() {
         return DB.getInstance().addUser(this);
     }
@@ -144,32 +171,32 @@ public abstract class User {
     }
     
      public static User createUser(int id, String role, String name, String email, String password, 
-                                 boolean isLoggedIn, Restaurant restaurant) {
-        User user = null;
-        
-        switch (role.toUpperCase()) {
-            case "CUSTOMER":
-                user = new Customer(name, email, password);
-                break;
-            case "ADMIN":
-                user = new Admin(name, email, password);
-                break;
-            case "RESTAURANT_ADMIN":
-                user = new RestaurantAdmin(name, email, password, restaurant);
-                break;
-            case "DELIVERY":
-                user = new Delivery(name, email, password);
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid user role: " + role);
-        }
-        
-        user.setID(id);
-        user.setRole(role);
-        user.setIsLoggedIn(isLoggedIn);
-        
-        return user;
+                               boolean isLoggedIn, Restaurant restaurant) throws SQLException {
+    User user = null;
+    
+    switch (role.toUpperCase()) {
+        case "CUSTOMER":
+            user = new Customer(name, email, password);
+            break;
+        case "ADMIN":
+            user = new Admin(name, email, password);
+            break;
+        case "RESTAURANT_ADMIN":
+            user = new RestaurantAdmin(name, email, password, restaurant);
+            break;
+        case "DELIVERY":
+            user = new Delivery(name, email, password);
+            break;
+        default:
+            throw new IllegalArgumentException("Invalid user role: " + role);
     }
+    
+    // These should already be set by constructors, but just to be safe:
+    user.setID(id);
+    user.setIsLoggedIn(isLoggedIn);
+    
+    return user;
+}
     
     public abstract boolean register(String name, String email, String password);
     public abstract boolean register(String name, String email, String password, Restaurant restaurant);

@@ -4,6 +4,7 @@
 
 package restoro;
 
+import java.sql.SQLException;
 import restoro.Entities.Admin;
 import restoro.Entities.Complaint;
 import restoro.Entities.Customer;
@@ -14,7 +15,9 @@ import restoro.Entities.Order;
 import restoro.Entities.PromotionsDiscounts;
 import restoro.Entities.Restaurant;
 import restoro.Entities.RestaurantAdmin;
+import restoro.Entities.User;
 import restoro.Interfaces.StartWindow;
+import restoro.Strategy.Visa;
 
 /**
  *
@@ -22,105 +25,144 @@ import restoro.Interfaces.StartWindow;
  */
 public class RESTORO {
 
-    public static void main(String[] args) {
-        
-//         // Create a dummy customer and register
-//        Customer customer = new Customer("Omar", "omar@example.com", "1234");
-//        customer.register("Omar", "omar@example.com", "1234");
-//
-//        // Set payment method
-//        customer.setPaymentMethod(new CreditCard());
-//
-//        // Add items to cart
-//        customer.addToCart(new MenuItem("Margherita Pizza", 120));
-//        customer.addToCart(new MenuItem("Pepperoni Pizza", 150));
-//
-//        // Place order
-//        Order order = customer.placeOrder();
-//
-//        // Show UI to track order
-//        new TrackOrderUI(customer).setVisible(true);
-//        
-//        
-Delivery dummyDelivery = new Delivery("1", "1", "1");
-Customer customer = new Customer("1", "1", "1");
-MenuItem item1 = new MenuItem(1, "Burger", "Juicy grilled beef burger", 5.99, "Main Course");
-MenuItem item2 = new MenuItem(2, "Fries", "Crispy golden fries", 2.99, "Sides");
-MenuItem item3 = new MenuItem(3, "Cola", "Chilled soft drink", 1.49, "Drinks");
+    public static void main(String[] args) throws SQLException {
+        User.initializeAllUsers();
+        Restaurant.initializeAllRestaurants();
+        Order.initializeAllOrders();
+             // Create users with different roles for demonstration
+               System.out.println("\n--- Creating System Users ---");
+            Admin systemAdmin = new Admin("John Admin", "1", "1");
+            
+            
+            System.out.println("\n--- Creating Restaurants ---");
+Restaurant tacoShack = new Restaurant("Taco Shack", "123 Spicy Lane", "555-123-4567", true, null);
+Restaurant pizzaPlace = new Restaurant("Pizza Place", "456 Cheese Avenue", "555-234-5678", true, null);
+Restaurant burgerHub = new Restaurant("Burger Hub", "789 Patty Road", "555-345-6789", true, null);
+            
+            System.out.println("\n--- Creating Restaurant Admins ---");
+RestaurantAdmin tacoAdmin = new RestaurantAdmin("Carlos Manager", "carlos@tacoshack.com", "taco123", tacoShack);
+RestaurantAdmin pizzaAdmin = new RestaurantAdmin("Maria Manager", "maria@pizzaplace.com", "pizza123", pizzaPlace);
+RestaurantAdmin burgerAdmin = new RestaurantAdmin("Ahmed Manager", "ahmed@burgerhub.com", "burger123", burgerHub);
+            
+            System.out.println("\n--- Linking Admins to Restaurants ---");
+            tacoShack.setRestaurantAdmin(tacoAdmin);
+            pizzaPlace.setRestaurantAdmin(pizzaAdmin);
+            burgerHub.setRestaurantAdmin(burgerAdmin);
+            
+            // Create menus for each restaurant
+            System.out.println("\n--- Creating Menus and Menu Items ---");
+            
+            // Taco Shack Menu
+            Menu tacoMenu = new Menu("Taco Shack Menu",tacoShack.getRestaurantID());
+            tacoMenu.addItem(new MenuItem(101, "Beef Taco", "Seasoned ground beef in corn tortilla", 3.99, "Main Course"));
+            tacoMenu.addItem(new MenuItem(102, "Chicken Quesadilla", "Grilled chicken with melted cheese", 5.49, "Main Course"));
+            tacoMenu.addItem(new MenuItem(103, "Nachos", "Tortilla chips with cheese and jalapeños", 4.29, "Appetizer"));
+            tacoMenu.addItem(new MenuItem(104, "Mexican Rice", "Traditional seasoned rice", 2.49, "Sides"));
+            tacoMenu.addItem(new MenuItem(105, "Horchata", "Sweet rice drink with cinnamon", 1.99, "Drinks"));
+            
+            // Pizza Place Menu
+            Menu pizzaMenu = new Menu("Pizza Place Menu",pizzaPlace.getRestaurantID());
+            pizzaMenu.addItem(new MenuItem(201, "Margherita Pizza", "Classic tomato and mozzarella", 8.99, "Main Course"));
+            pizzaMenu.addItem(new MenuItem(202, "Pepperoni Pizza", "Pepperoni and cheese", 10.99, "Main Course"));
+            pizzaMenu.addItem(new MenuItem(203, "Garlic Bread", "Toasted bread with garlic butter", 3.49, "Appetizer"));
+            pizzaMenu.addItem(new MenuItem(204, "Caesar Salad", "Romaine lettuce with Caesar dressing", 4.99, "Sides"));
+            pizzaMenu.addItem(new MenuItem(205, "Soda", "Assorted soft drinks", 1.79, "Drinks"));
+            
+            // Burger Hub Menu
+            Menu burgerMenu = new Menu("Burger Hub Menu",burgerHub.getRestaurantID());
+            burgerMenu.addItem(new MenuItem(301, "Classic Burger", "Beef patty with lettuce and tomato", 6.99, "Main Course"));
+            burgerMenu.addItem(new MenuItem(302, "Cheese Burger", "Classic burger with American cheese", 7.49, "Main Course"));
+            burgerMenu.addItem(new MenuItem(303, "Onion Rings", "Breaded and deep-fried onion rings", 3.29, "Sides"));
+            burgerMenu.addItem(new MenuItem(304, "Fries", "Crispy potato fries", 2.99, "Sides"));
+            burgerMenu.addItem(new MenuItem(305, "Milkshake", "Creamy vanilla milkshake", 3.99, "Drinks"));
+          
+            
+             System.out.println("\n--- Creating Delivery Personnel ---");
+            Delivery tacoDelivery = new Delivery("Roberto Driver", "1", "1");
+            Delivery pizzaDelivery = new Delivery("Susan Driver", "susan@delivery.com", "delivery456");
+            Delivery burgerDelivery = new Delivery("Ahmed Driver", "ahmed@delivery.com", "delivery789");
+            
+            // Create customers
+            System.out.println("\n--- Creating Customers ---");
+            Customer customer1 = new Customer("Alice Smith", "1", "1");
+            Customer customer2 = new Customer("Bob Johnson", "bob@email.com", "customer456");
+            Customer customer3 = new Customer("Charlie Brown", "charlie@email.com", "customer789");
+            
+            // Setup complaint handling chain
+            System.out.println("\n--- Setting Up Complaint Handling Chain ---");
+            tacoDelivery.setNext(tacoAdmin);
+            tacoAdmin.setNext(systemAdmin);
+            
+            pizzaDelivery.setNext(pizzaAdmin);
+            pizzaAdmin.setNext(systemAdmin);
+            
+            burgerDelivery.setNext(burgerAdmin);
+            burgerAdmin.setNext(systemAdmin);
+            
+            // Set up promotions
+            System.out.println("\n--- Setting Up Promotions ---");
+            PromotionsDiscounts weekendPromo = new PromotionsDiscounts(2025, "Weekend Special: 15% OFF", true);
+            PromotionsDiscounts newUserPromo = new PromotionsDiscounts(2025, "New User: First Order 20% OFF", true);
+            PromotionsDiscounts holidayPromo = new PromotionsDiscounts(2025, "Holiday Season: Buy 1 Get 1 Free", false);
+            
+            // Simulate customer ordering process
+            System.out.println("\n--- Simulating Customer Orders ---");
+            
+            // Add items to customer1's cart for Taco Shack
+            System.out.println("\nCustomer 1 ordering from Taco Shack:");
+            customer1.getCart().addToCart(tacoMenu.viewAllItems().get(0)); // Add beef taco
+            customer1.getCart().addToCart(tacoMenu.viewAllItems().get(3)); // Add mexican rice
+            customer1.getCart().addToCart(tacoMenu.viewAllItems().get(4)); // Add horchata
+            Order order1 = new Order(customer1.getCart(), customer1, tacoDelivery, tacoShack, "Placed");
+            System.out.println(order1.toString());
+            
+            // Add items to customer2's cart for Pizza Place
+            System.out.println("\nCustomer 2 ordering from Pizza Place:");
+            customer2.getCart().addToCart(pizzaMenu.viewAllItems().get(1)); // Add pepperoni pizza
+            customer2.getCart().addToCart(pizzaMenu.viewAllItems().get(2)); // Add garlic bread
+            customer2.getCart().addToCart(pizzaMenu.viewAllItems().get(4)); // Add soda
+            Order order2 = new Order(customer2.getCart(), customer2, pizzaDelivery, pizzaPlace, "Placed");
+            System.out.println(order2.toString());
+            
+            // Add items to customer3's cart for Burger Hub
+            System.out.println("\nCustomer 3 ordering from Burger Hub:");
+            customer3.getCart().addToCart(burgerMenu.viewAllItems().get(1)); // Add cheese burger
+            customer3.getCart().addToCart(burgerMenu.viewAllItems().get(3)); // Add fries
+            customer3.getCart().addToCart(burgerMenu.viewAllItems().get(4)); // Add milkshake
+            Order order3 = new Order(customer3.getCart(), customer3, burgerDelivery, burgerHub, "Placed");
+            System.out.println(order3.toString());
+            
+            // Process orders through different states
+            System.out.println("\n--- Processing Orders Through Different States ---");
+            
+//            System.out.println("\nUpdating Order 1 Status:");
+//            order1.setState(new OrderPreparedState());
+//            order1.processOrder();
+//            
+//            System.out.println("\nUpdating Order 2 Status:");
+//            order2.setState(new OrderPreparedState());
+//            order2.processOrder();
+//            order2.setState(new OrderDeliveredState());
+//            order2.processOrder();
+//            
+//            System.out.println("\n--- Handling a Customer Complaint ---");
+//            Complaint complaint = new Complaint(burgerDelivery, systemAdmin, burgerAdmin);
+//            complaint.processComplaint("Order was cold when delivered", customer3, order3);
+            
+            // Launch the GUI if needed
+            System.out.println("\n--- Launching GUI Interface ---");
+            new StartWindow().setVisible(true);
+            
+            System.out.println("\nRESTORO system initialized successfully!");
+            
+            
+Complaint complaintSystem = new Complaint(tacoDelivery, systemAdmin, tacoAdmin);
 
-Menu dummyMenu = new Menu("Dummy Menu");
-dummyMenu.addItem(item1);
-dummyMenu.addItem(item2);
-dummyMenu.addItem(item3);
+complaintSystem.fileComplaint("delivery was late and package was damaged.");
+complaintSystem.fileComplaint("admin did not approve refund.");
+complaintSystem.fileComplaint("Restaurant RestaurantAdmin food quality is bad.");
+    }
+        
 
-RestaurantAdmin dummyAdmin = new RestaurantAdmin(
-    "DummyAdmin",
-    "1",
-    "2",
-    null // temporarily set to null
-);
-PromotionsDiscounts promo = new PromotionsDiscounts(2025, "20% OFF for Eid Offer", true);
-
-
-// Create the restaurant and assign the admin
-Restaurant dummyRestaurant = new Restaurant(
-    "Ahmed",
-    "123 Dummy Street",
-    "123-456-7890",
-    true,
-    dummyMenu,
-    dummyAdmin
-);
-
-
-        Order o1 = new Order(customer.getCart(),customer,dummyDelivery,dummyRestaurant,"Placed");
-        Order o2 = new Order(customer.getCart(),customer,dummyDelivery,dummyRestaurant,"Yes");
-
-
-// Set the restaurant on the admin now that it exists
-dummyAdmin.setRestaurant(dummyRestaurant);
-        System.out.println(o1.toString());
-
-
-        new StartWindow().setVisible(true);
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-//        Delivery delivery = new Delivery("DeliveryGuy", "delivery@example.com", "pass123");
-//Admin admin = new Admin("AdminGuy", "admin@example.com", "admin123");
-//Restaurant restaurant = new Restaurant(); // assuming it has a default constructor
-//RestaurantAdmin restaurantAdmin = new RestaurantAdmin("RestAdmin", "restadmin@example.com", "pass456", restaurant);
-//
-//Complaint complaintSystem = new Complaint(delivery, admin, restaurantAdmin);
-//
-//complaintSystem.fileComplaint("delivery was late and package was damaged.");
-//complaintSystem.fileComplaint("admin did not approve refund.");
-//complaintSystem.fileComplaint("Restaurant RestaurantAdmin food quality is bad.");
 
     }
-}

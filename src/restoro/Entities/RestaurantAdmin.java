@@ -8,6 +8,7 @@ package restoro.Entities;
  * @author omrmh
  */
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import restoro.ChainOfResponsibilty.ComplaintHandler;
 
@@ -16,10 +17,10 @@ public class RestaurantAdmin extends User implements ComplaintHandler {
     private Restaurant restaurant;
     
     public RestaurantAdmin(String name, String email, String password, Restaurant restaurant) {
-        super(name, email, password);
+        super("RESTAURANT_ADMIN", name ,email, password, restaurant);
         this.restaurant = restaurant;
     }
-
+    
     public RestaurantAdmin() {
     }
     
@@ -62,7 +63,7 @@ public class RestaurantAdmin extends User implements ComplaintHandler {
         }
     }
     
-    public ArrayList<Order> getIncomingOrders(Restaurant restaurant) {
+    public ArrayList<Order> getIncomingOrders(Restaurant restaurant) throws SQLException {
         Order order = new Order();
         ArrayList<Order> incomingOrders = order.getIncomingOrders(restaurant);
         return incomingOrders;

@@ -4,6 +4,7 @@
  */
 package restoro.Interfaces;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import restoro.Entities.Order;
@@ -20,7 +21,7 @@ public class ViewIncomingOrdersUI extends javax.swing.JFrame {
      */
     RestaurantAdmin restaurantAdmin;
     ArrayList<Order> orders;
-    public ViewIncomingOrdersUI(RestaurantAdmin restaurantAdmin) {
+    public ViewIncomingOrdersUI(RestaurantAdmin restaurantAdmin) throws SQLException {
         initComponents();
         setTitle("Restoro");
         setDefaultCloseOperation(ViewIncomingOrdersUI.EXIT_ON_CLOSE);

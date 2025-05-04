@@ -8,6 +8,9 @@ import javax.swing.JOptionPane;
 import restoro.Entities.Cart;
 import restoro.Entities.Customer;
 import restoro.Entities.PromotionsDiscounts;
+import restoro.Strategy.ApplePay;
+import restoro.Strategy.CashOnDelivery;
+import restoro.Strategy.Visa;
 
 /**
  *
@@ -43,18 +46,21 @@ public class MakePaymentUI extends javax.swing.JFrame {
         // Example if using JLabel named applePayLabel
     applePayLabel.addMouseListener(new java.awt.event.MouseAdapter() {
     public void mouseClicked(java.awt.event.MouseEvent evt) {
+        customer.setPaymentMethod(new ApplePay());
         JOptionPane.showMessageDialog(null, "Payment successful using Apple Pay!");
     }
     });
 
     cashLabel.addMouseListener(new java.awt.event.MouseAdapter() {
     public void mouseClicked(java.awt.event.MouseEvent evt) {
+                customer.setPaymentMethod(new CashOnDelivery());
         JOptionPane.showMessageDialog(null, "Payment successful using Cash!");
     }
     });
 
     cardLabel.addMouseListener(new java.awt.event.MouseAdapter() {
     public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        customer.setPaymentMethod(new Visa());
         cardNumberField.setVisible(true);
         cvvField.setVisible(true);
         CardNumberLabel.setVisible(true);

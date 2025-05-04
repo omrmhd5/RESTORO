@@ -4,6 +4,7 @@
  */
 package restoro.Interfaces;
 
+import java.sql.SQLException;
 import restoro.Entities.Customer;
 import restoro.Entities.Order;
 
@@ -17,15 +18,16 @@ public class ViewPastOrdersUI extends javax.swing.JFrame {
      * Creates new form ViewPastOrders
      */
     Customer customer;
-    public ViewPastOrdersUI(Customer customer) {
+    public ViewPastOrdersUI(Customer customer) throws SQLException {
         initComponents();
+                Order.initializeAllOrders();
         this.customer = customer;
         Order order = new Order();
         PastOrders.setText(order.getPastOrders(customer).toString());        
         setTitle("Restoro");
         setDefaultCloseOperation(TrackOrderUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setSize()
+//        setSize();
     }
 
     /**

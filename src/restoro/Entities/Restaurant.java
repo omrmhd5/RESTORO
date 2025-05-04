@@ -2,6 +2,7 @@ package restoro.Entities;
 
 import java.util.ArrayList;
 import restoro.DB;
+import static restoro.Entities.User.users;
 
 public class Restaurant{
     private int restaurantID;
@@ -14,33 +15,36 @@ public class Restaurant{
     
     private static ArrayList<Restaurant> allRestaurants = new ArrayList<>();
 
-    public Restaurant(String restaurantName, String restaurantAddress, String restaurantPhoneNumber, boolean isOpen, Menu menu, RestaurantAdmin restaurantAdmin) {
+    public Restaurant(String restaurantName, String restaurantAddress, String restaurantPhoneNumber, boolean isOpen, RestaurantAdmin restaurantAdmin) {
         this.restaurantID = generateRandomId();
         this.restaurantName = restaurantName;
         this.restaurantAddress = restaurantAddress;
         this.restaurantPhoneNumber = restaurantPhoneNumber;
         this.isOpen = isOpen;
-        this.menu = menu;
+//        this.menu = menu;
         this.restaurantAdmin = restaurantAdmin;
         allRestaurants.add(this);
         DB.getInstance().addRestaurant(this);
     }
     
-    public Restaurant(int ID,String restaurantName, String restaurantAddress, String restaurantPhoneNumber,String restaurantAdmin) {
+    public Restaurant(int ID, String restaurantName, String restaurantAddress, String restaurantPhoneNumber,String restaurantAdmin) {
         this.restaurantID = ID;
         this.restaurantName = restaurantName;
         this.restaurantAddress = restaurantAddress;
         this.restaurantPhoneNumber = restaurantPhoneNumber;
         allRestaurants.add(this);
+                DB.getInstance().addRestaurant(this);
     }
     
-
+      public static void initializeAllRestaurants() {
+    if (allRestaurants.isEmpty()) {
+        allRestaurants = DB.getInstance().getAllRestaurants();
+    }
+}
+    
     public Restaurant() {
     }
     
-     public static void loadRestaurantsFromDB() {
-        allRestaurants = DB.getInstance().getAllRestaurants();
-    }
     
     public Restaurant searchForRestaurant(String name) {
         for (Restaurant restaurant : allRestaurants) {
@@ -68,8 +72,16 @@ public class Restaurant{
     }
 
     public Menu getMenu() {
-        return menu;
+
+    if (this.menu == null) {
+
+        this.menu = DB.getInstance().getMenuIdForRestaurant(this.restaurantID);
+
     }
+
+    return this.menu;
+
+}
 
     public RestaurantAdmin getRestaurantAdmin() {
         return restaurantAdmin;
@@ -98,6 +110,12 @@ public class Restaurant{
     public void setRestaurantPhoneNumber(String restaurantPhoneNumber) {
         this.restaurantPhoneNumber = restaurantPhoneNumber;
     }
+
+    public void setRestaurantAdmin(RestaurantAdmin restaurantAdmin) {
+        this.restaurantAdmin = restaurantAdmin;
+    }
+    
+    
     
     
     
@@ -116,7 +134,6 @@ public class Restaurant{
     public void UpdateRestaurantAvailabilty(int id, boolean status) {
         boolean updated = DB.getInstance().updateRestaurantStatus(id, status);
         if (updated) {
-            loadRestaurantsFromDB();
             for (Restaurant restaurant : allRestaurants) {
                 if (restaurant.getRestaurantID() == id) {
                     restaurant.setIsOpen(status);
@@ -128,16 +145,17 @@ public class Restaurant{
         }
     }
 
-    public boolean RemoveRestaurant(String restaurantName) {
-        boolean removed = DB.getInstance().removeRestaurant(restaurantName);
-        
-        if (removed) {
-            loadRestaurantsFromDB();
-                    System.out.println("Restaurant successfully removed");
-                }
-    System.out.println("No restaurant found with name: " + restaurantName);
-    return false;
+    public static boolean RemoveRestaurant(String restaurantName) {
+    boolean removed = DB.getInstance().removeRestaurant(restaurantName);
+    
+    if (removed) {
+        System.out.println("Restaurant successfully removed");
+    } else {
+        System.out.println("No restaurant found with name: " + restaurantName);
     }
+
+    return removed;
+}
 
     @Override
 public String toString() {

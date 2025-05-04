@@ -4,6 +4,7 @@
  */
 package restoro.Interfaces;
 
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import restoro.Entities.Customer;
 import restoro.Entities.Restaurant;
@@ -13,13 +14,14 @@ import restoro.Entities.Restaurant;
  * @author omrmh
  */
 public class SearchRestaurantUI extends javax.swing.JFrame {
-    private Customer customer = new Customer();
+    private Customer customer;
     private Restaurant restaurant;
 
     /**
      * Creates new form SearchRestaurantUI
      */
-    public SearchRestaurantUI() {
+    public SearchRestaurantUI() throws SQLException {
+        this.customer = new Customer();
         initComponents();
         setTitle("Restoro");
         setDefaultCloseOperation(SearchRestaurantUI.EXIT_ON_CLOSE);
@@ -280,7 +282,6 @@ public class SearchRestaurantUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SearchRestaurantUI().setVisible(true);
             }
         });
     }

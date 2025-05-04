@@ -18,12 +18,14 @@ public class Menu implements MenuViewer {
     private String MenuTitle; 
     private int menu_ID;
 
-    public Menu(String MenuTitle) {
-        items = DB.getInstance().getMenuItemsByMenuId(menu_ID);
-        this.MenuTitle = MenuTitle;
-    }
+    public Menu(String MenuTitle, int restaurantID) {
+    this.MenuTitle = MenuTitle;
+    this.menu_ID = DB.getInstance().createMenuForRestaurant(restaurantID);
+    this.items = new ArrayList<>(); 
+}
 
     public Menu() {
+        items = DB.getInstance().getMenuItemsByMenuId(menu_ID);
     }
     
 
@@ -37,6 +39,10 @@ public class Menu implements MenuViewer {
         return menu_ID;
     }
 
+    public void setMenu_ID(int menu_ID) {
+        this.menu_ID = menu_ID;
+    }
+    
     public String getMenuTitle() {
         return MenuTitle;
     }
@@ -63,11 +69,12 @@ public class Menu implements MenuViewer {
         }
         return null;
     }
-
-    public void addItem(MenuItem item) {
-         DB.getInstance().addMenuItem(item);
-        items.add(item);
-    }
+    
+public void addItem(MenuItem item) {
+    item.setMenu_id(this.menu_ID);
+    DB.getInstance().addMenuItem(item);
+    items.add(item);
+}
 
     public boolean removeItem(String name) {
         for (MenuItem item : items) {

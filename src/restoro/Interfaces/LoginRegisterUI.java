@@ -4,6 +4,9 @@
  */
 package restoro.Interfaces;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import restoro.Entities.Admin;
 import restoro.Entities.Customer;
@@ -190,37 +193,41 @@ public class LoginRegisterUI extends javax.swing.JFrame {
                 || (selectedRole.equalsIgnoreCase("restaurantadmin") && user instanceof RestaurantAdmin)
                 || (selectedRole.equalsIgnoreCase("deliverystaff") && user instanceof Delivery)) {
 
-            found = true;
-
-            // Assign the user to the appropriate type
-            switch (selectedRole.toLowerCase()) {
-                case "customer":
-                    newCustomer = (Customer) user;
-                    this.dispose();
-                    CustomerOptionsUI CO = new CustomerOptionsUI(newCustomer);
-                    CO.setVisible(true);
-                    break;
-                case "admin":
-                    newAdmin = (Admin) user;
-                    this.dispose();
-                    AdminOptionsUI AO = new AdminOptionsUI(newAdmin);
-                    AO.setVisible(true);
-                    break;
-                case "restaurantadmin":
-                    newRestaurantAdmin = (RestaurantAdmin) user;
-                    this.dispose();
-                    RestaurantAdminOptionsUI RAO = new RestaurantAdminOptionsUI(newRestaurantAdmin);
-                    RAO.setVisible(true);
-                    break;
-                case "deliverystaff":
-                    newDelivery = (Delivery) user;
-                    this.dispose();
-                    ViewAssignedOrderUI VAO = new ViewAssignedOrderUI(newDelivery);
-                    VAO.setVisible(true);
-                    
-                    break;
+            try {
+                found = true;
+                
+                // Assign the user to the appropriate type
+                switch (selectedRole.toLowerCase()) {
+                    case "customer":
+                        newCustomer = (Customer) user;
+                        this.dispose();
+                        CustomerOptionsUI CO = new CustomerOptionsUI(newCustomer);
+                        CO.setVisible(true);
+                        break;
+                    case "admin":
+                        newAdmin = (Admin) user;
+                        this.dispose();
+                        AdminOptionsUI AO = new AdminOptionsUI(newAdmin);
+                        AO.setVisible(true);
+                        break;
+                    case "restaurantadmin":
+                        newRestaurantAdmin = (RestaurantAdmin) user;
+                        this.dispose();
+                        RestaurantAdminOptionsUI RAO = new RestaurantAdminOptionsUI(newRestaurantAdmin);
+                        RAO.setVisible(true);
+                        break;
+                    case "deliverystaff":
+                        newDelivery = (Delivery) user;
+                        this.dispose();
+                        ViewAssignedOrderUI VAO = new ViewAssignedOrderUI(newDelivery);
+                        VAO.setVisible(true);
+                        
+                        break;
+                }
+                break;
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginRegisterUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-            break;
         }
     }
 }
@@ -233,32 +240,32 @@ public class LoginRegisterUI extends javax.swing.JFrame {
                 JOptionPane.YES_NO_OPTION);
 
         if (choice == JOptionPane.YES_OPTION) {
-            User newUser = null;
-
-            switch (selectedRole.toLowerCase()) {
-                case "customer":
-                    newCustomer = new Customer("New User", email, password);
-                    
-        Order o1 = new Order(null,newCustomer,null,null,"Placed");
-        Order o2 = new Order(null,newCustomer,null,null,"Yes");
-                    
-                    break;
-                case "admin":
-                    newAdmin = new Admin("New Admin", email, password);
-                                JOptionPane.showMessageDialog(this, "User registered successfully. You can now log in.");
-
-                    break;
-                case "restaurantadmin":
-                    JOptionPane.showMessageDialog(this, "User Can Not Register Himself.");
-                    break;
-                case "deliverystaff":
-                    newUser = new Delivery("New Staff", email, password);
-                                JOptionPane.showMessageDialog(this, "User registered successfully. You can now log in.");
-
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(this, "Unknown user type.");
-                    
+            try {
+                User newUser = null;
+                
+                switch (selectedRole.toLowerCase()) {
+                    case "customer":
+                        newCustomer = new Customer("New User", email, password);
+                        break;
+                    case "admin":
+                        newAdmin = new Admin("New Admin", email, password);
+                        JOptionPane.showMessageDialog(this, "User registered successfully. You can now log in.");
+                        
+                        break;
+                    case "restaurantadmin":
+                        JOptionPane.showMessageDialog(this, "User Can Not Register Himself.");
+                        break;
+                    case "deliverystaff":
+                        newUser = new Delivery("New Staff", email, password);
+                        JOptionPane.showMessageDialog(this, "User registered successfully. You can now log in.");
+                        
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(this, "Unknown user type.");
+                        
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(LoginRegisterUI.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }

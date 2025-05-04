@@ -4,6 +4,7 @@
  */
 package restoro.Entities;
 
+import java.sql.SQLException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,7 +19,7 @@ import static org.junit.Assert.*;
 public class UserTest {
 
     @Test
-    public void testCustomerLoginSuccess() {
+    public void testCustomerLoginSuccess() throws SQLException {
         Customer customer = new Customer("Hatem", "hatem@example.com", "1234");
 
         boolean loggedIn = customer.login("hatem@example.com", "1234");

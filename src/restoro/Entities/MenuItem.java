@@ -16,14 +16,13 @@ public class MenuItem {
     private int menu_id;
     
 
-    public MenuItem(int id, String name, String description, double price, String category ) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.category=category;
-        
-    }
+   public MenuItem(int id, String name, String description, double price, String category) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.price = price;
+    this.category = category;
+}
 
     public MenuItem() {
     }

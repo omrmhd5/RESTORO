@@ -191,7 +191,7 @@ public class DeleteRestaurant extends javax.swing.JFrame {
        );
 
       if (confirm == JOptionPane.YES_OPTION) {
-         //boolean deleted = Restaurant.RemoveRestaurant(restaurantName);
+         boolean deleted = Restaurant.RemoveRestaurant(restaurantName);
         if (deleted) {
             JOptionPane.showMessageDialog(this, "Restaurant \"" + restaurantName + "\" deleted successfully.");
         } else {

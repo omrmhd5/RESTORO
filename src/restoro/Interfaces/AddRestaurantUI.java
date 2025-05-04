@@ -291,13 +291,13 @@ public class AddRestaurantUI extends javax.swing.JFrame {
     }//GEN-LAST:event_RestaurantIDActionPerformed
 
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
-
-    String name = RestaurantName.getText();
+int ID = Integer.parseInt(RestaurantID.getText());
+String name = RestaurantName.getText();
     String address = RestaurantAddress.getText().trim();
     String phoneNumber = RestaurantPhoneNumber.getText().trim();
     String adminName = RestaurantAdminName.getText().trim();
 
-    Restaurant newRestaurant = new Restaurant(id, name, address, phoneNumber, adminName);
+    Restaurant newRestaurant = new Restaurant(ID,name, address, phoneNumber, adminName);
 
     System.out.println("Restaurant added " + name);
     }//GEN-LAST:event_AddButtonActionPerformed

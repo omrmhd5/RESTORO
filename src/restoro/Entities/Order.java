@@ -8,7 +8,6 @@ import restoro.State.OrderPlacedState;
 import restoro.State.OrderState;
 
 
-
 public class Order {
     private int orderID;
     private Cart cart;
@@ -35,8 +34,8 @@ public class Order {
         System.out.println("Order placed with ID: " + orderID);
     }
     public Order(Order existingOrder) throws SQLException {
-        this.cart = new Cart();
-        for (MenuItem item : existingOrder.cart.getCartItems()) {
+this.cart = new Cart(existingOrder.customer.getID());
+for (MenuItem item : existingOrder.cart.getCartItems()) {
             this.cart.addToCart(item);
         }
         this.customer = existingOrder.customer;
@@ -49,10 +48,13 @@ public class Order {
         System.out.println("Reordered from Order ID: " + existingOrder.orderID + " -> New Order ID: " + this.orderID);
     }
 
-    public Order() {}
-
-    public static void loadOrdersFromDB() throws SQLException {
-    orders = DB.getInstance().getAllOrders();
+    public Order() throws SQLException {
+    }
+    
+      public static void initializeAllOrders() {
+    if (orders.isEmpty()) {
+        orders = DB.getInstance().getAllOrders();
+    }
 }
     
     public int getOrderID() {

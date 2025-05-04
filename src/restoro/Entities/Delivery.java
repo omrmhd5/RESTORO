@@ -4,6 +4,7 @@
  */
 package restoro.Entities;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import restoro.ChainOfResponsibilty.ComplaintHandler;
 
@@ -14,9 +15,9 @@ import restoro.ChainOfResponsibilty.ComplaintHandler;
 public class Delivery extends User implements ComplaintHandler {
     private ComplaintHandler next;
     
-    
+    // Add another constructor that takes name
     public Delivery(String name, String email, String password) {
-        super(name, email, password);
+        super("DELIVERY", name, email, password);
     }
 
     public Delivery() {
@@ -66,7 +67,7 @@ public class Delivery extends User implements ComplaintHandler {
         }
     }
     
-    public ArrayList<Order> getAssignedOrders(Delivery delivery){
+    public ArrayList<Order> getAssignedOrders(Delivery delivery) throws SQLException{
         Order order = new Order();
         return order.getAssignedOrders(delivery);
     }

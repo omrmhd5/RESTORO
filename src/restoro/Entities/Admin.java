@@ -8,13 +8,12 @@ import restoro.ChainOfResponsibilty.ComplaintHandler;
 // * @author salma
 // *
 public class Admin extends User implements ComplaintHandler {
-
     private ComplaintHandler next;
-
+    
+    // Add another constructor that takes name
     public Admin(String name, String email, String password) {
-        super(name, email, password);
+        super("ADMIN", name,email, password);
     }
-
     public Admin() {
     }
 

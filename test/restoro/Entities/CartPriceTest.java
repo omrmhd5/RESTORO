@@ -9,6 +9,7 @@ package restoro.Entities;
 //import org.junit.AfterClass;
 //import org.junit.Before;
 //import org.junit.BeforeClass;
+import java.sql.SQLException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 //import restoro.ReadOnly.MenuViewer;
@@ -21,7 +22,7 @@ import static org.junit.Assert.*;
 public class CartPriceTest {
 
     @Test
-    public void testCalculateCartTotal() {
+    public void testCalculateCartTotal() throws SQLException {
         // Arrange
 
         Customer customer = new Customer("Hatem", "hatem@example.com", "1234");

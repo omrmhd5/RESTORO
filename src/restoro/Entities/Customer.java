@@ -4,7 +4,10 @@
  */
 package restoro.Entities;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static restoro.Entities.User.users;
 import restoro.ReadOnly.MenuViewer;
 import restoro.Strategy.PaymentMethod;
@@ -17,38 +20,48 @@ public class Customer extends User {
     private int ordersCount;
     private PaymentMethod payment;
     private MenuViewer menuViewer;
-    private Order order = new Order();
+    private Order order;
     private Restaurant restaurant = new Restaurant();
     private Menu menu = new Menu();
-    private Cart cart = new Cart();
+    private Cart cart;
     
-    public Customer(String name, String email, String password) {
-        super(name, email, password);
+    // Add another constructor that takes name
+    public Customer(String name, String email, String password) throws SQLException {
+        super("CUSTOMER",name ,email, password);
+this.cart = new Cart(this.ID);
+this.order = new Order();
     }
 
-    public Customer() {
+    public Customer() throws SQLException {
+        this.cart = new Cart(this.ID);
+        this.order = new Order();
     }
 
     @Override
     public boolean register(String name, String email, String password) {
-        System.out.println("Customer: Attempting registration for " + email);
-
-        if (!validateUser(email, password) || name == null || name.trim().isEmpty()) {
-            System.out.println("Customer: Registration failed due to invalid input.");
-            return false;
-        }
-
-        for (User user : users) {
-            if (user.email.equals(email)) {
-                System.out.println("Customer: Email already registered.");
+        try {
+            System.out.println("Customer: Attempting registration for " + email);
+            
+            if (!validateUser(email, password) || name == null || name.trim().isEmpty()) {
+                System.out.println("Customer: Registration failed due to invalid input.");
                 return false;
             }
+            
+            for (User user : users) {
+                if (user.email.equals(email)) {
+                    System.out.println("Customer: Email already registered.");
+                    return false;
+                }
+            }
+            
+            Customer newCustomer = new Customer(name, email, password);
+            users.add(newCustomer);
+            System.out.println("Customer: Registration successful for " + email);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        Customer newCustomer = new Customer(name, email, password);
-        users.add(newCustomer);
-        System.out.println("Customer: Registration successful for " + email);
-        return true;
+        return false;
     }
 
     public String getName() {
@@ -71,7 +84,7 @@ public class Customer extends User {
     }
 
     public void setMenuViewer(MenuViewer menuViewer) {
-        menuViewer = menuViewer;
+        this.menuViewer = menuViewer;
     }
     
     public void setPaymentMethod(PaymentMethod P){
@@ -92,7 +105,7 @@ public class Customer extends User {
     }
     
     public void addToCart(MenuItem item) {
-        cart.addToCart(item);
+        getCart().addToCart(item);
     }
 
     public void removeFromCart(MenuItem item) {
@@ -119,7 +132,7 @@ public class Customer extends User {
         return cart.getCartItems();
     }
 
-    public Order placeOrder() {
+    public Order placeOrder() throws SQLException {
         order = new Order(cart,this,null,restaurant,"Placed");
         payForOrder(order.getTotalPrice());
         return order;

@@ -76,7 +76,7 @@ public class DB {
                     + "r.restaurant_phone_number, r.is_open, u.name AS admin_name "
                     + "FROM Restaurant r "
                     + "LEFT JOIN RestaurantAdmin ra ON r.restaurant_id = ra.restaurant_id "
-                    + "LEFT JOIN User u ON ra.admin_id = u.user_id";
+                    + "LEFT JOIN Userr u ON ra.admin_id = u.user_id";
             
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -109,6 +109,7 @@ public class DB {
     }
     
     public boolean addRestaurant(Restaurant restaurant) {
+        System.out.println("Yes");
         try {
             String query = "INSERT INTO Restaurant (restaurant_id, restaurant_name, restaurant_address, "
                     + "restaurant_phone_number, is_open) VALUES (?, ?, ?, ?, ?)";
@@ -180,7 +181,7 @@ public ArrayList<User> getAllUsers() {
     try {
         String query = "SELECT u.user_id, u.name, u.email, u.password, u.is_logged_in, u.role, u.restaurant_id, "
                 + "r.restaurant_name, r.restaurant_address, r.restaurant_phone_number "
-                + "FROM User u "
+                + "FROM Userr u "
                 + "LEFT JOIN Restaurant r ON u.restaurant_id = r.restaurant_id";
         
         Statement stmt = connection.createStatement();
@@ -221,130 +222,154 @@ public ArrayList<User> getAllUsers() {
  * Add new user to database
  * @param user User object to add
  * @return true if successful, false otherwise
- */
-public boolean addUser(User user) {
+ */public boolean addUser(User user) {
+try {
+// Start a transaction
+connection.setAutoCommit(false);
+
+
+    // Insert into User table
+    String userQuery = "INSERT INTO Userr (user_id, name, email, password, is_logged_in, role, restaurant_id) "
+            + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    
+    PreparedStatement userStmt = connection.prepareStatement(userQuery);
+    userStmt.setInt(1, user.getID());
+    userStmt.setString(2, user.getName());
+    userStmt.setString(3, user.getEmail());
+    userStmt.setString(4, user.getPassword());
+    userStmt.setBoolean(5, user.isIsLoggedIn());
+    userStmt.setString(6, user.getRole());
+    
+    // Set restaurant ID if present
+    if (user.getRestaurant() != null) {
+        userStmt.setInt(7, user.getRestaurant().getRestaurantID());
+    } else {
+        userStmt.setNull(7, java.sql.Types.INTEGER);
+    }
+    
+    int userRowsAffected = userStmt.executeUpdate();
+    userStmt.close();
+    
+    // Based on role, insert into specific user type table
+    boolean typeInsertSuccess = false;
+    
+    switch (user.getRole().toUpperCase()) {
+        case "CUSTOMER":
+            typeInsertSuccess = addCustomerRecord(user.getID());
+            break;
+        case "ADMIN":
+            typeInsertSuccess = addAdminRecord(user.getID());
+            break;
+        case "RESTAURANT_ADMIN":
+            if (user.getRestaurant() != null) {
+                typeInsertSuccess = addRestaurantAdminRecord(user.getID(), user.getRestaurant().getRestaurantID());
+            }
+            break;
+        case "DELIVERY":
+            typeInsertSuccess = addDeliveryRecord(user.getID());
+            break;
+        default:
+            LOGGER.warning("Unknown user role: " + user.getRole());
+            typeInsertSuccess = true; // Don't fail if role doesn't match specific table
+    }
+    
+    // Commit or rollback based on success
+    if (userRowsAffected > 0 && typeInsertSuccess) {
+        connection.commit();
+        connection.setAutoCommit(true);
+        return true;
+    } else {
+        connection.rollback();
+        connection.setAutoCommit(true);
+        return false;
+    }
+} catch (SQLException ex) {
     try {
-        // Start a transaction
-        connection.setAutoCommit(false);
-        
-        // Insert into User table
-        String userQuery = "INSERT INTO User (user_id, name, email, password, is_logged_in, role, restaurant_id) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-        
-        PreparedStatement userStmt = connection.prepareStatement(userQuery);
-        userStmt.setInt(1, user.getID());
-        userStmt.setString(2, user.getName());
-        userStmt.setString(3, user.getEmail());
-        userStmt.setString(4, user.getPassword());
-        userStmt.setBoolean(5, user.isIsLoggedIn());
-        userStmt.setString(6, user.getRole());
-        
-        // Set restaurant ID if present
-        if (user.getRestaurant() != null) {
-            userStmt.setInt(7, user.getRestaurant().getRestaurantID());
-        } else {
-            userStmt.setNull(7, java.sql.Types.INTEGER);
-        }
-        
-        int userRowsAffected = userStmt.executeUpdate();
-        userStmt.close();
-        
-        // Based on role, insert into specific user type table
-        boolean typeInsertSuccess = false;
-        
-        switch (user.getRole().toUpperCase()) {
-            case "CUSTOMER":
-                typeInsertSuccess = addCustomerRecord(user.getID());
-                break;
-            case "ADMIN":
-                typeInsertSuccess = addAdminRecord(user.getID());
-                break;
-            case "RESTAURANT_ADMIN":
-                if (user.getRestaurant() != null) {
-                    typeInsertSuccess = addRestaurantAdminRecord(user.getID(), user.getRestaurant().getRestaurantID());
-                }
-                break;
-            case "DELIVERY":
-                typeInsertSuccess = addDeliveryRecord(user.getID());
-                break;
-            default:
-                LOGGER.warning("Unknown user role: " + user.getRole());
-                typeInsertSuccess = true; // Don't fail if role doesn't match specific table
-        }
-        
-        // Commit or rollback based on success
-        if (userRowsAffected > 0 && typeInsertSuccess) {
-            connection.commit();
-            connection.setAutoCommit(true);
-            return true;
-        } else {
-            connection.rollback();
-            connection.setAutoCommit(true);
-            return false;
-        }
+        connection.rollback();
+        connection.setAutoCommit(true);
+    } catch (SQLException rollbackEx) {
+        LOGGER.log(Level.SEVERE, "Error rolling back transaction", rollbackEx);
+    }
+    LOGGER.log(Level.SEVERE, "Error adding user to database", ex);
+    return false;
+}
+
+
+}
+ 
+ public boolean addCustomerRecord(int userId) {
+    try {
+        String sql = "INSERT INTO Customer (customer_id) VALUES (?)";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, userId);
+        stmt.executeUpdate();
+        stmt.close();
+
+        return true;
     } catch (SQLException ex) {
-        try {
-            connection.rollback();
-            connection.setAutoCommit(true);
-        } catch (SQLException rollbackEx) {
-            LOGGER.log(Level.SEVERE, "Error rolling back transaction", rollbackEx);
-        }
-        LOGGER.log(Level.SEVERE, "Error adding user to database", ex);
+        LOGGER.log(Level.SEVERE, "Error inserting customer record", ex);
         return false;
     }
 }
 
-private boolean addCustomerRecord(int userId) throws SQLException {
-    String query = "INSERT INTO Customer (customer_id, orders_count, payment_method) VALUES (?, 0, NULL)";
-    
-    PreparedStatement pstmt = connection.prepareStatement(query);
-    pstmt.setInt(1, userId);
-    
-    int rowsAffected = pstmt.executeUpdate();
-    pstmt.close();
-    
-    return rowsAffected > 0;
+private boolean addAdminRecord(int userId) {
+    boolean success = false;
+    try {
+        String query = "INSERT INTO Admin (admin_id) VALUES (?)";
+        
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setInt(1, userId);
+        
+        int rowsAffected = pstmt.executeUpdate();
+        pstmt.close();
+        
+        success = rowsAffected > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return success;
 }
 
-private boolean addAdminRecord(int userId) throws SQLException {
-    String query = "INSERT INTO Admin (admin_id) VALUES (?)";
-    
-    PreparedStatement pstmt = connection.prepareStatement(query);
-    pstmt.setInt(1, userId);
-    
-    int rowsAffected = pstmt.executeUpdate();
-    pstmt.close();
-    
-    return rowsAffected > 0;
+private boolean addRestaurantAdminRecord(int userId, int restaurantId) {
+    boolean success = false;
+    try {
+        String query = "INSERT INTO RestaurantAdmin (admin_id, restaurant_id) VALUES (?, ?)";
+        
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setInt(1, userId);
+        pstmt.setInt(2, restaurantId);
+        
+        int rowsAffected = pstmt.executeUpdate();
+        pstmt.close();
+        
+        success = rowsAffected > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return success;
 }
 
-private boolean addRestaurantAdminRecord(int userId, int restaurantId) throws SQLException {
-    String query = "INSERT INTO RestaurantAdmin (admin_id, restaurant_id) VALUES (?, ?)";
-    
-    PreparedStatement pstmt = connection.prepareStatement(query);
-    pstmt.setInt(1, userId);
-    pstmt.setInt(2, restaurantId);
-    
-    int rowsAffected = pstmt.executeUpdate();
-    pstmt.close();
-    
-    return rowsAffected > 0;
+private boolean addDeliveryRecord(int userId) {
+    boolean success = false;
+    try {
+        String query = "INSERT INTO Delivery (delivery_id) VALUES (?)";
+        
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setInt(1, userId);
+        
+        int rowsAffected = pstmt.executeUpdate();
+        pstmt.close();
+        
+        success = rowsAffected > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return success;
 }
 
-private boolean addDeliveryRecord(int userId) throws SQLException {
-    String query = "INSERT INTO Delivery (delivery_id) VALUES (?)";
-    
-    PreparedStatement pstmt = connection.prepareStatement(query);
-    pstmt.setInt(1, userId);
-    
-    int rowsAffected = pstmt.executeUpdate();
-    pstmt.close();
-    
-    return rowsAffected > 0;
-}
-
-public void addOrder(Order order) throws SQLException {
-        String sql = "INSERT INTO Orders (order_id, customer_id, restaurant_id, delivery_id, cart_id, quantity, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+public void addOrder(Order order) {
+    try {
+        String sql = "INSERT INTO Orderr (order_id, customer_id, restaurant_id, delivery_id, cart_id, quantity, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = connection.prepareStatement(sql);
         stmt.setInt(1, order.getOrderID());
         stmt.setInt(2, order.getCustomer().getID());
@@ -354,28 +379,31 @@ public void addOrder(Order order) throws SQLException {
         stmt.setInt(6, order.getQuantity());
         stmt.setString(7, order.getStatus());
         stmt.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
 
- public ArrayList<Order> getAllOrders() throws SQLException {
-        String sql = "SELECT * FROM Orders";
+public ArrayList<Order> getAllOrders() {
+    ArrayList<Order> orders = new ArrayList<>();
+    try {
+        String sql = "SELECT * FROM orderr";
         PreparedStatement stmt = connection.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
-        ArrayList<Order> orders = new ArrayList<>();
-
         while (rs.next()) {
             Customer customer = getCustomerById(rs.getInt("customer_id"));
             Restaurant restaurant = getRestaurantById(rs.getInt("restaurant_id"));
             Delivery delivery = getDeliveryById(rs.getInt("delivery_id"));
             Cart cart = getCartById(rs.getInt("cart_id"));
-
             Order order = new Order(cart, customer, delivery, restaurant, rs.getString("status"));
             order.setOrderId(rs.getInt("order_id"));
             orders.add(order);
         }
-
-        return orders;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
-
+    return orders;
+}
 
 public ArrayList<MenuItem> getMenuItemsByMenuId(int menuId) {
     ArrayList<MenuItem> items = new ArrayList<>();
@@ -443,10 +471,29 @@ public boolean removeMenuItem(String name, int menuId) {
     }
 }
 
+public int createCartForCustomer(int customerId) {
+    String query = "INSERT INTO Cart (customer_id) VALUES (?)";  // Ensure your Cart table has customer_id FK
+    System.out.println("Creatimng");
+    try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        pstmt.setInt(1, customerId);
+        int rows = pstmt.executeUpdate();
+        if (rows > 0) {
+            try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return -1; // failed
+}
+
 public ArrayList<MenuItem> getCartItems(int cartId) {
     ArrayList<MenuItem> items = new ArrayList<>();
     String query = "SELECT m.item_id, m.name, m.description, m.price, m.category, m.menu_id " +
-                   "FROM CartItems c JOIN MenuItem m ON c.item_id = m.item_id " +
+                   "FROM CartItem c JOIN MenuItem m ON c.item_id = m.item_id " +
                    "WHERE c.cart_id = ?";
 
     try (PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -473,7 +520,7 @@ public ArrayList<MenuItem> getCartItems(int cartId) {
 
 
 public boolean addToCart(int cartId, MenuItem item) {
-    String query = "INSERT INTO CartItems (cart_id, item_id) VALUES (?, ?)";
+    String query = "INSERT INTO CartItem (cart_id, item_id) VALUES (?, ?)";
     try (PreparedStatement pstmt = connection.prepareStatement(query)) {
         pstmt.setInt(1, cartId);
         pstmt.setInt(2, item.getID());
@@ -486,7 +533,7 @@ public boolean addToCart(int cartId, MenuItem item) {
 }
 
 public boolean removeFromCart(int cartId, MenuItem item) {
-    String query = "DELETE FROM CartItems WHERE cart_id = ? AND item_id = ?";
+    String query = "DELETE FROM CartItem WHERE cart_id = ? AND item_id = ?";
     try (PreparedStatement pstmt = connection.prepareStatement(query)) {
         pstmt.setInt(1, cartId);
         pstmt.setInt(2, item.getID());
@@ -537,7 +584,7 @@ public Restaurant getRestaurantById(int restaurantId) {
  * @return true if update successful, false otherwise
  */
 public boolean updateOrderStatus(int orderId, String status) {
-    String query = "UPDATE `Order` SET state = ? WHERE order_id = ?";
+    String query = "UPDATE `Orderr` SET state = ? WHERE order_id = ?";
     
     try (PreparedStatement pstmt = connection.prepareStatement(query)) {
         pstmt.setString(1, status);
@@ -558,22 +605,30 @@ public boolean updateOrderStatus(int orderId, String status) {
  * @param restaurantId Restaurant ID
  * @return Menu ID, or -1 if not found
  */
-private int getMenuIdForRestaurant(int restaurantId) {
-    String query = "SELECT menu_id FROM Menu WHERE restaurant_id = ?";
-    
+public Menu getMenuIdForRestaurant(int restaurantId) {
+    String query = "SELECT menu_id, menu_title FROM Menu WHERE restaurant_id = ?";
     try (PreparedStatement pstmt = connection.prepareStatement(query)) {
         pstmt.setInt(1, restaurantId);
-        
         try (ResultSet rs = pstmt.executeQuery()) {
             if (rs.next()) {
-                return rs.getInt("menu_id");
+                int menuId = rs.getInt("menu_id");
+                String menuTitle = rs.getString("menu_title");
+                ArrayList<MenuItem> items = getMenuItemsByMenuId(menuId);
+                Menu menu = new Menu();
+
+                menu.setMenuTitle(menuTitle);
+                menu.setMenu_ID(menuId);
+                for (MenuItem item : items) {
+                    menu.addItem(item);
+                }
+                return menu;
             }
         }
     } catch (SQLException ex) {
-        LOGGER.log(Level.SEVERE, "Failed to get menu ID for restaurant", ex);
+        LOGGER.log(Level.SEVERE, "Failed to get Menu for restaurant", ex);
     }
-    
-    return -1;
+    return null;
+
 }
 
 /**
@@ -581,7 +636,7 @@ private int getMenuIdForRestaurant(int restaurantId) {
  * @param restaurantId Restaurant ID
  * @return New menu ID, or -1 if creation failed
  */
-private int createMenuForRestaurant(int restaurantId) {
+public int createMenuForRestaurant(int restaurantId) {
     String query = "INSERT INTO Menu (menu_title, restaurant_id) VALUES (?, ?)";
     
     try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -631,12 +686,16 @@ private int createMenuForRestaurant(int restaurantId) {
         return null;
     }
   
-    public Cart getCartById(int id) throws SQLException {
-        Cart cart = new Cart();
-        cart.setCart_ID(id);
+   public Cart getCartById(int id) throws SQLException {
+    Cart cart = new Cart();  // This should not trigger DB insertion
+    cart.setCart_ID(id);
 
-        String sql = "SELECT * FROM CartItems WHERE cart_id = ?";
-        PreparedStatement stmt = connection.prepareStatement(sql);
+    String sql = "SELECT m.item_id, m.name, m.description, m.price, m.category " +
+                 "FROM CartItems c " +
+                 "JOIN MenuItem m ON c.item_id = m.item_id " +
+                 "WHERE c.cart_id = ?";
+
+    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
         stmt.setInt(1, id);
         ResultSet rs = stmt.executeQuery();
 
@@ -648,10 +707,10 @@ private int createMenuForRestaurant(int restaurantId) {
                 rs.getDouble("price"),
                 rs.getString("category")
             );
-            cart.addToCart(item);
-        }
-
-        return cart;
+            cart.getCartItems().add(item);         }
     }
+
+    return cart;
+}
 
 }

@@ -15,9 +15,12 @@ public class Cart {
     private ArrayList<MenuItem> CartItems = new ArrayList<>();
     private int cart_ID;
 
-    public Cart() {
-        DB.getInstance().getCartItems(cart_ID);
-    }
+   public Cart(int customerId) {
+    this.cart_ID = DB.getInstance().createCartForCustomer(customerId);
+}
+   
+   public Cart() {
+}
 
     public int getCart_ID() {
         return cart_ID;

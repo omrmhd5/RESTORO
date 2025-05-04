@@ -4,6 +4,9 @@
  */
 package restoro.Interfaces;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import restoro.Entities.RestaurantAdmin;
 
 /**
@@ -164,10 +167,14 @@ public class RestaurantAdminOptionsUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-        ViewIncomingOrdersUI vio = new ViewIncomingOrdersUI(restaurantAdmin);
-        vio.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            this.dispose();
+            ViewIncomingOrdersUI vio = new ViewIncomingOrdersUI(restaurantAdmin);
+            vio.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(RestaurantAdminOptionsUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

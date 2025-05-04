@@ -4,6 +4,9 @@
  */
 package restoro.Interfaces;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import restoro.Entities.Customer;
 
 /**
@@ -185,17 +188,25 @@ public class CustomerOptionsUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MakeOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MakeOrderActionPerformed
-        // TODO add your handling code here:
-        SearchRestaurantUI sr = new SearchRestaurantUI();
-        sr.setVisible(true);
-        this.dispose();
+        try {
+            // TODO add your handling code here:
+            SearchRestaurantUI sr = new SearchRestaurantUI();
+            sr.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerOptionsUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_MakeOrderActionPerformed
 
     private void ViewPastOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewPastOrdersActionPerformed
-        // TODO add your handling code here:
-        ViewPastOrdersUI to = new ViewPastOrdersUI(customer);
-        to.setVisible(true);
-        this.dispose();
+        try {
+            // TODO add your handling code here:
+            ViewPastOrdersUI to = new ViewPastOrdersUI(customer);
+            to.setVisible(true);
+            this.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerOptionsUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ViewPastOrdersActionPerformed
 
     private void TrackOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TrackOrderActionPerformed
