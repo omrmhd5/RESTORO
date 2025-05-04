@@ -26,10 +26,8 @@ public class TrackOrderUI extends javax.swing.JFrame {
         System.out.println(customer);
         this.customer = customer;
         
-        // Initialize orders from database
         Order.initializeAllOrders();
         
-        // Get the first order for this customer
         Order order = null;
         ArrayList<Order> customerOrders = new Order().getPastOrders(customer);
         if (!customerOrders.isEmpty()) {

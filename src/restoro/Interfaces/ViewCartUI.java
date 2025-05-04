@@ -31,7 +31,7 @@ public class ViewCartUI extends javax.swing.JFrame {
  private void populateCart() {
    try {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0); // Clear table
+        model.setRowCount(0);
 
         double total = 0.0;
 

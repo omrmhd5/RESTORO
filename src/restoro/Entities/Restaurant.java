@@ -21,7 +21,6 @@ public class Restaurant{
         this.restaurantAddress = restaurantAddress;
         this.restaurantPhoneNumber = restaurantPhoneNumber;
         this.isOpen = isOpen;
-//        this.menu = menu;
         this.restaurantAdmin = restaurantAdmin;
         allRestaurants.add(this);
         DB.getInstance().addRestaurant(this);
@@ -33,7 +32,7 @@ public class Restaurant{
         this.restaurantAddress = restaurantAddress;
         this.restaurantPhoneNumber = restaurantPhoneNumber;
         allRestaurants.add(this);
-                DB.getInstance().addRestaurant(this);
+        DB.getInstance().addRestaurant(this);
     }
     
       public static void initializeAllRestaurants() {

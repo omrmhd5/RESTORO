@@ -8,7 +8,6 @@ public class Complaint {
     private final ComplaintHandler chain;
 
     public Complaint(Delivery deliveryHandler, Admin adminHandler, RestaurantAdmin restaurantAdminHandler) {
-        // Set up the chain
         deliveryHandler.setNext(adminHandler);
         adminHandler.setNext(restaurantAdminHandler);
 

@@ -43,7 +43,6 @@ public class MakePaymentUI extends javax.swing.JFrame {
         TotalPriceFeild.setText(String.valueOf(cart.calculateTotal()));
 
         
-        // Example if using JLabel named applePayLabel
     applePayLabel.addMouseListener(new java.awt.event.MouseAdapter() {
     public void mouseClicked(java.awt.event.MouseEvent evt) {
         customer.setPaymentMethod(new ApplePay());
@@ -321,7 +320,6 @@ public class MakePaymentUI extends javax.swing.JFrame {
             return;
         }
 
-        // Basic validation (you can extend with regex for card formats)
         if (cardNum.length() < 12 || cardNum.length() > 19 || !cardNum.matches("\\d+")) {
             JOptionPane.showMessageDialog(this, "Invalid card number format.");
             return;
@@ -339,27 +337,7 @@ public class MakePaymentUI extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "An error occurred while processing payment: " + e.getMessage());
     }
     }//GEN-LAST:event_payNowButtonActionPerformed
-//private void applyPromoCode() {
-//     try {
-//        int code = Integer.parseInt(jTextField3.getText().trim());
-//
-//        if (PromotionsDiscounts.isPromoCodeValid(code)) {
-//            double originalTotal = cart.calculateTotal();
-//            double discountedTotal = originalTotal - 20;
-//
-//            if (discountedTotal < 0) discountedTotal = 0;
-//
-//            TotalPriceFeild.setText(String.valueOf(discountedTotal));
-//            JOptionPane.showMessageDialog(this, "Promo applied! 20 LE discount.");
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Invalid or inactive promo code.");
-//        }
-//    } catch (NumberFormatException e) {
-//        JOptionPane.showMessageDialog(this, "Please enter a numeric promo code.");
-//    } catch (Exception e) {
-//        JOptionPane.showMessageDialog(this, "Something went wrong: " + e.getMessage());
-//    }
-//}
+
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
       try {

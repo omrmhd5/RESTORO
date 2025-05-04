@@ -22,7 +22,7 @@ public class PromotionsDiscountsTest {
 
         float actualTotal = PromotionsDiscounts.applyPromo(originalTotal, 1111);
 
-        System.out.println("✅ Promo Code Test Passed. Total after discount = " + actualTotal);
+        System.out.println("Promo Code Test Passed. Total after discount = " + actualTotal);
 
         assertEquals("Promo should apply 20% discount", expectedTotal, actualTotal,0.01f);
     }

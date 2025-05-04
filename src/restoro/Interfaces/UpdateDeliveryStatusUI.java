@@ -194,15 +194,12 @@ public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
    
 
 if (pickedUpRadio.isSelected()) {
-    //order.setState(new PickedUpState());
     order.setStatus("Picked Up");
     System.out.println(order);
 } else if (onTheWayRadio.isSelected()) {
-    //order.setState(new OnTheWayState());
     order.setStatus("On The Way");
         System.out.println(order);
 } else if (deliveredRadio.isSelected()) {
-    //order.setState(new DeliveredState());
     order.setStatus("Delivered");
         System.out.println(order);
 } else {

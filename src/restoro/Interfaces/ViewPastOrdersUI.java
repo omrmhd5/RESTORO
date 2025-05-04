@@ -20,7 +20,7 @@ public class ViewPastOrdersUI extends javax.swing.JFrame {
     Customer customer;
     public ViewPastOrdersUI(Customer customer) throws SQLException {
         initComponents();
-                Order.initializeAllOrders();
+        Order.initializeAllOrders();
         this.customer = customer;
         Order order = new Order();
         PastOrders.setText(order.getPastOrders(customer).toString());        
