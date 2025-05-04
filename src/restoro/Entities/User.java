@@ -169,8 +169,7 @@ public abstract class User {
     System.out.println("User: No matching user found.");
     return false;
     }
-    
-     public static User createUser(int id, String role, String name, String email, String password, 
+    public static User createUser(int id, String role, String name, String email, String password, 
                                boolean isLoggedIn, Restaurant restaurant) throws SQLException {
     User user = null;
     
