@@ -176,7 +176,7 @@
                               <Component id="RestaurantPhoneNumber" alignment="0" max="32767" attributes="0"/>
                               <Component id="RestaurantAddress" alignment="0" max="32767" attributes="0"/>
                               <Component id="RestaurantName" alignment="0" max="32767" attributes="0"/>
-                              <Component id="RestaurantID" pref="175" max="32767" attributes="0"/>
+                              <Component id="RestaurantID" pref="212" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -216,9 +216,9 @@
                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                       <Component id="RestaurantAdminName" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   <Component id="AddButton" min="-2" pref="33" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <EmptySpace pref="45" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

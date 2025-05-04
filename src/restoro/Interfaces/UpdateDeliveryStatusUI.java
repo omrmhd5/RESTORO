@@ -85,7 +85,7 @@ public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
+                        .addGap(20, 20, 20)
                         .addComponent(BackButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jLabel3)
@@ -94,12 +94,12 @@ public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(BackButton1)
-                        .addGap(16, 16, 16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel1)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
@@ -169,7 +169,7 @@ public class UpdateDeliveryStatusUI extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(37, 37, 37)
                 .addComponent(updateButton)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -214,13 +214,9 @@ JOptionPane.showMessageDialog(this, "Order status updated to: " + order.getStatu
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void BackButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButton1ActionPerformed
-        try {
-            ViewAssignedOrderUI options= new ViewAssignedOrderUI(delivery);
-            options.setVisible(true);
-            this.dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(UpdateDeliveryStatusUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        DeliveryOptionsUI options= new DeliveryOptionsUI(order);
+        options.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BackButton1ActionPerformed
 
     /**

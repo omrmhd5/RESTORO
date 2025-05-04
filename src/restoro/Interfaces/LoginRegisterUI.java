@@ -34,7 +34,7 @@ public class LoginRegisterUI extends javax.swing.JFrame {
         setTitle("Restoro");
         setDefaultCloseOperation(LoginRegisterUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setSize(500,400);
+        setSize(520,400);
     }
 
     /**

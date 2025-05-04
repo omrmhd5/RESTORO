@@ -100,7 +100,7 @@ public class ViewAssignedOrderUI extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(57, Short.MAX_VALUE)
+                .addContainerGap(58, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(61, 61, 61)
                 .addComponent(jLabel3)
@@ -124,6 +124,7 @@ public class ViewAssignedOrderUI extends javax.swing.JFrame {
         Order1.setBackground(new java.awt.Color(245, 230, 255));
         Order1.setColumns(20);
         Order1.setRows(5);
+        Order1.setDisabledTextColor(new java.awt.Color(102, 0, 153));
         Order1.setEnabled(false);
         jScrollPane3.setViewportView(Order1);
 
@@ -140,6 +141,7 @@ public class ViewAssignedOrderUI extends javax.swing.JFrame {
         Order2.setBackground(new java.awt.Color(245, 230, 255));
         Order2.setColumns(20);
         Order2.setRows(5);
+        Order2.setDisabledTextColor(new java.awt.Color(102, 0, 153));
         Order2.setEnabled(false);
         jScrollPane4.setViewportView(Order2);
 
@@ -156,6 +158,7 @@ public class ViewAssignedOrderUI extends javax.swing.JFrame {
         Order3.setBackground(new java.awt.Color(245, 230, 255));
         Order3.setColumns(20);
         Order3.setRows(5);
+        Order3.setDisabledTextColor(new java.awt.Color(102, 0, 153));
         Order3.setEnabled(false);
         jScrollPane2.setViewportView(Order3);
 
@@ -208,7 +211,7 @@ public class ViewAssignedOrderUI extends javax.swing.JFrame {
                         .addComponent(ChooseItem2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(70, 70, 70)
                         .addComponent(ChooseItem3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(50, 74, Short.MAX_VALUE))
+                .addGap(50, 81, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -230,17 +233,19 @@ public class ViewAssignedOrderUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ChooseItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseItem1ActionPerformed
-        
+        this.dispose();
         new DeliveryOptionsUI(orders.get(0)).setVisible(true);
 
     }//GEN-LAST:event_ChooseItem1ActionPerformed
 
     private void ChooseItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseItem2ActionPerformed
+        this.dispose();
         new UpdateDeliveryStatusUI(orders.get(1)).setVisible(true);
     }//GEN-LAST:event_ChooseItem2ActionPerformed
 
     private void ChooseItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseItem3ActionPerformed
-       new UpdateDeliveryStatusUI(orders.get(2)).setVisible(true);
+       this.dispose();
+        new UpdateDeliveryStatusUI(orders.get(2)).setVisible(true);
     }//GEN-LAST:event_ChooseItem3ActionPerformed
 
     /**

@@ -17,7 +17,6 @@ import restoro.Entities.Restaurant;
 import restoro.Entities.RestaurantAdmin;
 import restoro.Entities.User;
 import restoro.Interfaces.StartWindow;
-import restoro.Strategy.Visa;
 
 /**
  *

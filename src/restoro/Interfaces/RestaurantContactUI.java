@@ -24,6 +24,7 @@ public class RestaurantContactUI extends javax.swing.JFrame {
         setDefaultCloseOperation(RestaurantContactUI.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         jTextArea1.setText(order.getRestaurant().toString());
+        setSize(400,400);
     }
 
     /**
@@ -41,6 +42,7 @@ public class RestaurantContactUI extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        BackButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -78,21 +80,39 @@ public class RestaurantContactUI extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo.png"))); // NOI18N
 
+        BackButton1.setBackground(new java.awt.Color(232, 170, 255));
+        BackButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        BackButton1.setForeground(new java.awt.Color(255, 255, 255));
+        BackButton1.setText("<");
+        BackButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 153), 2));
+        BackButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel4)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(BackButton1)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(9, 9, 9)
+                .addComponent(BackButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -106,6 +126,7 @@ public class RestaurantContactUI extends javax.swing.JFrame {
         jTextArea1.setBackground(new java.awt.Color(245, 230, 255));
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.setDisabledTextColor(new java.awt.Color(102, 0, 153));
         jTextArea1.setEnabled(false);
         jScrollPane1.setViewportView(jTextArea1);
 
@@ -153,6 +174,12 @@ public class RestaurantContactUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void BackButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButton1ActionPerformed
+        DeliveryOptionsUI options= new DeliveryOptionsUI(order);
+        options.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BackButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -188,6 +215,7 @@ public class RestaurantContactUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

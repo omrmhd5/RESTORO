@@ -149,7 +149,7 @@ public class DeleteRestaurant extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(RestaurantName, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49))
         );
@@ -200,6 +200,9 @@ public class DeleteRestaurant extends javax.swing.JFrame {
     } else {
         JOptionPane.showMessageDialog(this, "Deletion canceled.");
       }
+       AdminOptionsUI options= new AdminOptionsUI(admin);
+        options.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_DeleteButtonActionPerformed
 
     private void BackButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButton3ActionPerformed

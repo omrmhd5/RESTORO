@@ -55,6 +55,7 @@ public class MakePaymentUI extends javax.swing.JFrame {
     public void mouseClicked(java.awt.event.MouseEvent evt) {
                 customer.setPaymentMethod(new CashOnDelivery());
         JOptionPane.showMessageDialog(null, "Payment successful using Cash!");
+        
     }
     });
 
@@ -254,7 +255,7 @@ public class MakePaymentUI extends javax.swing.JFrame {
                                 .addComponent(cvvField, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(cardNumberField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(payNowButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(37, Short.MAX_VALUE))))
+                        .addContainerGap(44, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -332,6 +333,8 @@ public class MakePaymentUI extends javax.swing.JFrame {
         }
 
         JOptionPane.showMessageDialog(this, "Payment successful using Card!");
+        new StartWindow().setVisible(true);
+        this.dispose();
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "An error occurred while processing payment: " + e.getMessage());
     }

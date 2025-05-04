@@ -133,7 +133,7 @@ public class DeliveryOptionsUI extends javax.swing.JFrame {
                 .addComponent(ContactRestaurant)
                 .addGap(40, 40, 40)
                 .addComponent(UpdateOrderStatus)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -156,15 +156,17 @@ public class DeliveryOptionsUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ContactCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContactCustomerActionPerformed
+        this.dispose();
         CustomerContactUI cc = new CustomerContactUI(order);
         cc.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_ContactCustomerActionPerformed
 
     private void ContactRestaurantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContactRestaurantActionPerformed
+        this.dispose();
         RestaurantContactUI rc = new RestaurantContactUI(order);
         rc.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_ContactRestaurantActionPerformed
 
     private void UpdateOrderStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateOrderStatusActionPerformed
